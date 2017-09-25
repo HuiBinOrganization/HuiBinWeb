@@ -1,0 +1,381 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>International Center for diagnosis and treatment</title>
+<link href="~/Content/css/uikit.min.css" rel="stylesheet" type="text/css">
+<link href="~/Content/css/customize.css" rel="stylesheet" type="text/css">
+<script src="~/Content/js/jquery.js"></script>
+<script src="~/Content/js/uikit.min.js"></script>
+<script src="~/Content/js/jquery.sudoSlider.min.js"></script>
+<script src="~/Content/js/customize.js"></script>
+</head>
+
+<body>
+<!-- browser tips start -->
+<div class="browser"><span class="browser-text">It is recommended to use IE9 and above or Chrome browser, Firefox and other browsers to visit this site, get a better user experience. </span><span>Upgrade <a href="https://support.microsoft.com/zh-cn/help/17621/internet-explorer-downloads" target="_blank">IE</a> - <a href="http://dl.pconline.com.cn/download/51614.html" target="_blank">Chrome</a> - <a href="http://www.firefox.com.cn/download/" target="_blank">Firefox</a></span><span class="browser-close"><a href="javascript:void()" class="uk-icon-close f20"></a></span></div>
+<!-- browser tips end -->
+<div class="uk-container uk-container-center">
+  <nav class="uk-navbar"> <a href="~/Hospital/Index" class="uk-navbar-brand mtp18"><img src="~/Content/img/pages/logo.png" alt="" width="605" height="96" /></a>
+    <div class="uk-navbar-flip mtp46">
+      <ul class="uk-navbar-nav">
+        <li><a href="~/Hospital/Index">首页</a></li>
+        <li><a href="#">国际诊疗网</a></li>
+        <li><a href="#"><i class="uk-icon-home uk-icon-small"></i></a></li>
+      </ul>
+    </div>
+  </nav>
+</div>
+<!-- dep start -->
+<div class="uk-container uk-container-center">
+  <div class="uk-grid uk-margin-top uk-margin-bottom">
+    <div class="uk-width-1-5"><img id="doctor-img" class="uk-align-medium-left" src="~/Content/img/pages/pic-doc1.png" alt=""></div>
+    <div class="uk-width-4-5 pdl0">
+      <h2 id="doctor-name"></h2>
+      <table width="100%" border="0" cellspacing="0" cellpadding="0" class="f16 lh30">
+        <tbody>
+          <tr>
+            <td class="c9" style="width:30px;">Title:</td>
+            <td id="doctor-title"></td>
+          </tr>
+          <tr>
+            <td class="c9">Gender:</td>
+            <td id="doctor-gender"></td>
+          </tr>
+          <tr>
+            <td class="c9">Department:</td>
+            <td id="doctor-Department"></td>
+          </tr>
+          <tr>
+            <td class="uk-text-top c9">Be good at:</td>
+            <td id="doctor-goodat"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <h3 class="confirm-tit"><img src="~/Content/img/pages/icon-ha.png" alt=""/>House arrangement</h3>
+  <div class="uk-position-relative uk-margin">
+    <div id="slider">
+      <ul>
+        <li>
+          <table width="100%" cellpadding="0" cellspacing="0" class="uk-table doc-tab">
+            <thead>
+              <tr id="doctor-orderDate">
+                <th rowspan="2" class="uk-text-middle">L don't</th>
+                <th>27/02</th>
+                <th>28/02</th>
+                <th>01/03</th>
+                <th>02/03</th>
+                <th>03/03</th>
+                <th>04/03</th>
+                <th>05/03</th>
+              </tr>
+              <tr id="doctor-week">
+                <th>Saturday</th>
+                <th>Sunday</th>
+                <th>Monday</th>
+                <th>Tuesday</th>
+                <th>Wednesday</th>
+                <th>Thursday</th>
+                <th>Friday</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr id="doctor-am">
+                <th>a.m</th>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td><span class="available"><a href="~/Hospital/FormSubscribe">Available</a></span></td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+              </tr>
+              <tr id="doctor-pm">
+                <th>p.m</th>
+                <td><span class="layoff">Lay off</span></td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td><span class="reservations">Reservations</span></td>
+                <td>&nbsp;</td>
+              </tr>
+              <tr id="doctor-night">
+                <th>Night</th>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td><span class="available"><a href="~/Hospital/FormSubscrib">Available</a></span></td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+              </tr>
+            </tbody>
+          </table>
+        </li>
+        <li>
+          <table width="100%" cellpadding="0" cellspacing="0" class="uk-table doc-tab">
+            <thead>
+              <tr>
+                <th rowspan="2" class="uk-text-middle">L don't</th>
+                <th>06/03</th>
+                <th>07/03</th>
+                <th>08/03</th>
+                <th>09/03</th>
+                <th>10/03</th>
+                <th>11/03</th>
+                <th>12/03</th>
+              </tr>
+              <tr>
+                <th>Saturday</th>
+                <th>Sunday</th>
+                <th>Monday</th>
+                <th>Tuesday</th>
+                <th>Wednesday</th>
+                <th>Thursday</th>
+                <th>Friday</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th>a.m</th>
+                <td>&nbsp;</td>
+                <td><span class="reservations">Reservations</span></td>
+                <td>&nbsp;</td>
+                <td><span class="available"><a href="~/Hospital/FormSubscrib">Available</a></span></td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+              </tr>
+              <tr>
+                <th>p.m</th>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td><span class="layoff">Lay off</span></td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td><span class="available"><a href="~/Hospital/FormSubscrib">Available</a></span></td>
+                <td>&nbsp;</td>
+              </tr>
+              <tr>
+                <th>Night</th>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td><span class="reservations">Reservations</span></td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+              </tr>
+            </tbody>
+          </table>
+        </li>
+        <li>
+          <table width="100%" cellpadding="0" cellspacing="0" class="uk-table doc-tab">
+            <thead>
+              <tr>
+                <th rowspan="2" class="uk-text-middle">L don't</th>
+                <th>06/03</th>
+                <th>07/03</th>
+                <th>08/03</th>
+                <th>09/03</th>
+                <th>10/03</th>
+                <th>11/03</th>
+                <th>12/03</th>
+              </tr>
+              <tr>
+                <th>Saturday</th>
+                <th>Sunday</th>
+                <th>Monday</th>
+                <th>Tuesday</th>
+                <th>Wednesday</th>
+                <th>Thursday</th>
+                <th>Friday</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th>a.m</th>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td><span class="reservations">Reservations</span></td>
+                <td>&nbsp;</td>
+                <td><span class="layoff">Lay off</span></td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+              </tr>
+              <tr>
+                <th>p.m</th>
+                <td><span class="available"><a href="~/Hospital/FormSubscrib">Available</a></span></td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td><span class="available"><a href="~/Hospital/FormSubscrib">Available</a></span></td>
+                <td>&nbsp;</td>
+              </tr>
+              <tr>
+                <th>Night</th>
+                <td>&nbsp;</td>
+                <td><span class="reservations">Reservations</span></td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+              </tr>
+            </tbody>
+          </table>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <h3 class="confirm-tit"><img src="~/Content/img/pages/icon-dp.png" alt=""/>Doctor profile</h3>
+  <p class="f16 lh24 dp-ctt">The First Affiliated Hospital of Xi'an Jiao Tong University is directly under the Ministry of health in teaching, medical and scientific research, prevention and health care as one of the three grade of stomatological hospital, northwest oral medical professional teacher training center, is the Ministry of health to continue. The First Affiliated Hospital of Xi'an Jiao Tong University is directly under the Ministry of health in teaching, medical and scientific research, prevention and health care as one of the three grade of stomatological hospital, northwest oral medical professional teacher training center, is the Ministry of health to continue. The First Affiliated Hospital of Xi'an Jiao Tong University is directly under the Ministry of health teaching, medical treatment, scientific research, prevention and health care as one of the three grade of stomatological hospital, northwest stomatology teacher training center. Is the Ministry of health to continue. The First Affiliated Hospital of Xi'an Jiao Tong University is directly under the Ministry of health in teaching, medical and scientific research, prevention and health care as one of the three grade of stomatological hospital, northwest oral medical professional teacher training center, is the Ministry of health to continue. The first Affiliated Hospital of Xi'an Jiao Tong University is directly under the Ministry of health, medical treatment, scientific research and teaching preventive health care as one of the three grade of stomatological hospital, northwest stomatology teacher training center.</p>
+</div>
+<!-- dep end --> 
+<!-- footer start -->
+<div class="footer uk-margin-top">
+  <div class="uk-container uk-container-center">
+    <div class="uk-grid uk-grid-divider">
+      <div class="uk-width-3-5">
+        <div class="uk-panel branch">
+          <h3 class="uk-panel-title">Branch information</h3>
+          <p>The First Affiliated Hospital of Xi'an Jiao Tong University Medical College</p>
+          <p>The First Affiliated Hospital of Binxian County Jiaotong University.</p>
+          <p>The First Affiliated Hospital of Hancheng Jiaotong University.</p>
+          <p>International land Hospital; land and port clinic.</p>
+        </div>
+      </div>
+      <div class="uk-width-2-5">
+        <div class="uk-panel social">
+          <h3 class="uk-panel-title uk-margin-bottom">About us</h3>
+          <p><a href="#" class="uk-icon-button uk-icon-weibo"></a><a href="#" class="uk-icon-button uk-icon-tencent-weibo"></a><a href="#" class="uk-icon-button uk-icon-wechat"></a></p>
+          <p><img src="~/Content/img/pages/pic-ewm.png" alt=""/></p>
+          <p>Scanning concern Jiaotong University Affiliated Hospital</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="cp">
+  <div class="uk-container uk-container-center"> Copyright &copy; 2011, the First Affiliated Hospital of Xi'an Jiao Tong University, Shaanxi Province, ICP 12009712, -3. Address: No. 277, Yanta West Road, Shaanxi, Xi'an: 710061 </div>
+</div>
+<!-- footer end -->
+
+    <script type="text/ecmascript">
+        var docID;
+        //获取地址栏参数
+        function GetQueryString(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if (r != null) return unescape(r[2]); return null;
+        }
+
+        $(function () {
+            debugger;
+            var param = GetQueryString("DocId");
+            docID = param;
+            //开始ajax请求数据
+            var url = "@Url.Content("~/UIManage/Doctor/GetDoctorInfo")";
+            $.ajax({
+                type: "post",
+                url: url,
+                data: { DoctorId: param },
+                success: function (data) {
+                    debugger;
+                    var result = JSON.parse(data);
+                    if (result.IsSuccess == true) {
+                        //医生名字
+                        $("#doctor-name").text(result.Result.DoctorName);
+                        //医生title
+                        $("#doctor-title").text(result.Result.Title);
+                        //医生性别
+                        $("#doctor-gender").text(result.Result.Gender);
+                        //医生部门
+                        $("#doctor-Department").text(result.Result.Introduction);
+                        //头像地址
+                        $("#doctor-img").attr('src', result.Result.Avatar);
+                        //医生擅长
+                        $("#doctor-goodat").text(result.Result.GootAt);
+                        //绘制下面的表格
+                        for (var i = 0; i < result.Result.OrderCycle; i++) {
+                            //时间
+                            $("#doctor-orderDate").append("<th>" + result.Result.OrderCycleList[i].OrderDateTime + "</th>");
+                            //星期
+                            switch (result.Result.OrderCycleList[i].Week) {
+                                case 1:     //周一
+                                    $("#doctor-week").append("<th>Monday</th>");
+                                    break;
+                                case 2:     //周2
+                                    $("#doctor-week").append("<th>Tuesday</th>");
+                                    break;
+                                case 3:     //周3
+                                    $("#doctor-week").append("<th>Wednesday</th>");
+                                    break;
+                                case 4:     //周4
+                                    $("#doctor-week").append("<th>Thursday</th>");
+                                    break;
+                                case 5:     //周5
+                                    $("#doctor-week").append("<th>Friday</th>");
+                                    break;
+                                case 6:     //周6
+                                    $("#doctor-week").append("<th>Saturday</th>");
+                                    break;
+                                case 7:     //周7
+                                    $("#doctor-week").append("<th>Sunday</th>");
+                                    break;
+                            };
+                            //判断表格状态
+                            if (result.Result.OrderCycleList[i].MorningOrderType == 1) {
+                                $("#doctor-am").append("<td><span class=\"available\"><a href=\"../Hospital/FormSubscribe?OrderTimeType=1&DoctorId=" + docID + "&OrderDate=" + result.Result.OrderCycleList[i].OrderDateTime + "\">Available</a></span></td>");
+                                $("#doctor-pm").append("<td>&nbsp;</td>");
+                                $("#doctor-night").append("<td>&nbsp;</td>");
+                            } else if (result.Result.OrderCycleList[i].MorningOrderType == 2) {
+                                $("#doctor-am").append("<td><span class=\"reservations\">Reservations</span></td>");
+                                $("#doctor-pm").append("<td>&nbsp;</td>");
+                                $("#doctor-night").append("<td>&nbsp;</td>");
+                            } else if (result.Result.OrderCycleList[i].MorningOrderType == 3) {
+                                $("#doctor-am").append("<td><span class=\"layoff\">Lay off</span></td>");
+                                $("#doctor-pm").append("<td>&nbsp;</td>");
+                                $("#doctor-night").append("<td>&nbsp;</td>");
+                            } else if (result.Result.OrderCycleList[i].AfterNoonOrderType == 1) {
+                                $("#doctor-pm").append("<td><span class=\"available\"><a href=\"../Hospital/FormSubscribe?OrderTimeType=1&DoctorId=" + docID + "&OrderDate=" + result.Result.OrderCycleList[i].OrderDateTime + "\">Available</a></span></td>");
+                                $("#doctor-am").append("<td>&nbsp;</td>");
+                                $("#doctor-night").append("<td>&nbsp;</td>");
+                            } else if (result.Result.OrderCycleList[i].AfterNoonOrderType == 2) {
+                                $("#doctor-pm").append("<td><span class=\"reservations\">Reservations</span></td>");
+                                $("#doctor-am").append("<td>&nbsp;</td>");
+                                $("#doctor-night").append("<td>&nbsp;</td>");
+                            } else if (result.Result.OrderCycleList[i].AfterNoonOrderType == 3) {
+                                $("#doctor-pm").append("<td><span class=\"layoff\">Lay off</span></td>");
+                                $("#doctor-am").append("<td>&nbsp;</td>");
+                                $("#doctor-night").append("<td>&nbsp;</td>");
+                            } else if (result.Result.OrderCycleList[i].NightOrderType == 1) {
+                                $("#doctor-night").append("<td><span class=\"available\"><a href=\"../Hospital/FormSubscribe?OrderTimeType=1&DoctorId=" + docID + "&OrderDate=" + result.Result.OrderCycleList[i].OrderDateTime + "\">Available</a></span></td>");
+                                $("#doctor-am").append("<td>&nbsp;</td>");
+                                $("#doctor-pm").append("<td>&nbsp;</td>");
+                            } else if (result.Result.OrderCycleList[i].NightOrderType == 1) {
+                                $("#doctor-night").append("<td><span class=\"reservations\">Reservations</span></td>");
+                                $("#doctor-am").append("<td>&nbsp;</td>");
+                                $("#doctor-pm").append("<td>&nbsp;</td>");
+                            } else if (result.Result.OrderCycleList[i].NightOrderType == 1) {
+                                $("#doctor-night").append("<td><span class=\"layoff\">Lay off</span></td>");
+                                $("#doctor-am").append("<td>&nbsp;</td>");
+                                $("#doctor-pm").append("<td>&nbsp;</td>");
+                            }
+                        }
+                    }
+                    
+                },
+                error: function (e) {
+                    debugger;
+                }
+            });
+        })
+    </script>
+</body>
+</html>

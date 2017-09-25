@@ -1,0 +1,103 @@
+﻿@charset "UTF-8";
+/* CSS Document */
+body{background:url(../img/pages/bodybg.png) repeat-x 0 0;}
+.f16{font-size:16px;}
+.f18{font-size:18px;}
+.f20{font-size:20px;}
+.uk-navbar{background:none;height:150px;}
+.mtp46{margin-top:46px;}
+.uk-navbar-brand{padding:0;height:96px;margin:18px 0;}
+.uk-navbar-nav>li>a{color:#fff;font-size:16px;padding:0;margin:0 15px;}
+.uk-navbar-nav>li.uk-open>a, .uk-navbar-nav>li:hover>a, .uk-navbar-nav>li>a:focus{background:none;border-bottom:1px #fff solid;color:#fff;}
+.lh30{line-height:30px;}
+.lh24{line-height:24px;}
+.pdl0{padding:0;}
+.lht70{line-height:70px;}
+.red{color:#ff0000;}
+.green{color:#66cf11;}
+.ml{margin-left:0 !important;}
+.ml170{margin-left:170px;}
+.w420{width:420px;}
+.w327{width:327px;}
+.c9{color:#999;}
+.mtp10{margin-top:10px !important;}
+.uk-button{background:#940006;color:#fff;}
+.uk-button:focus, .uk-button:hover{background:#a91416;color:#fff;}
+/* doc tab */
+.uk-tab>li.uk-open>a, .uk-tab>li>a:focus, .uk-tab>li>a:hover{background:#940006;color:#fff;border:1px #940006 solid;}
+.uk-tab>li>a{background:#ccc;color:#666;}
+.uk-tab>li.uk-active>a{background:#940006;color:#fff;border:1px #940006 solid;}
+.week{width:14.28%;border:1px #d2d2d2 solid;box-sizing:border-box;}
+.week h4{border-bottom:1px #d2d2d2 solid;padding:8px 0;}
+.tab-doc{background:#fff;border:1px #d3d3d3 solid;padding:6px;width:50px;height:50px;border-radius:50px;}
+.week span{display:inline-block;padding-top:6px;color:#940006;}
+.bookingtit{background:#940006;color:#fff;position:relative;top:3px;padding:10px 20px}
+.mapbox{background:#fff;border:1px #d2d2d2 solid;padding:8px;float:left;margin-right:15px;}
+.mapbox img{margin:0;}
+.mapcon{display:inline-block;}
+.tabicon img{padding:6px 5px 6px 0;}
+.tabicon tr td:first-child{color:#666;}
+.tabquery h4{color:#666;padding:50px 150px;}
+.tabquery span{color:#999;}
+.btn-submit{margin:15px 0 200px 0;}
+.tablist{padding:20px 10px;}
+.tablist li{color:#940006;}
+.tablist li p{color:#000;padding:8px 0 0 18px;}
+.uk-open .uk-modal-dialog{box-shadow:0 8px 20px rgba(0,0,0,0.5);}
+.uk-modal-header{margin:-20px -20px 15px -20px;padding:20px;border-bottom:1px solid #e5e5e5;background:#fafafa;}
+.uk-modal-footer{margin:15px -20px -20px -20px;padding:20px;border-top:1px solid #e5e5e5;background:#fafafa;}
+#appointment h3{color:#940006;}
+#appointment i{color:#07d;}
+/* rdoc */
+.rdoc{background:#f5f5f7;border:1px #d2d2d2 solid;}
+.side-doc{background:#fff;border:1px #d3d3d3 solid;padding:10px;width:100px;height:100px;border-radius:62px;}
+.rdoc h3{background:#cccccc;border-left:5px #940006 solid;padding-left:15px;margin:-1px 0 0 -1px;line-height:46px;}
+.rdoc strong{display:inline-block;padding-top:15px;}
+.rdoc i{display:inline-block;font-style:normal;padding-top:10px;color:#666;}
+.uk-overlay{margin:10px 20px;padding:0 70px;border-radius:10px;}
+/* form */
+.confirm-tit{background:#f8f8f8;border:1px #e9e9e9 solid;padding:10px;margin-top:20px;}
+.confirm-tit img{padding-right:10px;}
+.confirm-info{margin:30px 0;}
+.confirm-info span{color:#07d;padding:0 8px;}
+.confirm-info i{color:#d02f0e;}
+.confirm-time{background:#ecf7ff;padding:15px 0;}
+.confirm-time span{width:25%;display:inline-block;padding:15px 0;}
+.uk-dropdown{background:#fff;border:1px #d3d3d3 solid;box-shadow:0 2px 5px rgba(0,0,0,.1);}
+.uk-form-horizontal .uk-form-label{width:160px;}
+.uk-form-horizontal .uk-form-controls{margin-left:170px;}
+.ltlabel label{margin-top:10px;}
+.uk-datepicker{margin-top:15px;}
+.description{width:520px;padding-top:36px;}
+.btn-return{background:#d3d3d3;color:#444;}
+/* dep */
+.dep-tit{background:#f1f1f1;}
+.dep-tit h3{background:#940006;color:#fff;padding:10px 20px;display:inline-block;margin-bottom:0;}
+/* doc */
+.dp-ctt{padding:0 15px;}
+.doc-tab{border:1px #d3d3d3 solid;}
+.doc-tab tr th{border:1px #d3d3d3 solid;background:#e9f4ff;padding:15px;width:12.5%}
+.doc-tab tr td{border:1px #d3d3d3 solid;padding:0;}
+.layoff{background:#cf0606;display:block;color:#fff;text-align:center;padding:15px 0;}
+.available{background:#36aa1f;display:block;color:#fff;text-align:center;}
+.available a{display:block;padding:15px 0;color:#fff;}
+.reservations{background:#999;display:block;color:#fff;text-align:center;padding:15px 0;}
+#slider {width:100%;}
+.prevBtn, .nextBtn{margin:0;padding:0;display:block;overflow:hidden;text-indent:-8000px;}
+.prevBtn, .nextBtn{display:block;width:49px;height:98px;position:absolute;left:-49px;top:79px;z-index:1000;background:url(../imgs/btn-prev.png) no-repeat 0 0;cursor:pointer;}	
+.nextBtn{left:100%;}														
+.nextBtn {background:url(../imgs/btn-next.png) no-repeat 0 0;}
+.prevBtn a:focus, .nextBtn a:focus{outline:none;}
+/* footer */
+.footer{background:#363435;padding:40px 0;}
+.cp{background:#595858;padding:12px;color:#fff;}
+.branch, .social{color:#fff; padding:40px 0;}
+.branch a, .social a{margin-right:10px;}
+.uk-panel-title{color:#aeaeae;}
+.uk-grid-divider>[class*=uk-width-2-]:nth-child(n+2){border-left:1px #434343 solid;}
+.social{background:url(../img/pages/logobtm.png) no-repeat center center;}
+/* browser */
+.browser{background:rgba(0,0,0,0.9);padding:15px 0;color:#999;position:fixed;z-index:9999;right:0;bottom:0;width:100%;text-align:left;}
+.browser a{color:#fff;}
+.browser-text{padding:15px 30px;}
+.browser-close{position:absolute;right:30px;}
