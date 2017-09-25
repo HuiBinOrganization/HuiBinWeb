@@ -114,7 +114,7 @@ namespace NFine.Web.Areas.UIManage.Controllers
                     getDoctorInfoResponse.DoctorId = doctor.DoctorId;
                     getDoctorInfoResponse.DoctorName = doctor.DoctorName;
                     getDoctorInfoResponse.GootAt = doctor.GootAt;
-                    getDoctorInfoResponse.Avatar = doctor.Avatar;
+                    getDoctorInfoResponse.Avatar = "/imgs/pic-doc.png";
                     getDoctorInfoResponse.Title = doctor.Title;
                     getDoctorInfoResponse.Introduction = doctor.Introduction;
                     getDoctorInfoResponse.Gender = doctor.Gender == true ? 1 : 2;
@@ -136,7 +136,7 @@ namespace NFine.Web.Areas.UIManage.Controllers
                     for (int i = 0; i < orderCycle; i++)
                     {
                         OrderDateTimeInfo orderDateTimeInfo = new OrderDateTimeInfo();
-                        var orderDateTime = DateTime.Now.AddDays(0);
+                        var orderDateTime = DateTime.Now.AddDays(i);
                         orderDateTimeInfo.OrderDateTime = orderDateTime;
                         //查询停诊表信息
                         int week = (int)orderDateTime.DayOfWeek;
@@ -145,6 +145,8 @@ namespace NFine.Web.Areas.UIManage.Controllers
                             week = 7;
                         }
                         orderDateTimeInfo.Week = week;
+
+                        orderDateTimeInfoList.Add(orderDateTimeInfo);
                     }
 
                     //出诊列表
@@ -160,16 +162,25 @@ namespace NFine.Web.Areas.UIManage.Controllers
                                 OrderCycle orderCycleInfo = new OrderCycle();
                                 orderCycleInfo.Week = visit.Week;
                                 orderCycleInfo.OrderDateTime = info.OrderDateTime;
-
+                                var beginTime = Convert.ToDateTime(orderCycleInfo.OrderDateTime.ToString("yyyy-MM-dd 00:00:00"));
+                                var endTime = Convert.ToDateTime(orderCycleInfo.OrderDateTime.ToString("yyyy-MM-dd 23:59:59"));
+                                var orderList = orderApp.GetList(item => item.OrderDoctorId == request.DoctorId && item.OrderDate > beginTime && item.OrderDate < beginTime);
                                 #region 下午出诊
                                 //下午出诊
                                 if (visit.Morning)
                                 {
                                     #region 上午
-                                    //查询预约人数,上午
-                                    var orderUserCount = orderApp.GetList(item =>item.OrderDoctorId==request.DoctorId&& item.OrderDate == info.OrderDateTime && item.OrderType == 1).Sum(item => item.OrderId);
 
-                                    if (visit.MorningCount < orderUserCount)
+                                    //查询预约人数,上午
+                                    var orderUserCount = 0;
+                                    orderList = orderList.Where(item => item.OrderType == 1);
+                                    if (orderList != null && orderList.Any())
+                                    {
+                                        orderUserCount = orderList.Sum(item => item.OrderId);
+                                    }
+
+
+                                    if (orderUserCount < visit.MorningCount)
                                     {
                                         //预约状态，可预约
                                         orderCycleInfo.MorningOrderType = 1;
@@ -190,9 +201,14 @@ namespace NFine.Web.Areas.UIManage.Controllers
                                 {
                                     #region 下午
                                     //查询预约人数,下午
-                                    var orderUserCount = orderApp.GetList(item => item.OrderDoctorId == request.DoctorId && item.OrderDate == info.OrderDateTime && item.OrderType == 2).Sum(item => item.OrderId);
+                                    var orderUserCount = 0;
+                                    orderList = orderList.Where(item => item.OrderType == 2);
+                                    if (orderList != null && orderList.Any())
+                                    {
+                                        orderUserCount = orderList.Sum(item => item.OrderId);
+                                    }
 
-                                    if (visit.AfternoonCount < orderUserCount)
+                                    if (orderUserCount < visit.AfternoonCount)
                                     {
                                         //预约状态，可预约
                                         orderCycleInfo.AfterNoonOrderType = 1;
@@ -213,9 +229,14 @@ namespace NFine.Web.Areas.UIManage.Controllers
                                 {
                                     #region 晚上
                                     //查询预约人数,晚上
-                                    var orderUserCount = orderApp.GetList(item => item.OrderDoctorId == request.DoctorId && item.OrderDate == info.OrderDateTime && item.OrderType == 3).Sum(item => item.OrderId);
+                                    var orderUserCount = 0;
+                                    orderList = orderList.Where(item => item.OrderType == 3);
+                                    if (orderList != null && orderList.Any())
+                                    {
+                                        orderUserCount = orderList.Sum(item => item.OrderId);
+                                    }
 
-                                    if (visit.MorningCount < orderUserCount)
+                                    if (orderUserCount < visit.NightCount)
                                     {
                                         //预约状态，可预约
                                         orderCycleInfo.NightOrderType = 1;
