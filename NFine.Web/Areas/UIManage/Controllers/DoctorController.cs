@@ -48,7 +48,7 @@ namespace NFine.Web.Areas.UIManage.Controllers
                         GetDoctorListResponse doctorResponse = new GetDoctorListResponse();
                         doctorResponse.DoctorId = doctor.DoctorId;
                         doctorResponse.DoctorName = doctor.DoctorName;
-                        doctorResponse.Avatar = "/imgs/pic-doc.png";
+                        doctorResponse.Avatar = "/Content/img/pages/pic-doc.png";
                         doctorResponse.GootAt = doctor.GootAt;
                         doctorResponse.VisitList = new List<int>();
                         if (visitList != null && visitList.Any())
@@ -114,7 +114,7 @@ namespace NFine.Web.Areas.UIManage.Controllers
                     getDoctorInfoResponse.DoctorId = doctor.DoctorId;
                     getDoctorInfoResponse.DoctorName = doctor.DoctorName;
                     getDoctorInfoResponse.GootAt = doctor.GootAt;
-                    getDoctorInfoResponse.Avatar = "/imgs/pic-doc.png";
+                    getDoctorInfoResponse.Avatar = "/Content/img/pages/pic-doc.png";
                     getDoctorInfoResponse.Title = doctor.Title;
                     getDoctorInfoResponse.Introduction = doctor.Introduction;
                     getDoctorInfoResponse.Gender = doctor.Gender == true ? 1 : 2;
