@@ -280,7 +280,7 @@ namespace NFine.Web.Areas.UIManage.Controllers
         [HandlerAjaxOnly]
         public ActionResult GetDoctorOrderInfo(GetDoctorOrderInfoRequest request)
         {
-            ResponseBase<GetDoctorInfoResponse> response = new ResponseBase<GetDoctorInfoResponse>();
+            ResponseBase<GetDoctorOrderInfoResponse> response = new ResponseBase<GetDoctorOrderInfoResponse>();
             response.IsSuccess = false;
             response.Reason = "系统出错，请联系管理员";
 
@@ -395,7 +395,13 @@ namespace NFine.Web.Areas.UIManage.Controllers
                             getDoctorOrderInfoResponse.PeriodList = segmentationList.ToList().Select(item =>
                              {
                                  //已经预约数量
-                                 var count = orderApp.GetList(order =>order.OrderDoctorId==request.DoctorId&& order.OrderDate >= item.BeginTime&&order.OrderDate<=item.EndTime && order.OrderType == (int)request.OrderTimeType).Sum(order => order.OrderId);
+                                 var list = orderApp.GetList(order => order.OrderDoctorId == request.DoctorId && order.OrderDate >= item.BeginTime && order.OrderDate <= item.EndTime && order.OrderType == (int)request.OrderTimeType);
+                                 var count = 0;
+                                 if (list != null && list.Any())
+                                 {
+                                     count=list.Sum(order => order.OrderId);
+                                 }
+                               
                                  return new Period
                                  {
                                      BeginTime = item.BeginTime,
@@ -407,7 +413,10 @@ namespace NFine.Web.Areas.UIManage.Controllers
 
                     }
                 }
+
+                response.Result = getDoctorOrderInfoResponse;
                 response.IsSuccess = true;
+                response.Reason = "";
             }
             catch (Exception ex)
             {
