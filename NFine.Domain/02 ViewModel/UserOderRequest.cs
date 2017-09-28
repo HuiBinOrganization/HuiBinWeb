@@ -99,7 +99,7 @@ namespace NFine.Domain.ViewModel
         /// <summary>
         /// 国籍
         /// </summary>
-        public int Nationality
+        public string Nationality
         {
             get;
             set;

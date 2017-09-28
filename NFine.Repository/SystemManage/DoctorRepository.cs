@@ -1,4 +1,5 @@
 ﻿using NFine.Data;
+using NFine.Domain.Entity.Enums;
 using NFine.Domain.Entity.SystemManage;
 using NFine.Domain.IRepository.SystemManage;
 using NFine.Domain.ViewModel;
@@ -15,12 +16,28 @@ namespace NFine.IRepository.SystemManage
         /// <summary>
         /// 删除操作
         /// </summary>
-        /// <param name="keyValue">key</param>
-        public void DeleteForm(string keyValue)
+        /// <param name="doctorId">doctorId</param>
+        public void DeleteForm(int doctorId)
         {
             using (var db = new RepositoryBase().BeginTrans())
             {
 
+                db.Delete<DoctorEntity>(item => item.DoctorId == doctorId);
+                //删除坐诊
+                db.Delete<VisitEntity>(item => item.DoctorId == doctorId);
+                //删除分段
+                db.Delete<SegmentationOrderEntity>(item => item.DoctorId == doctorId);
+
+                //修改预约状态为停诊
+                var orderList = db.IQueryable<OrderEntity>(item => item.OrderDoctorId == doctorId && item.OrderDate > DateTime.Now).ToList();
+                if (orderList != null && orderList.Any())
+                {
+                    foreach (var info in orderList)
+                    {
+                        info.OrderStatus = OrderStatusEnum.Stop;
+                        db.Update<OrderEntity>(info);
+                    }
+                }
                 db.Commit();
             }
         }
@@ -30,24 +47,66 @@ namespace NFine.IRepository.SystemManage
         /// </summary>
         /// <param name="entity">entity</param>
         /// <param name="keyValue">key</param>
-        public void SubmitForm(DoctorViewModel model)
+        public void SubmitForm(DoctorViewModel model, string keyValue)
         {
             using (var db = new RepositoryBase().BeginTrans())
             {
-                //添加医生信息
-                DoctorEntity entity = new DoctorEntity();
-                entity.DoctorName = model.Name;
-                entity.GootAt = model.Experties;
-                entity.Avatar = "";
-                entity.Title = model.Title;
-                entity.Introduction = model.Introduction;
-                entity.Gender = model.Gender;
-                entity.Category = model.Category;
-                entity.Price = model.Price;
-                // entity.OrderType = model.OrderType==tru;
-                entity.AddDate = DateTime.Now;
-                db.Insert(entity);
 
+                int doctorId = 0;
+                if (string.IsNullOrWhiteSpace(keyValue))
+                {
+                    //添加医生信息
+                    DoctorEntity entity = new DoctorEntity();
+                    entity.DoctorName = model.Name;
+                    entity.GootAt = model.Experties;
+                    entity.Avatar = "";
+                    entity.Title = model.Title;
+                    entity.Introduction = model.Introduction;
+                    entity.Gender = model.Gender;
+                    entity.Category = model.Category;
+                    entity.Price = model.Price;
+                    // entity.OrderType = model.OrderType==tru;
+                    entity.AddDate = DateTime.Now;
+                    db.Insert(entity);
+                    doctorId = entity.DoctorId;
+                }
+                else
+                {
+
+                    int.TryParse(keyValue, out doctorId);
+                    DoctorEntity entity = db.FindEntity<DoctorEntity>(item => item.DoctorId == doctorId);
+                    if (entity != null)
+                    {
+                        entity.DoctorName = model.Name;
+                        entity.GootAt = model.Experties;
+                        entity.Avatar = "";
+                        entity.Title = model.Title;
+                        entity.Introduction = model.Introduction;
+                        entity.Gender = model.Gender;
+                        entity.Category = model.Category;
+                        entity.Price = model.Price;
+                        // entity.OrderType = model.OrderType==tru;
+                        entity.AddDate = DateTime.Now;
+                        db.Update(entity);
+                    }
+                }
+
+                //如果不为空，所以删除
+                if (!string.IsNullOrWhiteSpace(keyValue))
+                {
+                    //删除医生坐诊
+                    var deleteVisitList = db.IQueryable<VisitEntity>(item => item.DoctorId == doctorId);
+
+                    if (deleteVisitList != null && deleteVisitList.Any())
+                    {
+                        var visitIdList = deleteVisitList.Select(item => item.VisitId).ToList();
+
+                        db.Delete<VisitEntity>(item => visitIdList.Contains(item.VisitId));
+                    }
+                }
+
+
+                #region 添加坐诊
                 List<VisitEntity> visitList = new List<VisitEntity>();
                 VisitEntity visit = new VisitEntity();
 
@@ -58,7 +117,7 @@ namespace NFine.IRepository.SystemManage
                 visit.Afternoon = model.MondayAfternoon;
                 visit.Night = model.MondayNight;
                 visit.Stop = model.MondayStop;
-                visit.DoctorId = entity.DoctorId;
+                visit.DoctorId = doctorId;
                 visit.AddDate = DateTime.Now;
                 SetVisit(visit, visit.Morning, visit.Afternoon, visit.Night, model);
                 visitList.Add(visit);
@@ -72,7 +131,7 @@ namespace NFine.IRepository.SystemManage
                 visit.Afternoon = model.TuesdayAfternoon;
                 visit.Night = model.TuesdayNight;
                 visit.Stop = model.TuesdayStop;
-                visit.DoctorId = entity.DoctorId;
+                visit.DoctorId = doctorId;
                 visit.AddDate = DateTime.Now;
                 SetVisit(visit, visit.Morning, visit.Afternoon, visit.Night, model);
                 visitList.Add(visit);
@@ -86,7 +145,7 @@ namespace NFine.IRepository.SystemManage
                 visit.Afternoon = model.WednesdayAfternoon;
                 visit.Night = model.WednesdayNight;
                 visit.Stop = model.WednesdayStop;
-                visit.DoctorId = entity.DoctorId;
+                visit.DoctorId = doctorId;
                 visit.AddDate = DateTime.Now;
                 SetVisit(visit, visit.Morning, visit.Afternoon, visit.Night, model);
                 visitList.Add(visit);
@@ -100,7 +159,7 @@ namespace NFine.IRepository.SystemManage
                 visit.Afternoon = model.ThursdayAfternoon;
                 visit.Night = model.ThursdayNight;
                 visit.Stop = model.ThursdayStop;
-                visit.DoctorId = entity.DoctorId;
+                visit.DoctorId = doctorId;
                 visit.AddDate = DateTime.Now;
                 SetVisit(visit, visit.Morning, visit.Afternoon, visit.Night, model);
                 visitList.Add(visit);
@@ -114,7 +173,7 @@ namespace NFine.IRepository.SystemManage
                 visit.Afternoon = model.FridayAfternoon;
                 visit.Night = model.FridayNight;
                 visit.Stop = model.FridayStop;
-                visit.DoctorId = entity.DoctorId;
+                visit.DoctorId = doctorId;
                 visit.AddDate = DateTime.Now;
                 SetVisit(visit, visit.Morning, visit.Afternoon, visit.Night, model);
                 visitList.Add(visit);
@@ -128,7 +187,7 @@ namespace NFine.IRepository.SystemManage
                 visit.Afternoon = model.SaturdayAfternoon;
                 visit.Night = model.SaturdayNight;
                 visit.Stop = model.SaturdayStop;
-                visit.DoctorId = entity.DoctorId;
+                visit.DoctorId = doctorId;
                 visit.AddDate = DateTime.Now;
                 SetVisit(visit, visit.Morning, visit.Afternoon, visit.Night, model);
                 visitList.Add(visit);
@@ -142,7 +201,7 @@ namespace NFine.IRepository.SystemManage
                 visit.Afternoon = model.SundayAfternoon;
                 visit.Night = model.SundayNight;
                 visit.Stop = model.SundayStop;
-                visit.DoctorId = entity.DoctorId;
+                visit.DoctorId = doctorId;
                 visit.AddDate = DateTime.Now;
                 SetVisit(visit, visit.Morning, visit.Afternoon, visit.Night, model);
                 visitList.Add(visit);
@@ -150,7 +209,24 @@ namespace NFine.IRepository.SystemManage
 
                 //添加坐诊
                 db.Insert(visitList);
+                #endregion
 
+
+                //如果不为空，所以删除
+                if (!string.IsNullOrWhiteSpace(keyValue))
+                {
+                    //删除医生坐诊
+                    var deleteSegmentationList = db.IQueryable<SegmentationOrderEntity>(item => item.DoctorId == doctorId);
+
+                    if (deleteSegmentationList != null && deleteSegmentationList.Any())
+                    {
+                        var segmentationListIdList = deleteSegmentationList.Select(item => item.SegmentationOrderId).ToList();
+
+                        db.Delete<SegmentationOrderEntity>(item => segmentationListIdList.Contains(item.SegmentationOrderId));
+                    }
+                }
+
+                #region 分时段
                 //添加分时段
                 List<SegmentationOrderEntity> segmentationOrderList = new List<SegmentationOrderEntity>();
 
@@ -167,7 +243,8 @@ namespace NFine.IRepository.SystemManage
                             segmentationOrder.EndTime = segmentation.EndTime;
                             segmentationOrder.OrderCount = segmentation.OrderCount;
                             segmentationOrder.AddDate = DateTime.Now;
-                            segmentationOrder.DoctorId = entity.DoctorId;
+                            segmentationOrder.DoctorId = doctorId;
+                            segmentationOrder.SegmentationCount = model.MorningSegmentationCount;
                             segmentationOrderList.Add(segmentationOrder);
                         }
                     }
@@ -186,7 +263,8 @@ namespace NFine.IRepository.SystemManage
                             segmentationOrder.EndTime = segmentation.EndTime;
                             segmentationOrder.OrderCount = segmentation.OrderCount;
                             segmentationOrder.AddDate = DateTime.Now;
-                            segmentationOrder.DoctorId = entity.DoctorId;
+                            segmentationOrder.DoctorId = doctorId;
+                            segmentationOrder.SegmentationCount = model.AfternoonSegmentationCount;
                             segmentationOrderList.Add(segmentationOrder);
                         }
 
@@ -207,7 +285,8 @@ namespace NFine.IRepository.SystemManage
                             segmentationOrder.EndTime = segmentation.EndTime;
                             segmentationOrder.OrderCount = segmentation.OrderCount;
                             segmentationOrder.AddDate = DateTime.Now;
-                            segmentationOrder.DoctorId = entity.DoctorId;
+                            segmentationOrder.DoctorId = doctorId;
+                            segmentationOrder.SegmentationCount = model.NightSegmentationCount;
                             segmentationOrderList.Add(segmentationOrder);
                         }
                     }
@@ -218,6 +297,7 @@ namespace NFine.IRepository.SystemManage
                     //添加分时段
                     db.Insert(segmentationOrderList);
                 }
+                #endregion
 
                 db.Commit();
             }

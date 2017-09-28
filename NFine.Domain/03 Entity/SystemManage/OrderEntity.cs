@@ -1,4 +1,5 @@
-﻿using NFine.Domain.Entity.Enums;
+﻿using NFine.Domain._03_Entity.Enums;
+using NFine.Domain.Entity.Enums;
 using System;
 
 namespace NFine.Domain.Entity.SystemManage
@@ -47,7 +48,7 @@ namespace NFine.Domain.Entity.SystemManage
         }  
     
         /// <summary>
-        /// <div style="border-style: none; position: relative; z-index: 1; left: 7px; width: 689px; ">医生号别 1:普通号 </div>2:专家号
+        /// 医生号别 1:普通号 2:专家号
         /// </summary>
         public int DorderType
         {
@@ -122,6 +123,19 @@ namespace NFine.Domain.Entity.SystemManage
         /// 预约号
         /// </summary>
         public string OrderNumber
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// 预约状态
+        /// 0:未就诊 
+        /// 1:已就诊
+        /// 2:爽约
+        /// 3:停诊
+        /// </summary>
+        public OrderStatusEnum OrderStatus
         {
             get;
             set;

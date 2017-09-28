@@ -69,5 +69,14 @@ namespace NFine.Domain.Entity.SystemManage
             set;
         }
 
+        /// <summary>
+        /// 分段数量
+        /// </summary>
+        public int SegmentationCount
+        {
+            get;
+            set;
+        }
+
     }
 }

@@ -647,6 +647,7 @@
     <Content Include="Areas\HospitalManage\Views\Web.config" />
     <Content Include="Areas\HospitalManage\Views\Member\Index.cshtml" />
     <Content Include="Areas\HospitalManage\Views\Member\Form.cshtml" />
+    <Content Include="Areas\HospitalManage\Views\Doctor\Details.cshtml" />
     <None Include="Properties\PublishProfiles\NFine.Framework.Release.pubxml" />
     <Content Include="Views\Hospital\Index.cshtml" />
     <Content Include="Views\Hospital\Department.cshtml" />

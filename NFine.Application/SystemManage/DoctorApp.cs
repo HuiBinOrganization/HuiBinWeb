@@ -1,4 +1,5 @@
 ﻿using NFine.Code;
+using NFine.Domain.Entity.Enums;
 using NFine.Domain.Entity.SystemManage;
 using NFine.Domain.IRepository.SystemManage;
 using NFine.Domain.ViewModel;
@@ -17,15 +18,18 @@ namespace NFine.Application.SystemManage
         private ModuleApp moduleApp = new ModuleApp();
         private ModuleButtonApp moduleButtonApp = new ModuleButtonApp();
 
+        private IVisitRepository visit = new VisitRepository();
+        private ISegmentationOrderRepository segmentationOrder = new SegmentationOrderRepository();
+        private IOrderRepository order = new OrderRepository();
         /// <summary>
         /// 保存事件
         /// </summary>
         /// <param name="entity"></param>
         /// <param name="permissionIds"></param>
         /// <param name="keyValue"></param>
-        public void SubmitForm(DoctorViewModel entity)
+        public void SubmitForm(DoctorViewModel entity, string keyValue)
         {
-            service.SubmitForm(entity);
+            service.SubmitForm(entity, keyValue);
         }
 
         public List<DoctorEntity> GetList(Pagination pagination, string keyword)
@@ -41,6 +45,17 @@ namespace NFine.Application.SystemManage
         public IQueryable<DoctorEntity> GetList(Expression<Func<DoctorEntity, bool>> predicate)
         {
             return service.IQueryable(predicate);
+        }
+
+        /// <summary>
+        /// 删除医生
+        /// </summary>
+        /// <param name="doctorId">医生Id</param>
+        public void DeleteForm(int doctorId)
+        {
+
+            service.DeleteForm(doctorId);
+          
         }
     }
 }

@@ -129,6 +129,8 @@
                 async: false,
                 success: function (data) {
                     $("#form1").formSerialize(data);
+                    $("#form1").find('.form-control,select,input').attr('readonly', 'readonly');
+                    $("#form1").find('div.ckbox label').attr('for', '');
                 }
             });
         }
@@ -188,7 +190,7 @@
                         //创建上午分时段
                         if (!!keyValue) {
                             $("#MorningCreate").click();
-                            $("#MorningCreate").removeClass("disabled");
+                         //   $("#MorningCreate").removeClass("disabled");
                         }
                         $finish.hide();
                         $next.show();
@@ -201,7 +203,7 @@
                         //创建下午分时段
                         if (!!keyValue)
                         {
-                            $("#AfternoonCreate").removeClass("disabled");
+                          //  $("#AfternoonCreate").removeClass("disabled");
                             $("#AfternoonCreate").click();
                         }
                         $finish.hide();
@@ -214,7 +216,7 @@
 
                         //创建晚上分时段
                         if (!!keyValue) {
-                            $("#NightCreate").removeClass("disabled");
+                         //   $("#NightCreate").removeClass("disabled");
                             $("#NightCreate").click();
                         }
                         $finish.show();
@@ -626,7 +628,7 @@
         <div class="form-button" style="position:fixed; bottom:0" id="wizard-actions">
             <a id="btn_last" disabled class="btn btn-default btn-prev">上一步</a>
             <a id="btn_next" class="btn btn-default btn-next">下一步</a>
-            <a id="btn_finish" class="btn btn-default" style="display: none;" onclick="submitForm()">完成</a>
+            <a id="btn_finish" class="btn btn-default disabled" style="display: none;" onclick="submitForm()">完成</a>
         </div>
     </div>
 </form>

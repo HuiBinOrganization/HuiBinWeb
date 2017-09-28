@@ -13,13 +13,205 @@ namespace NFine.Web.Areas.HospitalManage.Controllers
     public class DoctorController : ControllerBase
     {
         private DoctorApp doctorApp = new DoctorApp();
+        private VisitApp visitApp = new VisitApp();
+        private SegmentationOrderApp segmentationOrderApp = new SegmentationOrderApp();
+
         [HttpPost]
         [HandlerAjaxOnly]
         [ValidateAntiForgeryToken]
         public ActionResult SubmitForm(DoctorViewModel model, string permissionIds, string keyValue)
         {
-            doctorApp.SubmitForm(model);
+            doctorApp.SubmitForm(model, keyValue);
             return Success("操作成功。");
+        }
+
+        [HttpGet]
+        [HandlerAjaxOnly]
+        public ActionResult GetFormJson(string keyValue)
+        {
+            int doctorId = 0;
+            int.TryParse(keyValue, out doctorId);
+            var doctor = doctorApp.GetList(item => item.DoctorId == doctorId).FirstOrDefault();
+            DoctorViewModel model = new DoctorViewModel();
+            if (doctor != null)
+            {
+                model.DoctorId = doctor.DoctorId;
+                model.Name = doctor.DoctorName;
+                model.Gender = doctor.Gender;
+                model.Category = doctor.Category;
+                model.Title = doctor.Title;
+                model.Price = doctor.Price;
+                model.Experties = doctor.GootAt;
+                model.Introduction = doctor.Introduction;
+            }
+
+            #region 获取出诊信息
+            //获取出诊信息
+            var visitList = visitApp.GetList(item => item.DoctorId == doctorId);
+            if (visitList != null && visitList.Any())
+            {
+                foreach (var visit in visitList)
+                {
+                    switch (visit.Week)
+                    {
+                        //星期一
+                        case 1:
+                            {
+                                model.MondayMorning = visit.Morning;
+                                model.MondayAfternoon = visit.Afternoon;
+                                model.MondayNight = visit.Night;
+                            }
+                            break;
+                        //星期二
+                        case 2:
+                            {
+                                model.TuesdayMorning = visit.Morning;
+                                model.TuesdayAfternoon = visit.Afternoon;
+                                model.TuesdayNight = visit.Night;
+                            }
+                            break;
+                        //星期三
+                        case 3:
+                            {
+                                model.WednesdayMorning = visit.Morning;
+                                model.WednesdayAfternoon = visit.Afternoon;
+                                model.WednesdayNight = visit.Night;
+                            }
+                            break;
+                        //星期四
+                        case 4:
+                            {
+                                model.ThursdayMorning = visit.Morning;
+                                model.ThursdayAfternoon = visit.Afternoon;
+                                model.ThursdayNight = visit.Night;
+                            }
+                            break;
+                        //星期五
+                        case 5:
+                            {
+                                model.FridayMorning = visit.Morning;
+                                model.FridayAfternoon = visit.Afternoon;
+                                model.FridayNight = visit.Night;
+                            }
+                            break;
+                        //星期六
+                        case 6:
+                            {
+                                model.SaturdayMorning = visit.Morning;
+                                model.SaturdayAfternoon = visit.Afternoon;
+                                model.SaturdayNight = visit.Night;
+                            }
+                            break;
+                        //星期日
+                        case 7:
+                            {
+                                model.SundayMorning = visit.Morning;
+                                model.SundayAfternoon = visit.Afternoon;
+                                model.SundayNight = visit.Night;
+                            }
+                            break;
+                    }
+                }
+
+                //预约数量
+                model.MorningOrderCount = visitList.Max(item => item.MorningCount);
+                //预约数量
+                model.AfternoonOrderCount = visitList.Max(item => item.AfternoonCount);
+                //预约数量
+                model.NightOrderCount = visitList.Max(item => item.NightCount);
+            }
+            #endregion
+
+            #region 分时段
+            var segmetnationList = segmentationOrderApp.GetList(item => item.DoctorId == doctorId).OrderBy(item => item.OrderTimeType);
+            if (segmetnationList != null && segmetnationList.Any())
+            {
+
+                #region 上午
+                //上午
+                var morningList = segmetnationList.Where(item => item.OrderTimeType == 1);
+                if (morningList != null && morningList.Any())
+                {
+                    List<SegmentationOrder> list = new List<SegmentationOrder>();
+                    foreach (var segmentation in morningList)
+                    {
+
+                        SegmentationOrder segmentationOrder = new SegmentationOrder();
+                        segmentationOrder.OrderCount = segmentation.OrderCount;
+                        segmentationOrder.OrderTimeType = segmentation.OrderTimeType;
+                        segmentationOrder.BeginTime = segmentation.BeginTime;
+                        segmentationOrder.EndTime = segmentation.EndTime;
+                        list.Add(segmentationOrder);
+                    }
+                    model.MorningSegmentationOrderList = list;
+                }
+                #endregion
+
+                #region 下午
+                //下午
+                var afternoonList = segmetnationList.Where(item => item.OrderTimeType == 2);
+                if (afternoonList != null && afternoonList.Any())
+                {
+                    List<SegmentationOrder> list = new List<SegmentationOrder>();
+                    foreach (var segmentation in afternoonList)
+                    {
+
+                        SegmentationOrder segmentationOrder = new SegmentationOrder();
+                        segmentationOrder.OrderCount = segmentation.OrderCount;
+                        segmentationOrder.OrderTimeType = segmentation.OrderTimeType;
+                        segmentationOrder.BeginTime = segmentation.BeginTime;
+                        segmentationOrder.EndTime = segmentation.EndTime;
+                        list.Add(segmentationOrder);
+                    }
+                    model.AfternoonSegmentationOrderList = list;
+                }
+                #endregion
+
+                #region 晚上
+                var nightList = segmetnationList.Where(item => item.OrderTimeType == 3);
+                if (nightList != null && nightList.Any())
+                {
+                    List<SegmentationOrder> list = new List<SegmentationOrder>();
+                    foreach (var segmentation in nightList)
+                    {
+
+                        SegmentationOrder segmentationOrder = new SegmentationOrder();
+                        segmentationOrder.OrderCount = segmentation.OrderCount;
+                        segmentationOrder.OrderTimeType = segmentation.OrderTimeType;
+                        segmentationOrder.BeginTime = segmentation.BeginTime;
+                        segmentationOrder.EndTime = segmentation.EndTime;
+                        list.Add(segmentationOrder);
+                    }
+                    model.NightSegmentationOrderList = list;
+                }
+                #endregion
+
+                //分段数量
+                //上午
+                var segmentationCountList = segmetnationList.Where(item => item.OrderTimeType == 1);
+                if (segmentationCountList != null && segmentationCountList.Any())
+                {
+                    model.MorningSegmentationCount = segmentationCountList.Max(item => item.SegmentationCount);
+                }
+
+                //下午
+                segmentationCountList = segmetnationList.Where(item => item.OrderTimeType == 2);
+                if (segmentationCountList != null && segmentationCountList.Any())
+                {
+                    model.AfternoonSegmentationCount = segmentationCountList.Max(item => item.SegmentationCount);
+                }
+
+                //晚上
+                segmentationCountList = segmetnationList.Where(item => item.OrderTimeType == 3);
+                if (segmentationCountList != null && segmentationCountList.Any())
+                {
+                    model.NightSegmentationCount = segmentationCountList.Max(item => item.SegmentationCount);
+                }
+
+            }
+            #endregion
+
+            return Content(model.ToJson());
         }
 
         [HttpGet]
@@ -34,6 +226,16 @@ namespace NFine.Web.Areas.HospitalManage.Controllers
                 records = pagination.records
             };
             return Content(data.ToJson());
+        }
+
+        [HttpPost]
+        [HandlerAjaxOnly]
+        public ActionResult DeleteForm(string keyValue)
+        {
+            var doctorId = 0;
+            int.TryParse(keyValue, out doctorId);
+            doctorApp.DeleteForm(doctorId);
+            return Success("删除成功。");
         }
     }
 }

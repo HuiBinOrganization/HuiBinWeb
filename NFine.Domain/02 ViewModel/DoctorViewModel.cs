@@ -12,6 +12,15 @@ namespace NFine.Domain.ViewModel
     public class DoctorViewModel
     {
         /// <summary>
+        /// 医生ID
+        /// </summary>
+        public int DoctorId
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// 姓名
         /// </summary>
         public string Name

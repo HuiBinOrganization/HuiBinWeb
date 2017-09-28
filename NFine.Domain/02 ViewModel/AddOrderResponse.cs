@@ -42,7 +42,7 @@ namespace NFine.Domain.ViewModel
         /// <summary>
         /// 预约开始时间
         /// </summary>
-        public DateTime BeginTime
+        public DateTime? BeginTime
         {
             get;
             set;
@@ -51,7 +51,7 @@ namespace NFine.Domain.ViewModel
         /// <summary>
         /// 预约结束时间
         /// </summary>
-        public DateTime EndTime
+        public DateTime? EndTime
         {
             get;
             set;

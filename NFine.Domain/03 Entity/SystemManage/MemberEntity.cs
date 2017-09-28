@@ -94,7 +94,7 @@ namespace NFine.Domain.Entity.SystemManage
         /// <summary>
         /// 国籍
         /// </summary>
-        public int Nationality
+        public string Nationality
         {
             get;
             set;

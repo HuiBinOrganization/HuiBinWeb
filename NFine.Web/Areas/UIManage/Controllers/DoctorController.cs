@@ -472,7 +472,7 @@ namespace NFine.Web.Areas.UIManage.Controllers
             }
 
             //性别
-            if ((int)request.Gender<1|| (int)request.Gender>2)
+            if ((int)request.Gender < 1 || (int)request.Gender > 2)
             {
                 response.IsSuccess = false;
                 response.Reason = "性别输入不正确";
@@ -481,7 +481,7 @@ namespace NFine.Web.Areas.UIManage.Controllers
 
 
             //出生年月
-            if (request.DateOfBirth ==null || request.DateOfBirth ==DateTime.MinValue)
+            if (request.DateOfBirth == null || request.DateOfBirth == DateTime.MinValue)
             {
                 response.IsSuccess = false;
                 response.Reason = "出生年月输入不正确";
@@ -513,7 +513,7 @@ namespace NFine.Web.Areas.UIManage.Controllers
             }
 
             //国籍
-            if (request.Nationality<1)
+            if (string.IsNullOrWhiteSpace(request.Nationality))
             {
                 response.IsSuccess = false;
                 response.Reason = "国籍输入不正确";
@@ -524,7 +524,7 @@ namespace NFine.Web.Areas.UIManage.Controllers
             if (request.OrderDoctorId < 1)
             {
                 response.IsSuccess = false;
-                response.Reason = "国籍输入不正确";
+                response.Reason = "预约医生Id输入不正确";
                 return Content(response.ToJson());
             }
 
@@ -537,7 +537,7 @@ namespace NFine.Web.Areas.UIManage.Controllers
             }
 
             //预约时间类型
-            if ((int)request.OrderDateTimeType < 1|| (int)request.OrderDateTimeType>3)
+            if ((int)request.OrderDateTimeType < 1 || (int)request.OrderDateTimeType > 3)
             {
                 response.IsSuccess = false;
                 response.Reason = "预约时间类型不正确";
@@ -545,7 +545,7 @@ namespace NFine.Web.Areas.UIManage.Controllers
             }
 
             //预约类型
-            if ((int)request.OrderType < 1|| (int)request.OrderType>2)
+            if ((int)request.OrderType < 1 || (int)request.OrderType > 2)
             {
                 response.IsSuccess = false;
                 response.Reason = "预约类型不正确";
@@ -572,6 +572,7 @@ namespace NFine.Web.Areas.UIManage.Controllers
                 orderViewModel.OrderType = request.OrderType;
                 orderViewModel.BeginTime = request.BeginTime;
                 orderViewModel.EndTime = request.EndTime;
+                orderViewModel.OrderDoctorId = request.OrderDoctorId;
                 var orderResonse = orderApp.AddOrder(orderViewModel);
 
                 response.IsSuccess = true;

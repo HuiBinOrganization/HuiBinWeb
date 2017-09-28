@@ -16,6 +16,12 @@ namespace NFine.IRepository.SystemManage
         /// </summary>
         /// <param name="entity">entity</param>
         /// <param name="keyValue">key</param>
-        void SubmitForm(DoctorViewModel entity);
+        void SubmitForm(DoctorViewModel entit, string keyValue);
+
+        /// <summary>
+        /// 删除操作
+        /// </summary>
+        /// <param name="doctorId">医生Id</param>
+        void DeleteForm(int doctorId);
     }
 }

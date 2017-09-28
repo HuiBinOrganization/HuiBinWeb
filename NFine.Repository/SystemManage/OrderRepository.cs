@@ -61,6 +61,7 @@ namespace NFine.IRepository.SystemManage
                 memberEntity.ContactNumber = model.ContactNumber;
                 memberEntity.Email = model.Email;
                 memberEntity.Nationality = model.Nationality;
+                memberEntity.AddDate = DateTime.Now;
 
                 //验证用户是否存在，如果存在不进行添加
                 var member = db.IQueryable<MemberEntity>(item => item.CredentialInformation == memberEntity.CredentialInformation && item.CredentialType == memberEntity.CredentialType).FirstOrDefault();
@@ -104,6 +105,7 @@ namespace NFine.IRepository.SystemManage
                         case OrderTimeTypeEnum.Morning:
                             {
                                 var orderTimetype = (int)OrderTimeTypeEnum.Morning;
+                                orderEntity.OrderType = orderTimetype;
                                 //查询已预约数量
                                 var orderedCount = db.IQueryable<OrderEntity>(item => item.OrderDoctorId == model.OrderDoctorId && item.OrderType == orderTimetype && item.OrderDate == model.OrderDateTime).Sum(item => item.OrderId);
 
@@ -118,8 +120,9 @@ namespace NFine.IRepository.SystemManage
                         case OrderTimeTypeEnum.Afternoon:
                             {
                                 var orderTimetype = (int)OrderTimeTypeEnum.Afternoon;
+                                orderEntity.OrderType = orderTimetype;
                                 //查询已预约数量
-                                var orderedCount = db.IQueryable<OrderEntity>(item => item.OrderDoctorId == model.OrderDoctorId && item.OrderType == orderTimetype && item.OrderDate == model.OrderDateTime).Sum(item => item.OrderId);
+                                var orderedCount = db.IQueryable<OrderEntity>(item => item.OrderDoctorId == model.OrderDoctorId && item.OrderType == orderTimetype && item.OrderDate == model.OrderDateTime).Count();
 
                                 //坐诊信息
                                 var visit = linq.FirstOrDefault();
@@ -132,8 +135,9 @@ namespace NFine.IRepository.SystemManage
                         case OrderTimeTypeEnum.Night:
                             {
                                 var orderTimetype = (int)OrderTimeTypeEnum.Night;
+                                orderEntity.OrderType = orderTimetype;
                                 //查询已预约数量
-                                var orderedCount = db.IQueryable<OrderEntity>(item => item.OrderDoctorId == model.OrderDoctorId && item.OrderType == orderTimetype && item.OrderDate == model.OrderDateTime).Sum(item => item.OrderId);
+                                var orderedCount = db.IQueryable<OrderEntity>(item => item.OrderDoctorId == model.OrderDoctorId && item.OrderType == orderTimetype && item.OrderDate == model.OrderDateTime).Count();
 
                                 //坐诊信息
                                 var visit = linq.FirstOrDefault();
@@ -148,53 +152,66 @@ namespace NFine.IRepository.SystemManage
                 else
                 {
                     orderEntity.NumberType = (int)OrderTypeEnum.Segmentation;
-                    orderEntity.BeginTime = model.BeginTime;
-                    orderEntity.EndTime = model.EndTime;
+                    orderEntity.BeginTime = model.BeginTime.Value;
+                    orderEntity.EndTime = model.EndTime.Value;
                     orderEntity.OrderNumber = DateTime.Now.ToString("yyyyMMddHHmmssfff");
                     switch (model.OrderDateTimeType)
                     {
                         case OrderTimeTypeEnum.Morning:
                             {
                                 var orderTimetype = (int)OrderTimeTypeEnum.Morning;
-
+                                orderEntity.OrderType = orderTimetype;
                                 //分时段
                                 var segmentationOrder = db.IQueryable<SegmentationOrderEntity>(item => item.DoctorId == model.OrderDoctorId && item.OrderTimeType == orderTimetype).FirstOrDefault();
 
                                 if (segmentationOrder != null)
                                 {
                                     //查询已预约数量
-                                    var orderedCount = db.IQueryable<OrderEntity>(item => item.OrderDoctorId == model.OrderDoctorId && item.OrderType == orderTimetype && item.OrderDate >= model.BeginTime && item.OrderDate <= model.EndTime).Sum(item => item.OrderId);
-                                    remainOrderCount = segmentationOrder.OrderCount - orderedCount;
+                                    var query = db.IQueryable<OrderEntity>(item => item.OrderDoctorId == model.OrderDoctorId && item.OrderType == orderTimetype && item.OrderDate >= model.BeginTime && item.OrderDate <= model.EndTime);
+                                    if (query != null)
+                                    {
+                                        var orderedCount = query.Count();
+                                        remainOrderCount = segmentationOrder.OrderCount - orderedCount;
+                                    }
                                 }
                             }
                             break;
                         case OrderTimeTypeEnum.Afternoon:
                             {
                                 var orderTimetype = (int)OrderTimeTypeEnum.Afternoon;
-
+                                orderEntity.OrderType = orderTimetype;
                                 //分时段
                                 var segmentationOrder = db.IQueryable<SegmentationOrderEntity>(item => item.DoctorId == model.OrderDoctorId && item.OrderTimeType == orderTimetype).FirstOrDefault();
 
                                 if (segmentationOrder != null)
                                 {
                                     //查询已预约数量
-                                    var orderedCount = db.IQueryable<OrderEntity>(item => item.OrderDoctorId == model.OrderDoctorId && item.OrderType == orderTimetype && item.OrderDate >= model.BeginTime && item.OrderDate <= model.EndTime).Sum(item => item.OrderId);
-                                    remainOrderCount = segmentationOrder.OrderCount - orderedCount;
+                                    var query = db.IQueryable<OrderEntity>(item => item.OrderDoctorId == model.OrderDoctorId && item.OrderType == orderTimetype && item.OrderDate >= model.BeginTime && item.OrderDate <= model.EndTime);
+                                    if (query != null)
+                                    {
+                                        var orderedCount = query.Count();
+                                        remainOrderCount = segmentationOrder.OrderCount - orderedCount;
+                                    }
+
                                 }
                             }
                             break;
                         case OrderTimeTypeEnum.Night:
                             {
                                 var orderTimetype = (int)OrderTimeTypeEnum.Afternoon;
-
+                                orderEntity.OrderType = orderTimetype;
                                 //分时段
                                 var segmentationOrder = db.IQueryable<SegmentationOrderEntity>(item => item.DoctorId == model.OrderDoctorId && item.OrderTimeType == orderTimetype).FirstOrDefault();
 
                                 if (segmentationOrder != null)
                                 {
                                     //查询已预约数量
-                                    var orderedCount = db.IQueryable<OrderEntity>(item => item.OrderDoctorId == model.OrderDoctorId && item.OrderType == orderTimetype && item.OrderDate >= model.BeginTime && item.OrderDate <= model.EndTime).Sum(item => item.OrderId);
-                                    remainOrderCount = segmentationOrder.OrderCount - orderedCount;
+                                    var query = db.IQueryable<OrderEntity>(item => item.OrderDoctorId == model.OrderDoctorId && item.OrderType == orderTimetype && item.OrderDate >= model.BeginTime && item.OrderDate <= model.EndTime);
+                                    if (query != null)
+                                    {
+                                        var orderedCount = query.Count();
+                                        remainOrderCount = segmentationOrder.OrderCount - orderedCount;
+                                    }
                                 }
                             }
                             break;
@@ -204,15 +221,19 @@ namespace NFine.IRepository.SystemManage
                 //如果有剩余，则进行添加
                 if (remainOrderCount > 0)
                 {
-
+                    orderEntity.AddDate = DateTime.Now;
                     //添加预约信息
                     db.Insert(orderEntity);
                 }
-             
+                //addOrderResponse.BeginTime = model.BeginTime.Value;
+
+                addOrderResponse.BeginTime = orderEntity.BeginTime;
+                addOrderResponse.EndTime = orderEntity.EndTime;
                 addOrderResponse.FullName = model.FullName;
                 addOrderResponse.OrderTime = model.OrderDateTime;
                 addOrderResponse.NumberType = (OrderTypeEnum)orderEntity.NumberType;
                 addOrderResponse.OrderTimeType = (OrderTimeTypeEnum)orderEntity.OrderType;
+                addOrderResponse.OrderNumber = orderEntity.OrderNumber;
                 //提交
                 db.Commit();
             }

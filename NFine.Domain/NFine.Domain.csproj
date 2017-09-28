@@ -59,9 +59,10 @@
     <Compile Include="02 ViewModel\UserOderRequest.cs" />
     <Compile Include="03 Entity\Enums\CredentialTypeEnum.cs" />
     <Compile Include="03 Entity\Enums\GenderEnum.cs" />
-    <Compile Include="03 Entity\Enums\NumberType.cs" />
+    <Compile Include="03 Entity\Enums\NumberTypeEnum.cs" />
+    <Compile Include="03 Entity\Enums\OrderStatusEnum.cs" />
     <Compile Include="03 Entity\Enums\OrderTimeTypeEnum.cs" />
-    <Compile Include="03 Entity\Enums\OrderType.cs" />
+    <Compile Include="03 Entity\Enums\OrderTypeEnum.cs" />
     <Compile Include="03 Entity\Enums\WeekEnum.cs" />
     <Compile Include="03 Entity\SystemManage\AreaEntity.cs" />
     <Compile Include="03 Entity\SystemManage\DoctorEntity.cs" />
