@@ -1,4 +1,5 @@
-﻿using NFine.Data;
+﻿using NFine.Code;
+using NFine.Data;
 using NFine.Domain.Entity.SystemManage;
 using NFine.Domain.ViewModel;
 using NFine.IRepository.SystemManage;
@@ -39,6 +40,13 @@ namespace NFine.Application.SystemManage
         public List<OrderEntity> GetOrderList(GetOrderListRequest model)
         {
             return service.IQueryable(item => item.MemberId == model.MemberId).ToList();
+        }
+
+        public List<OrderEntity> GetList(Pagination pagination, string keyword)
+        {
+            var expression = ExtLinq.True<OrderEntity>();
+            List<OrderEntity> list = service.FindList(expression, pagination);
+            return list;
         }
     }
 }

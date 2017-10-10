@@ -100,14 +100,22 @@ namespace NFine.IRepository.SystemManage
                     orderEntity.BeginTime = null;
                     orderEntity.EndTime = null;
                     orderEntity.OrderNumber = DateTime.Now.ToString("yyyyMMddHHmmssfff");
+                    orderEntity.OrderDate = DateTime.Now;
                     switch (model.OrderDateTimeType)
                     {
                         case OrderTimeTypeEnum.Morning:
                             {
                                 var orderTimetype = (int)OrderTimeTypeEnum.Morning;
                                 orderEntity.OrderType = orderTimetype;
-                                //查询已预约数量
-                                var orderedCount = db.IQueryable<OrderEntity>(item => item.OrderDoctorId == model.OrderDoctorId && item.OrderType == orderTimetype && item.OrderDate == model.OrderDateTime).Sum(item => item.OrderId);
+
+                                var query = db.IQueryable<OrderEntity>(item => item.OrderDoctorId == model.OrderDoctorId && item.OrderType == orderTimetype && item.OrderDate == model.OrderDateTime);
+                                var orderedCount = 0;
+                                if (query != null && query.Any())
+                                {
+                                    //查询已预约数量
+                                    orderedCount = query.Count();
+                                }
+
 
                                 //坐诊信息
                                 var visit = linq.FirstOrDefault();
@@ -121,8 +129,14 @@ namespace NFine.IRepository.SystemManage
                             {
                                 var orderTimetype = (int)OrderTimeTypeEnum.Afternoon;
                                 orderEntity.OrderType = orderTimetype;
-                                //查询已预约数量
-                                var orderedCount = db.IQueryable<OrderEntity>(item => item.OrderDoctorId == model.OrderDoctorId && item.OrderType == orderTimetype && item.OrderDate == model.OrderDateTime).Count();
+                                var query = db.IQueryable<OrderEntity>(item => item.OrderDoctorId == model.OrderDoctorId && item.OrderType == orderTimetype && item.OrderDate == model.OrderDateTime);
+                                var orderedCount = 0;
+                                if (query != null && query.Any())
+                                {
+                                    //查询已预约数量
+                                    orderedCount = query.Count();
+                                }
+
 
                                 //坐诊信息
                                 var visit = linq.FirstOrDefault();
@@ -136,8 +150,14 @@ namespace NFine.IRepository.SystemManage
                             {
                                 var orderTimetype = (int)OrderTimeTypeEnum.Night;
                                 orderEntity.OrderType = orderTimetype;
-                                //查询已预约数量
-                                var orderedCount = db.IQueryable<OrderEntity>(item => item.OrderDoctorId == model.OrderDoctorId && item.OrderType == orderTimetype && item.OrderDate == model.OrderDateTime).Count();
+                                var query = db.IQueryable<OrderEntity>(item => item.OrderDoctorId == model.OrderDoctorId && item.OrderType == orderTimetype && item.OrderDate == model.OrderDateTime);
+                                var orderedCount = 0;
+                                if (query != null && query.Any())
+                                {
+                                    //查询已预约数量
+                                    orderedCount = query.Count();
+                                }
+                              
 
                                 //坐诊信息
                                 var visit = linq.FirstOrDefault();
@@ -151,6 +171,7 @@ namespace NFine.IRepository.SystemManage
                 }
                 else
                 {
+                    orderEntity.OrderDate = DateTime.Now;
                     orderEntity.NumberType = (int)OrderTypeEnum.Segmentation;
                     orderEntity.BeginTime = model.BeginTime.Value;
                     orderEntity.EndTime = model.EndTime.Value;

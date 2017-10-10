@@ -54,7 +54,7 @@ namespace NFine.Web.Areas.UIManage.Controllers
                         if (visitList != null && visitList.Any())
                         {
                             //获取每周出诊信息
-                            List<int> weekVisit = visitList.Where(item => item.DoctorId == doctor.DoctorId).Select(item => item.Week).ToList();
+                            List<int> weekVisit = visitList.Where(item => item.DoctorId == doctor.DoctorId && (item.Morning==true||item.Afternoon==true || item.Night==true)).Select(item => item.Week).ToList();
                             if (weekVisit != null && weekVisit.Any())
                             {
                                 doctorResponse.VisitList.AddRange(weekVisit);

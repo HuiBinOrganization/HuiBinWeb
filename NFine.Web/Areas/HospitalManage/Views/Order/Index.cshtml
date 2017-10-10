@@ -9,14 +9,14 @@
     function gridList() {
         var $gridList = $("#gridList");
         $gridList.dataGrid({
-            url: "/SystemManage/User/GetGridJson",
+            url: "/HospitalManage/Order/GetGridJson",
             height: $(window).height() - 128,
             colModel: [
-                { label: '主键', name: 'F_Id', hidden: true },
+                //{ label: '主键', name: 'F_Id', hidden: true },
                 //{ label: '账户', name: 'F_Account', width: 80, align: 'left' },
-                { label: '姓名', name: 'F_RealName', width: 80, align: 'left' },
+                { label: '姓名', name: 'MemberId', width: 80, align: 'left' },
                 {
-                    label: '性别', name: 'F_Gender', width: 60, align: 'center',
+                    label: '性别', name: 'MemberId', width: 60, align: 'center',
                     formatter: function (cellvalue, options, rowObject) {
                         if (cellvalue == true) {
                             return '男';
@@ -25,16 +25,16 @@
                         }
                     }
                 },
-                { label: '手机', name: 'F_MobilePhone', width: 80, align: 'left' },
-                { label: '症状', name: 'F_MobilePhone', width: 80, align: 'left' },
+                { label: '手机', name: 'MemberId', width: 80, align: 'left' },
+                { label: '症状', name: 'SymptomDescription', width: 80, align: 'left' },
                 {
-                    label: '预约时间', name: 'F_CreatorTime', width: 80, align: 'left',
+                    label: '预约时间', name: 'OrderDate', width: 80, align: 'left',
                     formatter: "date", formatoptions: { srcformat: 'Y-m-d', newformat: 'Y-m-d' }
                 },
-                { label: '预约医生', name: 'F_Description', width: 200, align: 'left' }
+                { label: '预约医生', name: 'OrderDoctorId', width: 200, align: 'left' }
             ],
             pager: "#gridPager",
-            sortname: 'F_DepartmentId asc,F_CreatorTime desc',
+            sortname: 'OrderId asc',
             viewrecords: true
         });
         $("#btn_search").click(function () {

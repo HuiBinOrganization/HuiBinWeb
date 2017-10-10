@@ -9,14 +9,24 @@
     function gridList() {
         var $gridList = $("#gridList");
         $gridList.dataGrid({
-            url: "/SystemManage/User/GetGridJson",
+            url: "/HospitalManage/Member/GetGridJson",
             height: $(window).height() - 128,
             colModel: [
-                { label: '主键', name: 'F_Id', hidden: true },
+                { label: '主键', name: 'MemberId', hidden: true },
                 //{ label: '全名', name: 'F_Account', width: 80, align: 'left' },
-                { label: '姓名', name: 'F_RealName', width: 80, align: 'left' },
                 {
-                    label: '性别', name: 'F_Gender', width: 60, align: 'center',
+                    label: '证件类型', name: 'CredentialType', width: 60, align: 'center',
+                    formatter: function (cellvalue, options, rowObject) {
+                        if (cellvalue == 1) {
+                            return '护照';
+                        } else {
+                            return '身份证';
+                        }
+                    }
+                },
+                { label: '证件号码', name: 'CredentialInformation', width: 150, align: 'left' },
+                {
+                    label: '性别', name: 'Gender', width: 40, align: 'center',
                     formatter: function (cellvalue, options, rowObject) {
                         if (cellvalue == true) {
                             return '男';
@@ -25,23 +35,17 @@
                         }
                     }
                 },
-                { label: '手机', name: 'F_MobilePhone', width: 80, align: 'left' },
                 {
-                    label: 'E-mail', name: 'F_OrganizeId', width: 150, align: 'left',
-                    formatter: function (cellvalue, options, rowObject) {
-                        return top.clients.organize[cellvalue] == null ? "" : top.clients.organize[cellvalue].fullname;
-                    }
-                },
-                { label: '护照', name: 'F_MobilePhone', width: 80, align: 'left' },
-                { label: '就诊卡', name: 'F_MobilePhone', width: 80, align: 'left' },
-                { label: '国籍', name: 'F_MobilePhone', width: 80, align: 'left' },
-                {
-                    label: '出生年月', name: 'F_CreatorTime', width: 80, align: 'left',
+                    label: '出生年月', name: 'DateOfBirth', width: 80, align: 'left',
                     formatter: "date", formatoptions: { srcformat: 'Y-m-d', newformat: 'Y-m-d' }
-                }
+                },
+                { label: 'Email', name: 'Email', width: 150, align: 'left' },
+                //{ label: '护照', name: 'F_MobilePhone', width: 80, align: 'left' },
+                { label: '就诊卡', name: 'VisitingCardNumber', width: 150, align: 'left' },
+                { label: '国籍', name: 'Nationality', width: 80, align: 'left' },
             ],
             pager: "#gridPager",
-            sortname: 'F_DepartmentId asc,F_CreatorTime desc',
+            sortname: 'MemberId asc',
             viewrecords: true
         });
         $("#btn_search").click(function () {
