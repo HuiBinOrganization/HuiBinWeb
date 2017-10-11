@@ -14,24 +14,71 @@
             colModel: [
                 //{ label: '主键', name: 'F_Id', hidden: true },
                 //{ label: '账户', name: 'F_Account', width: 80, align: 'left' },
-                { label: '姓名', name: 'MemberId', width: 80, align: 'left' },
+                { label: '姓名', name: 'FullName', width: 80, align: 'left' },
                 {
-                    label: '性别', name: 'MemberId', width: 60, align: 'center',
+                    label: '性别', name: 'Gender', width: 60, align: 'center',
                     formatter: function (cellvalue, options, rowObject) {
-                        if (cellvalue == true) {
+                        if (cellvalue == 1) {
                             return '男';
                         } else {
                             return '女';
                         }
                     }
                 },
-                { label: '手机', name: 'MemberId', width: 80, align: 'left' },
+                { label: '手机', name: 'ContactNumber', width: 80, align: 'left' },
+                { label: '就诊卡', name: 'VisitingCardNumber', width: 120, align: 'left' },
+                {
+                    label: '证件类型', name: 'CredentialType', width: 50, align: 'left',
+                    formatter: function (cellvalue, options, rowObject) {
+                        var temp = "";
+                        switch (cellvalue) {
+                            case 1:
+                                temp = "护照";
+                                break;
+                            case 2:
+                                temp = "身份证";
+                                break;
+
+                        }
+                        return temp;
+                    },
+                },
+                { label: '证件号码', name: 'CredentialInformation', width: 100, align: 'left' },
                 { label: '症状', name: 'SymptomDescription', width: 80, align: 'left' },
                 {
-                    label: '预约时间', name: 'OrderDate', width: 80, align: 'left',
+                    label: '预约时间', name: 'OrderDateTime', width: 80, align: 'left',
                     formatter: "date", formatoptions: { srcformat: 'Y-m-d', newformat: 'Y-m-d' }
                 },
-                { label: '预约医生', name: 'OrderDoctorId', width: 200, align: 'left' }
+                { label: '预约医生', name: 'OrderDoctorName', width: 100, align: 'left' },
+                {
+                    label: '预约类型', name: 'OrderType', width: 150, align: 'left',
+                    formatter: function (cellvalue, options, rowObject) {
+
+                        var orderDateTimeType = "";
+                        switch (rowObject.OrderDateTimeType) {
+                            case 1:
+                                orderDateTimeType = "上午";
+                                break;
+                            case 2:
+                                orderDateTimeType = "下午";
+                                break;
+                            case 3:
+                                orderDateTimeType = "晚上";
+                                break;
+
+                        }
+                        var temp = "";
+                        switch (cellvalue) {
+                            case 1:
+                                temp = "依次:" + orderDateTimeType;
+                                break;
+                            case 2:
+                                temp = "分时段:" + rowObject.BeginTime.split(' ')[1].substring(0, 5) +"~"+ rowObject.EndTime.split(' ')[1].substring(0, 5);
+                                break;
+                        }
+                        return temp;
+                    },
+                }
             ],
             pager: "#gridPager",
             sortname: 'OrderId asc',

@@ -115,6 +115,17 @@ namespace NFine.Domain.ViewModel
             set;
         }
 
+
+        /// <summary>
+        /// 预约医生名称
+        /// </summary>
+
+        public string OrderDoctorName
+        {
+            get;
+            set;
+        }
+
         /// <summary>
         /// 预约时间
         /// </summary>

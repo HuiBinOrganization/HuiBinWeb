@@ -255,7 +255,7 @@ namespace NFine.Web.Areas.UIManage.Controllers
                             }
                         }
                     }
-
+                    orderCycleList = orderCycleList.OrderBy(item => item.OrderDateTime).ToList();
                     //出诊周期列表
                     getDoctorInfoResponse.OrderCycleList = orderCycleList;
 

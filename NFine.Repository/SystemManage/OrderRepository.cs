@@ -97,10 +97,10 @@ namespace NFine.IRepository.SystemManage
                 if (model.OrderType == OrderTypeEnum.Successively)
                 {
                     orderEntity.NumberType = (int)OrderTypeEnum.Successively;
-                    orderEntity.BeginTime = null;
-                    orderEntity.EndTime = null;
+                    orderEntity.BeginTime = DateTime.Now;
+                    orderEntity.EndTime = DateTime.Now;
                     orderEntity.OrderNumber = DateTime.Now.ToString("yyyyMMddHHmmssfff");
-                    orderEntity.OrderDate = DateTime.Now;
+                    orderEntity.OrderDate = model.OrderDateTime;
                     switch (model.OrderDateTimeType)
                     {
                         case OrderTimeTypeEnum.Morning:
@@ -171,7 +171,7 @@ namespace NFine.IRepository.SystemManage
                 }
                 else
                 {
-                    orderEntity.OrderDate = DateTime.Now;
+                    orderEntity.OrderDate = model.OrderDateTime;
                     orderEntity.NumberType = (int)OrderTypeEnum.Segmentation;
                     orderEntity.BeginTime = model.BeginTime.Value;
                     orderEntity.EndTime = model.EndTime.Value;

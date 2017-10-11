@@ -1,5 +1,6 @@
 ﻿using NFine.Code;
 using NFine.Data;
+using NFine.Domain.Entity.Enums;
 using NFine.Domain.Entity.SystemManage;
 using NFine.Domain.ViewModel;
 using NFine.IRepository.SystemManage;
@@ -18,6 +19,8 @@ namespace NFine.Application.SystemManage
     public class OrderApp
     {
         private IOrderRepository service = new OrderRepository();
+        private IMemberRepository memberService = new MemberRepository();
+        private IDoctorRepository doctorService = new DoctorRepository();
 
         public IQueryable<OrderEntity> GetList(Expression<Func<OrderEntity, bool>> predicate)
         {
@@ -42,11 +45,43 @@ namespace NFine.Application.SystemManage
             return service.IQueryable(item => item.MemberId == model.MemberId).ToList();
         }
 
-        public List<OrderEntity> GetList(Pagination pagination, string keyword)
+        public List<OrderViewModel> GetList(Pagination pagination, string keyword)
         {
             var expression = ExtLinq.True<OrderEntity>();
             List<OrderEntity> list = service.FindList(expression, pagination);
-            return list;
+            List<OrderViewModel> viewModelList = new List<OrderViewModel>();
+
+            foreach (var info in list)
+            {
+                OrderViewModel orderViewModel = new OrderViewModel();
+                var member = memberService.IQueryable(item => item.MemberId == info.MemberId).FirstOrDefault();
+                if (member != null)
+                {
+                    orderViewModel.FullName = member.FullName;
+                    orderViewModel.SymptomDescription = info.SymptomDescription;
+                    orderViewModel.Gender = (GenderEnum)member.Gender;
+                    orderViewModel.DateOfBirth = member.DateOfBirth;
+                    orderViewModel.VisitingCardNumber = member.VisitingCardNumber;
+                    orderViewModel.ContactNumber = member.ContactNumber;
+                    orderViewModel.CredentialType = (CredentialTypeEnum)member.CredentialType;
+                    orderViewModel.CredentialInformation = member.CredentialInformation;
+                }
+
+                var doctor = doctorService.IQueryable(item => item.DoctorId == info.OrderDoctorId).FirstOrDefault();
+                if (doctor != null)
+                {
+                    orderViewModel.OrderDoctorName = doctor.DoctorName;
+                }
+                orderViewModel.BeginTime = info.BeginTime;
+                orderViewModel.EndTime = info.EndTime;
+                orderViewModel.OrderDateTime = info.OrderDate;
+                orderViewModel.OrderType = (OrderTypeEnum)info.NumberType;
+                orderViewModel.OrderDateTimeType = (OrderTimeTypeEnum)info.OrderType;
+
+                viewModelList.Add(orderViewModel);
+
+            }
+            return viewModelList;
         }
     }
 }

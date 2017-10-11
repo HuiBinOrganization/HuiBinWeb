@@ -19,6 +19,6 @@ namespace NFine.Domain.Entity.Enums
         /// <summary>
         /// 身份证
         /// </summary>
-        ID = 1,
+        ID = 2,
     }
 }
