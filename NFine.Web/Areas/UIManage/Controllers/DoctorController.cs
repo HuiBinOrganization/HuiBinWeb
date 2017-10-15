@@ -337,7 +337,7 @@ namespace NFine.Web.Areas.UIManage.Controllers
                 getDoctorOrderInfoResponse.OrderTimeType = request.OrderTimeType;
                 getDoctorOrderInfoResponse.OrderPrice = doctor.Price;
                 getDoctorOrderInfoResponse.OrderTime = request.OrderDate;
-                getDoctorOrderInfoResponse.OrderType = doctor.Category == true ? OrderTypeEnum.Successively : OrderTypeEnum.Segmentation;
+                getDoctorOrderInfoResponse.OrderType = doctor.OrderType == true ? OrderTypeEnum.Successively : OrderTypeEnum.Segmentation;
                 getDoctorOrderInfoResponse.PeriodList = new List<Period>();
                 //周几
                 int week = (int)request.OrderDate.DayOfWeek;
@@ -654,9 +654,10 @@ namespace NFine.Web.Areas.UIManage.Controllers
                             list.Add(getOrderListResponse);
                         }
                     }
-                 
+                    response.IsSuccess = true;
+                    response.Result = list;
                 }
-                response.IsSuccess = true;
+              
             }
             catch (Exception ex)
             {

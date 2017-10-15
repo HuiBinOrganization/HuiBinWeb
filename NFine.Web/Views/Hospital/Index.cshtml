@@ -176,15 +176,28 @@
                   <td><div class="uk-form-row">
                       <input type="text" placeholder="Text input" class="uk-form-large" id="full-name">
                     </div></td>
-                  <td><span class="uk-form-help-inline">Please fill in the passport name</span></td>
+                  <td>
+                      <span class="uk-form-help-inline">Please fill in the passport name</span>
+
+                  </td>
                 </tr>
                 <tr class="uk-margin-large">
                   <td class="uk-width-1-6 uk-text-left">Passport No.</td>
                   <td><div class="uk-form-row">
                       <input type="text" placeholder="Text input" class="uk-form-large" id="passport-no">
                     </div></td>
-                  <td><span class="uk-form-help-inline">Please enter your passport number at the time of your reservation</span></td>
+                  <td>
+                      <span class="uk-form-help-inline">Please enter your passport number at the time of your reservation</span>
+                       
+                  </td>
+                    
                 </tr>
+                  <tr id="contactError">
+                      <td colspan="3">
+                        <p style="margin-left:90px;margin-top:20px;"><i class="uk-icon-times-circle uk-icon-medium uk-icon-justify red"></i><span class="red f16" id="contactErrorSpan">Please fill in the complete Full Name and passport</span></p>
+                    </td>
+                  </tr>
+
                 <tr>
                   <td>&nbsp;</td>
                   <td><button class="uk-button uk-button-large btn-submit" id="query-submit" type="button" onClick="DoctorIndex.querySubmit()">Reservation query</button></td>
@@ -381,6 +394,18 @@
 <!-- popup end -->
 
     <script type="text/javascript">
+        var PanDataArray = [];
+
+        function max(arr) {
+            var num = arr[0];
+            for (var i = 0; i < arr.length; i++) {
+                if (num < arr[i]) {
+                    num = arr[i]
+                }
+            }
+            return num;
+        }
+
         var DoctorIndex = function () {
             return {
                 //获取医生列表信息
@@ -509,6 +534,23 @@
                                 }
                                 
                             }
+                            //设置高度
+                            var $elements = $('.uk-float-left');
+                            for (var i = 0; i <$elements.length-1; i++) {
+                                var a = $($elements[i]).height();
+                                console.log(a);
+                                PanDataArray.push(a);
+                            }
+                            console.log(PanDataArray);
+                            var height = max(PanDataArray);
+                            //再次设置左部高度
+                            $("#Monday-flag").height(height);
+                            $("#Tuesday-flag").height(height);
+                            $("#Wednesday-flag").height(height);
+                            $("#Thursday-flag").height(height);
+                            $("#Friday-flag").height(height);
+                            $("#Saturday-flag").height(height);
+                            $("#Sunday-flag").height(height);
                         },
                         error: function (e) {
                         }
@@ -516,12 +558,14 @@
                 },
                 //预约查询
                 querySubmit: function () {
-                    debugger;
+                    
                     //如果没有填写全名或者护照---提示页面
                     var FullName = $("#full-name").val();
                     var PassportNo = $("#passport-no").val();
                     if (FullName == "" || PassportNo == "") {
-                        alert("请填写完整的名称和护照");
+                        //alert("请填写完整的名称和护照");
+                        $("#contactErrorSpan").text("Please fill in the complete Full Name and passport");
+                        $("#contactError").css("display", "");
                         return false;
                     } else {
                         var url = "@Url.Content("~/UIManage/Doctor/GetOrderList")";
@@ -530,9 +574,15 @@
                             url: url,
                             data: { FullName: FullName, PassportNo: PassportNo },
                             success: function (data) {
-                                debugger;
+                                
                                 var result = JSON.parse(data);
                                 if (result.IsSuccess == true) {
+                                    //这里处理如果没有数据，则提示
+                                    if (result.Result == null) {
+                                        $("#contactErrorSpan").text("Search No Data");
+                                        $("#contactError").css("display", "");
+                                        return false;
+                                    }
                                     //渲染页面
                                     $("#query-form").css("display", "none");
                                     $("#query-table").append("<table  class=\"uk-table uk-table-striped\">" +
@@ -574,7 +624,7 @@
             }
         }();
         $(function () {
-            debugger;
+            $("#contactError").css("display", "none");
             DoctorIndex.getDoctorList();
         });
     </script>
