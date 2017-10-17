@@ -15,6 +15,7 @@ namespace NFine.Web.Areas.HospitalManage.Controllers
         private DoctorApp doctorApp = new DoctorApp();
         private VisitApp visitApp = new VisitApp();
         private SegmentationOrderApp segmentationOrderApp = new SegmentationOrderApp();
+        private StopApp stopApp = new StopApp();
 
         [HttpPost]
         [HandlerAjaxOnly]
@@ -24,6 +25,19 @@ namespace NFine.Web.Areas.HospitalManage.Controllers
             doctorApp.SubmitForm(model, keyValue);
             return Success("操作成功。");
         }
+
+        [HttpPost]
+        [HandlerAjaxOnly]
+        [ValidateAntiForgeryToken]
+        public ActionResult SubmitStopForm(StopDoctorViewModel model, string permissionIds, string keyValue)
+        {
+            var doctorId = 0;
+            int.TryParse(keyValue, out doctorId);
+            model.DoctorId = doctorId;
+            stopApp.DoctorStop(model);
+            return Success("操作成功。");
+        }
+
 
         [HttpGet]
         [HandlerAjaxOnly]
@@ -113,12 +127,9 @@ namespace NFine.Web.Areas.HospitalManage.Controllers
                     }
                 }
 
-                //预约数量
-                model.MorningOrderCount = visitList.Max(item => item.MorningCount);
-                //预约数量
-                model.AfternoonOrderCount = visitList.Max(item => item.AfternoonCount);
-                //预约数量
-                model.NightOrderCount = visitList.Max(item => item.NightCount);
+             
+              
+                
             }
             #endregion
 
@@ -144,6 +155,9 @@ namespace NFine.Web.Areas.HospitalManage.Controllers
                         list.Add(segmentationOrder);
                     }
                     model.MorningSegmentationOrderList = list;
+
+                    //上午预约数量
+                    model.MorningOrderCount = list.Sum(item => item.OrderCount);
                 }
                 #endregion
 
@@ -164,6 +178,9 @@ namespace NFine.Web.Areas.HospitalManage.Controllers
                         list.Add(segmentationOrder);
                     }
                     model.AfternoonSegmentationOrderList = list;
+
+                    //下午预约数量
+                    model.AfternoonOrderCount = list.Sum(item => item.OrderCount);
                 }
                 #endregion
 
@@ -183,6 +200,9 @@ namespace NFine.Web.Areas.HospitalManage.Controllers
                         list.Add(segmentationOrder);
                     }
                     model.NightSegmentationOrderList = list;
+
+                    //预约数量
+                    model.NightOrderCount = list.Sum(item => item.OrderCount);
                 }
                 #endregion
 
@@ -191,27 +211,35 @@ namespace NFine.Web.Areas.HospitalManage.Controllers
                 var segmentationCountList = segmetnationList.Where(item => item.OrderTimeType == 1);
                 if (segmentationCountList != null && segmentationCountList.Any())
                 {
-                    model.MorningSegmentationCount = segmentationCountList.Max(item => item.SegmentationCount);
+                    model.MorningSegmentationCount = segmentationCountList.Count();
                 }
 
                 //下午
                 segmentationCountList = segmetnationList.Where(item => item.OrderTimeType == 2);
                 if (segmentationCountList != null && segmentationCountList.Any())
                 {
-                    model.AfternoonSegmentationCount = segmentationCountList.Max(item => item.SegmentationCount);
+                    model.AfternoonSegmentationCount = segmentationCountList.Count();
                 }
 
                 //晚上
                 segmentationCountList = segmetnationList.Where(item => item.OrderTimeType == 3);
                 if (segmentationCountList != null && segmentationCountList.Any())
                 {
-                    model.NightSegmentationCount = segmentationCountList.Max(item => item.SegmentationCount);
+                    model.NightSegmentationCount = segmentationCountList.Count();
                 }
 
             }
             #endregion
 
             return Content(model.ToJson());
+        }
+
+
+        [HttpGet]
+        [HandlerAuthorize]
+        public virtual ActionResult Stop()
+        {
+            return View();
         }
 
         [HttpGet]

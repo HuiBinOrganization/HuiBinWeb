@@ -79,5 +79,23 @@ namespace NFine.Domain.ViewModel
             get;
             set;
         }
+
+        /// <summary>
+        /// 是否成功
+        /// </summary>
+        public bool IsSuccess
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// 原因
+        /// </summary>
+        public string Reason
+        {
+            get;
+            set;
+        }
     }
 }

@@ -56,6 +56,7 @@
     <Compile Include="SystemManage\OrganizeApp.cs" />
     <Compile Include="SystemManage\RoleApp.cs" />
     <Compile Include="SystemManage\SegmentationOrderApp.cs" />
+    <Compile Include="SystemManage\StopApp.cs" />
     <Compile Include="SystemManage\UserApp.cs" />
     <Compile Include="SystemManage\UserLogOnApp.cs" />
     <Compile Include="SystemManage\DutyApp.cs" />

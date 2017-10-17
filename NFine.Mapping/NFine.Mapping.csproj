@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SystemManage\AreaMap.cs" />
+    <Compile Include="SystemManage\CloseOrderMap.cs" />
     <Compile Include="SystemManage\DoctorMap.cs" />
     <Compile Include="SystemManage\ItemsDetailMap.cs" />
     <Compile Include="SystemManage\ItemsMap.cs" />

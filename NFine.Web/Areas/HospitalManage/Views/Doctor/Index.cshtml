@@ -72,8 +72,6 @@
     }
 
     function btn_edit() {
-
-        debugger;
         var keyValue = $("#gridList").jqGridRowValue().DoctorId;
         $.modalOpen({
             id: "Form",
@@ -157,6 +155,21 @@
             }
         });
     }
+
+    function btn_stop() {
+        var keyValue = $("#gridList").jqGridRowValue().DoctorId;
+
+        $.modalOpen({
+            id: "Form",
+            title: "医生停诊",
+            url: "/HospitalManage/Doctor/Stop?keyValue=" + keyValue,
+            width: "500px",
+            height: "300px",
+            callBack: function (iframeId) {
+                top.frames[iframeId].submitForm();
+            }
+        });
+    }
 </script>
 
 <div class="topPanel">
@@ -173,6 +186,7 @@
                 <li><a id="NF-Details" authorize="yes" onclick="btn_details()"><i class="fa fa-search-plus"></i>查看医生</a></li>
                 <li><a id="NF-edit" authorize="yes" onclick="btn_edit()"><i class="fa fa-pencil-square-o"></i>修改医生</a></li>
                 <li><a id="NF-delete" authorize="yes" onclick="btn_delete()"><i class="fa fa-trash-o"></i>删除医生</a></li>
+                <li><a id="NF-stop" authorize="yes" onclick="btn_stop()"><i class="fa fa-trash-o"></i>停诊</a></li>
                 <li class="split"></li>
             </ul>
             <a href="javascript:;" class="close"></a>

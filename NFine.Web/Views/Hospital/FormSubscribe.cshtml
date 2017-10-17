@@ -1,183 +1,191 @@
 ﻿<!doctype html>
 <html>
 <head>
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>International Center for diagnosis and treatment</title>
-<link href="~/Content/css/uikit.min.css" rel="stylesheet" type="text/css">
-<link href="~/Content/css/customize.css" rel="stylesheet" type="text/css">
-<link href="~/Content/css/datepicker.min.css" rel="stylesheet" type="text/css">
-<script src="~/Content/js/jquery.js"></script>
-<script src="~/Content/js/uikit.min.js"></script>
-<script src="~/Content/js/datepicker.min.js"></script>
-<script src="~/Content/js/customize.js"></script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>International Center for diagnosis and treatment</title>
+    <link href="~/Content/css/uikit.min.css" rel="stylesheet" type="text/css">
+    <link href="~/Content/css/customize.css" rel="stylesheet" type="text/css">
+    <link href="~/Content/css/datepicker.min.css" rel="stylesheet" type="text/css">
+    <script src="~/Content/js/jquery.js"></script>
+    <script src="~/Content/js/uikit.min.js"></script>
+    <script src="~/Content/js/datepicker.min.js"></script>
+    <script src="~/Content/js/customize.js"></script>
 </head>
 
 <body>
-<div class="uk-container uk-container-center">
-  <nav class="uk-navbar"> <a href="~/Hospital/Index" class="uk-navbar-brand mtp18"><img src="~/Content/img/pages/logo.png" alt="" width="605" height="96" /></a>
-    <div class="uk-navbar-flip mtp46">
-      <ul class="uk-navbar-nav">
-        <li><a href="~/Hospital/Index">首页</a></li>
-        <li><a href="#">国际诊疗网</a></li>
-        <li><a href="#"><i class="uk-icon-home uk-icon-small"></i></a></li>
-      </ul>
+    <div class="uk-container uk-container-center">
+        <nav class="uk-navbar">
+            <a href="~/Hospital/Index" class="uk-navbar-brand mtp18"><img src="~/Content/img/pages/logo.png" alt="" width="605" height="96" /></a>
+            <div class="uk-navbar-flip mtp46">
+                <ul class="uk-navbar-nav">
+                    <li><a href="~/Hospital/Index">首页</a></li>
+                    <li><a href="#">国际诊疗网</a></li>
+                    <li><a href="#"><i class="uk-icon-home uk-icon-small"></i></a></li>
+                </ul>
+            </div>
+        </nav>
     </div>
-  </nav>
-</div>
-<!-- form start -->
-<div class="uk-container uk-container-center ltlabel">
-  <h3 class="confirm-tit"><img src="~/Content/img/pages/icon-res.png" alt=""/>Reservation confirmation</h3>
-  <form class="uk-form uk-form-horizontal">
-    <h4 class="confirm-info uk-text-center">Your reservation information is:<span id="form-name"></span><i id="form-time"></i>，Registration fee:<i id="form-fee"></i>，Please choose the exact time of your visit!</h4>
-    <div class="confirm-time">
-      <div class="uk-form-row">
-        <div class="uk-form-controls uk-form-controls-text ml"  id="form-PeriodList">
-            @*<span class="uk-text-center">*@
-          @*<input type="radio" id="radio1" name="radio">
-          <label for="radio1">07:50~08:50（Surplus:5）</label>
-          </span><span class="uk-text-center">
-          <input type="radio" id="radio2" name="radio">
-          <label for="radio2">07:50~08:50（Surplus:5）</label>
-          </span><span class="uk-text-center">
-          <input type="radio" id="radio3" name="radio">
-          <label for="radio3">07:50~08:50（Surplus:5）</label>
-          </span><span class="uk-text-center">
-          <input type="radio" id="radio4" name="radio">
-          <label for="radio4">07:50~08:50（Surplus:5）</label>
-          </span><span class="uk-text-center">
-          <input type="radio" id="radio5" name="radio">
-          <label for="radio5">07:50~08:50（Surplus:5）</label>*@
-          @*</span> *@
+    <!-- form start -->
+    <div class="uk-container uk-container-center ltlabel">
+        <h3 class="confirm-tit"><img src="~/Content/img/pages/icon-res.png" alt="" />Reservation confirmation</h3>
+        <form class="uk-form uk-form-horizontal">
+            <h4 class="confirm-info uk-text-center">Your reservation information is:<span id="form-name"></span><i id="form-time"></i>，Registration fee:<i id="form-fee"></i>，Please choose the exact time of your visit!</h4>
+            <div class="confirm-time">
+                <div class="uk-form-row">
+                    <div class="uk-form-controls uk-form-controls-text ml" id="form-PeriodList">
+                        @*<span class="uk-text-center">*@
+                        @*<input type="radio" id="radio1" name="radio">
+                            <label for="radio1">07:50~08:50（Surplus:5）</label>
+                            </span><span class="uk-text-center">
+                            <input type="radio" id="radio2" name="radio">
+                            <label for="radio2">07:50~08:50（Surplus:5）</label>
+                            </span><span class="uk-text-center">
+                            <input type="radio" id="radio3" name="radio">
+                            <label for="radio3">07:50~08:50（Surplus:5）</label>
+                            </span><span class="uk-text-center">
+                            <input type="radio" id="radio4" name="radio">
+                            <label for="radio4">07:50~08:50（Surplus:5）</label>
+                            </span><span class="uk-text-center">
+                            <input type="radio" id="radio5" name="radio">
+                            <label for="radio5">07:50~08:50（Surplus:5）</label>*@
+                        @*</span> *@
 
-        </div>
-      </div>
-    </div>
-    <h4><i class="uk-icon-info-circle uk-icon-justify"></i>Please fill in personal information:</h4>
-    <hr class="uk-article-divider">
-    <div class="uk-form-row">
-      <label class="uk-form-label uk-text-right mtp10" for="cardnum"><span class="red">* </span>Credential Information</label>
-      <div class="uk-form-controls">
-        <select id="idcard" class="uk-form-large">
-          <option value="1">Passport</option>
-          <option value="2">ID card</option>
-        </select>
-        <input type="text" onblur="FormSubscribe.FormValidation('cardnum');" id="cardnum" placeholder="Please enter your identification number" class="uk-form-large w327">
-        <span class="uk-form-help-inline c9" id="cardnumButton">Seeing doctor is the real name system. Please fill in the real ID number</span> </div>
-        <p class="ml170" id="cardnumError"><i class="uk-icon-times-circle uk-icon-medium uk-icon-justify red"></i><span class="red f16">The ID card format is incorrect. Please enter the correct ID card</span></p>
-    </div>
-    <div class="uk-form-row">
-      <label class="uk-form-label uk-text-right mtp10" for="fullname"><span class="red">* </span>Full Name</label>
-      <div class="uk-form-controls">
-        <input type="text" id="fullname" onblur="FormSubscribe.FormValidation('fullname');" placeholder="Please enter your full name" class="uk-form-width-large uk-form-large w420">
-        <span class="uk-form-help-inline c9" id="fullnameButton">Please fill in the full name on the document</span> </div>
-        <p class="ml170" id="fullnameError"><i class="uk-icon-times-circle uk-icon-medium uk-icon-justify red"></i><span class="red f16">The Full Name format is incorrect. Please enter the correct Full Name</span></p>
-    </div>
+                    </div>
+                </div>
+            </div>
+            <h4><i class="uk-icon-info-circle uk-icon-justify"></i>Please fill in personal information:</h4>
+            <hr class="uk-article-divider">
+            <div class="uk-form-row">
+                <label class="uk-form-label uk-text-right mtp10" for="cardnum"><span class="red">* </span>Credential Information</label>
+                <div class="uk-form-controls">
+                    <select id="idcard" class="uk-form-large">
+                        <option value="1">Passport</option>
+                        <option value="2">ID card</option>
+                    </select>
+                    <input type="text" onblur="FormSubscribe.FormValidation('cardnum');" id="cardnum" placeholder="Please enter your identification number" value="test" class="uk-form-large w327">
+                    <span class="uk-form-help-inline c9" id="cardnumButton">Seeing doctor is the real name system. Please fill in the real ID number</span>
+                </div>
+                <p class="ml170" id="cardnumError"><i class="uk-icon-times-circle uk-icon-medium uk-icon-justify red"></i><span class="red f16">The ID card format is incorrect. Please enter the correct ID card</span></p>
+            </div>
+            <div class="uk-form-row">
+                <label class="uk-form-label uk-text-right mtp10" for="fullname"><span class="red">* </span>Full Name</label>
+                <div class="uk-form-controls">
+                    <input type="text" id="fullname" onblur="FormSubscribe.FormValidation('fullname');" placeholder="Please enter your full name" value="test"  class="uk-form-width-large uk-form-large w420">
+                    <span class="uk-form-help-inline c9" id="fullnameButton">Please fill in the full name on the document</span>
+                </div>
+                <p class="ml170" id="fullnameError"><i class="uk-icon-times-circle uk-icon-medium uk-icon-justify red"></i><span class="red f16">The Full Name format is incorrect. Please enter the correct Full Name</span></p>
+            </div>
 
-    <div class="uk-form-row">
-      <label class="uk-form-label uk-text-right mtp10" for="visit"><span class="red">* </span>Visiting card number</label>
-      <div class="uk-form-controls">
-        <select class="uk-form-width-large uk-form-large w420" id="visit">
-          <option>1234982738940</option>
-          <option>1892732990893</option>
-        </select>
-        <span class="uk-form-help-inline c9" id="visitButton">No patients can not fill the card card, change required</span> </div>
-        
+            <div class="uk-form-row">
+                <label class="uk-form-label uk-text-right mtp10" for="visit"><span class="red">* </span>Visiting card number</label>
+                <div class="uk-form-controls">
+                    <select class="uk-form-width-large uk-form-large w420" id="visit">
+                        <option>1234982738940</option>
+                        <option>1892732990893</option>
+                    </select>
+                    <span class="uk-form-help-inline c9" id="visitButton">No patients can not fill the card card, change required</span>
+                </div>
+
+            </div>
+            <div class="uk-form-row">
+                <label class="uk-form-label uk-text-right" for="gender"><span class="red">* </span>Gender</label>
+                <div class="uk-form-controls uk-form-controls-text">
+                    <input type="radio" id="male" name="radio" value="1">
+                    <label for="male">male</label>
+                    <input type="radio" id="female" name="radio" class="uk-margin-left" value="2">
+                    <label for="female">female</label><br />
+                    <p class="ml170" id="sexError" style="margin-left:0;"><i class="uk-icon-times-circle uk-icon-medium uk-icon-justify red"></i><span class="red f16"> Please Check the correct Sex.</span></p>
+                </div>
+            </div>
+            <div class="uk-form-row">
+                <label class="uk-form-label uk-text-right mtp10" for="birth"><span class="red">* </span>Date Of Birth</label>
+                <div class="uk-form-controls">
+                    <input type="text" id="birth" placeholder="Please select date" data-uk-datepicker="{format:'YYYY-MM-DD'}" class="uk-form-width-large uk-form-large w420" value="2017-01-01">
+                </div>
+            </div>
+            <div class="uk-form-row">
+                <label class="uk-form-label uk-text-right mtp10" for="contact"><span class="red">* </span>Contact number</label>
+                <div class="uk-form-controls">
+                    <input type="text" id="contact" onblur="FormSubscribe.FormValidation('contact');" placeholder="Please enter the domestic mobile phone number" value="18700000000" class="uk-form-width-large uk-form-large w420">
+                    <span class="uk-form-help-inline c9" id="contactButton">Please fill in the domestic mobile phone number for receiving reservation reminders</span>
+                </div>
+                <p class="ml170" id="contactError"><i class="uk-icon-times-circle uk-icon-medium uk-icon-justify red"></i><span class="red f16">The Contact number format is incorrect. Please enter the correct Contact number</span></p>
+            </div>
+            <div class="uk-form-row">
+                <label class="uk-form-label uk-text-right mtp10" for="email"><span class="red">* </span>E-mail</label>
+                <div class="uk-form-controls">
+                    <input type="text" id="email" onblur="FormSubscribe.FormValidation('email');" placeholder="Please input your E-mail" value="18700000000@qq.com" class="uk-form-width-large uk-form-large w420">
+                    <span class="uk-form-help-inline c9" id="emailButton">Please fill in your email address@*<i class="uk-icon-check-circle uk-icon-medium green">*@@*</i>*@</span>
+                </div>
+                <p class="ml170" id="emailError"><i class="uk-icon-times-circle uk-icon-medium uk-icon-justify red"></i><span class="red f16">The e-mail format is incorrect. Please enter the correct email address</span></p>
+            </div>
+            <div class="uk-form-row">
+                <label class="uk-form-label uk-text-right mtp10" for="nationality"><span class="red">* </span>Nationality</label>
+                <div class="uk-form-controls">
+                    <select class="uk-form-width-large uk-form-large w420" id="nationality">
+                        @*<option>Egypt</option>
+                            <option>Canada</option>
+                            <option>USA</option>*@
+                    </select>
+                </div>
+            </div>
+            <div class="uk-form-row">
+                <label class="uk-form-label uk-text-right mtp10" for="symptom"><span class="red">* </span>Symptom description</label>
+                <div class="uk-form-controls">
+                    <textarea cols="30" rows="5" id="symptom" onblur="FormSubscribe.FormValidation('symptom');" vocab="头痛" class="uk-form-width-large uk-form-large w420"></textarea>
+                    <span class="uk-form-help-inline c9 description" id="symptomButton">Please give a brief description of your symptoms, to facilitateyour doctor's diagnosis and treatment,within 200 words</span>
+                </div>
+                <p class="ml170" id="symptomError"><i class="uk-icon-times-circle uk-icon-medium uk-icon-justify red"></i><span class="red f16">The Symptom description format is incorrect. Please enter the correct Symptom description</span></p>
+            </div>
+            <div class="uk-form-row">
+                <div class="uk-form-controls uk-margin-bottom"><button type="button" class="uk-button btn-return uk-margin-right" onclick="return FormSubscribe.clearContent(this);">Return</button><button type="button" class="uk-button" onclick="FormSubscribe.submitForm();">Confirm</button></div>
+            </div>
+        </form>
     </div>
-    <div class="uk-form-row">
-      <label class="uk-form-label uk-text-right" for="gender"><span class="red">* </span>Gender</label>
-      <div class="uk-form-controls uk-form-controls-text">
-        <input type="radio" id="male" name="radio" value="1">
-        <label for="male">male</label>
-        <input type="radio" id="female" name="radio" class="uk-margin-left" value="2">
-        <label for="female">female</label><br />
-          <p class="ml170" id="sexError" style="margin-left:0;"><i class="uk-icon-times-circle uk-icon-medium uk-icon-justify red"></i><span class="red f16"> Please Check the correct Sex.</span></p>
-      </div>
-    </div>
-    <div class="uk-form-row">
-      <label class="uk-form-label uk-text-right mtp10" for="birth"><span class="red">* </span>Date Of Birth</label>
-      <div class="uk-form-controls">
-        <input type="text" id="birth" placeholder="Please select date" data-uk-datepicker="{format:'YYYY-MM-DD'}" class="uk-form-width-large uk-form-large w420" value="2017-01-01">
-      </div>
-    </div>
-    <div class="uk-form-row">
-      <label class="uk-form-label uk-text-right mtp10" for="contact"><span class="red">* </span>Contact number</label>
-      <div class="uk-form-controls">
-        <input type="text" id="contact" onblur="FormSubscribe.FormValidation('contact');" placeholder="Please enter the domestic mobile phone number" class="uk-form-width-large uk-form-large w420">
-        <span class="uk-form-help-inline c9" id="contactButton">Please fill in the domestic mobile phone number for receiving reservation reminders</span> </div>
-        <p class="ml170" id="contactError"><i class="uk-icon-times-circle uk-icon-medium uk-icon-justify red"></i><span class="red f16">The Contact number format is incorrect. Please enter the correct Contact number</span></p>
-    </div>
-    <div class="uk-form-row">
-      <label class="uk-form-label uk-text-right mtp10" for="email"><span class="red">* </span>E-mail</label>
-      <div class="uk-form-controls">
-        <input type="text" id="email" onblur="FormSubscribe.FormValidation('email');" placeholder="Please input your E-mail" class="uk-form-width-large uk-form-large w420">
-        <span class="uk-form-help-inline c9" id="emailButton">Please fill in your email address@*<i class="uk-icon-check-circle uk-icon-medium green">*@@*</i>*@</span></div>
-      <p class="ml170" id="emailError"><i class="uk-icon-times-circle uk-icon-medium uk-icon-justify red"></i><span class="red f16">The e-mail format is incorrect. Please enter the correct email address</span></p>
-    </div>
-    <div class="uk-form-row">
-      <label class="uk-form-label uk-text-right mtp10" for="nationality"><span class="red">* </span>Nationality</label>
-      <div class="uk-form-controls">
-        <select class="uk-form-width-large uk-form-large w420" id="nationality">
-          @*<option>Egypt</option>
-          <option>Canada</option>
-          <option>USA</option>*@
-        </select>
-      </div>
-    </div>
-    <div class="uk-form-row">
-      <label class="uk-form-label uk-text-right mtp10" for="symptom"><span class="red">* </span>Symptom description</label>
-      <div class="uk-form-controls">
-        <textarea cols="30" rows="5" id="symptom" onblur="FormSubscribe.FormValidation('symptom');" class="uk-form-width-large uk-form-large w420"></textarea>
-        <span class="uk-form-help-inline c9 description" id="symptomButton">Please give a brief description of your symptoms, to facilitateyour doctor's diagnosis and treatment,within 200 words</span> </div>
-        <p class="ml170" id="symptomError"><i class="uk-icon-times-circle uk-icon-medium uk-icon-justify red"></i><span class="red f16">The Symptom description format is incorrect. Please enter the correct Symptom description</span></p>
-    </div>
-    <div class="uk-form-row">
-      <div class="uk-form-controls uk-margin-bottom"><button type="button" class="uk-button btn-return uk-margin-right" onclick="return FormSubscribe.clearContent(this);">Return</button><button type="button" class="uk-button" onclick="FormSubscribe.submitForm();">Confirm</button></div>
-    </div>
-  </form>
-</div>
-<!-- form end --> 
-<!-- footer start -->
-<div class="footer uk-margin-top">
-  <div class="uk-container uk-container-center">
-    <div class="uk-grid uk-grid-divider">
-      <div class="uk-width-3-5">
-        <div class="uk-panel branch">
-          <h3 class="uk-panel-title">Branch information</h3>
-          <p>The First Affiliated Hospital of Xi'an Jiao Tong University Medical College</p>
-          <p>The First Affiliated Hospital of Binxian County Jiaotong University.</p>
-          <p>The First Affiliated Hospital of Hancheng Jiaotong University.</p>
-          <p>International land Hospital; land and port clinic.</p>
+    <!-- form end -->
+    <!-- footer start -->
+    <div class="footer uk-margin-top">
+        <div class="uk-container uk-container-center">
+            <div class="uk-grid uk-grid-divider">
+                <div class="uk-width-3-5">
+                    <div class="uk-panel branch">
+                        <h3 class="uk-panel-title">Branch information</h3>
+                        <p>The First Affiliated Hospital of Xi'an Jiao Tong University Medical College</p>
+                        <p>The First Affiliated Hospital of Binxian County Jiaotong University.</p>
+                        <p>The First Affiliated Hospital of Hancheng Jiaotong University.</p>
+                        <p>International land Hospital; land and port clinic.</p>
+                    </div>
+                </div>
+                <div class="uk-width-2-5">
+                    <div class="uk-panel social">
+                        <h3 class="uk-panel-title uk-margin-bottom">About us</h3>
+                        <p><a href="javascript:void(0)" class="uk-icon-button uk-icon-weibo"></a><a href="javascript:void(0)" class="uk-icon-button uk-icon-tencent-weibo"></a><a href="javascript:void(0)" class="uk-icon-button uk-icon-wechat"></a></p>
+                        <p><img src="~/Content/img/pages/pic-ewm.png" alt="" /></p>
+                        <p>Scanning concern Jiaotong University Affiliated Hospital</p>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="uk-width-2-5">
-        <div class="uk-panel social">
-          <h3 class="uk-panel-title uk-margin-bottom">About us</h3>
-          <p><a href="javascript:void(0)" class="uk-icon-button uk-icon-weibo"></a><a href="javascript:void(0)" class="uk-icon-button uk-icon-tencent-weibo"></a><a href="javascript:void(0)" class="uk-icon-button uk-icon-wechat"></a></p>
-          <p><img src="~/Content/img/pages/pic-ewm.png" alt=""/></p>
-          <p>Scanning concern Jiaotong University Affiliated Hospital</p>
-        </div>
-      </div>
     </div>
-  </div>
-</div>
-<div class="cp">
-  <div class="uk-container uk-container-center"> Copyright &copy; 2011, the First Affiliated Hospital of Xi'an Jiao Tong University, Shaanxi Province, ICP 12009712, -3. Address: No. 277, Yanta West Road, Shaanxi, Xi'an: 710061 </div>
-</div>
-<!-- footer end -->
+    <div class="cp">
+        <div class="uk-container uk-container-center"> Copyright &copy; 2011, the First Affiliated Hospital of Xi'an Jiao Tong University, Shaanxi Province, ICP 12009712, -3. Address: No. 277, Yanta West Road, Shaanxi, Xi'an: 710061 </div>
+    </div>
+    <!-- footer end -->
     <a id="dialog-form" href="#appointment" data-uk-modal="{center:true}"></a>
     <!-- popup start -->
-<div id="appointment" class="uk-modal" style="position:fixed;z-index:10000">
-  <div class="uk-modal-dialog"> <a class="uk-modal-close uk-close"></a>
-    <div class="uk-modal-header">
-      <h3>Reservation prompt</h3>
+    <div id="appointment" class="uk-modal" style="position:fixed;z-index:10000">
+        <div class="uk-modal-dialog">
+            <a class="uk-modal-close uk-close"></a>
+            <div class="uk-modal-header">
+                <h3>Reservation prompt</h3>
+            </div>
+            No card reservation is successful, please record this medical record number<span id="form-huiID" style="color:#940006;"></span>, go to the self-help machine for medical card, please keep in mind your medical card password, and then take the number to see a doctor!<i><span id="form-huiDocID"></span>, <span id="form-huiTime" style="color:#940006;"></span>.</i>
+            <div class="uk-modal-footer uk-text-right">
+                <button type="button" id="form-huiButton" class="uk-button uk-text-right" onClick="window.location.href='@Url.Content("~/Hospital/Doctor")'">Confirm</button>
+            </div>
+        </div>
     </div>
-    No card reservation is successful, please record this medical record number<span id="form-huiID" style="color:#940006;"></span>, go to the self-help machine for medical card, please keep in mind your medical card password, and then take the number to see a doctor!<i><span id="form-huiDocID"></span>, <span id="form-huiTime" style="color:#940006;"></span>.</i>
-    <div class="uk-modal-footer uk-text-right">
-      <button type="button" id="form-huiButton" class="uk-button uk-text-right" onClick="window.location.href='@Url.Content("~/Hospital/Doctor")'">Confirm</button>
-    </div>
-  </div>
-</div>
 
     <input type="hidden" id="form-OrderDoctorId" value="" />
     <input type="hidden" id="form-OrderDateTime" value="" />
@@ -186,7 +194,7 @@
     <input type="hidden" id="form-BeginTime" value="" />
     <input type="hidden" id="form-EndTime" value="" />
     <input type="hidden" id="form-OrderDoctorName" value="" />
-<!-- popup end -->
+    <!-- popup end -->
     <script type="text/javascript">
         var docID, orderDate, orderTimeType;
         var flag = false;
@@ -201,7 +209,7 @@
             return {
                 //正则验证
                 FormValidation:function(id){
-                    
+
                     //身份证
                     var val = $("#idcard").find("option:selected").val();
                     if (val == 2 && id == "idcard") {
@@ -211,7 +219,7 @@
                             //alert("身份证输入不合法");
                             $("#" + id + "Error").css("display", "block");
                             $("#" + id + "Button").html("Seeing doctor is the real name system. Please fill in the real ID number");
-                            
+
                             return false;
                         } else {
                             $("#" + id + "Error").css("display", "none");
@@ -223,7 +231,7 @@
                         if ($("#fullname").val().length <= 50 && $("#fullname").val().length >= 1) {
                             $("#" + id + "Error").css("display", "none");
                             $("#" + id + "Button").html("<i class=\"uk-icon-check-circle uk-icon-medium green\"></i>");
-                            
+
                         } else {
                             $("#" + id + "Error").css("display", "block");
                             $("#" + id + "Button").html("Please fill in the full name on the document");
@@ -231,7 +239,7 @@
                         }
                     }
 
-                    //联系电话
+                        //联系电话
                     else if (id == "contact") {
                         var rex = /^(1\d{10})$/;
                         var rex2 = /^((0\d{2,3})-)(\d{7,8})(-(\d{3,}))?$/;
@@ -245,11 +253,11 @@
                             $("#" + id + "Error").css("display", "none");
                             $("#" + id + "Button").html("<i class=\"uk-icon-check-circle uk-icon-medium green\"></i>");
 
-                            
+
                         }
                     }
 
-                    //email
+                        //email
                     else if (id == "email") {
                         var valemail = $("#email").val();
                         var reg = @Html.Raw("/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/");
@@ -263,7 +271,7 @@
                                 $("#" + id + "Button").html("Please fill in your email address");
                                 return false;
                             }
-                            
+
                         } else {
                             $("#" + id + "Error").css("display", "block");
                             $("#" + id + "Button").html("Please fill in your email address");
@@ -271,13 +279,13 @@
                         }
                     }
 
-                    //症状
+                        //症状
                     else if (id == "symptom") {
                         debugger;
                         if ($("#symptom").val().length <= 200 && $("#symptom").val().length >= 1) {
                             $("#" + id + "Error").css("display", "none");
                             $("#" + id + "Button").html("<i class=\"uk-icon-check-circle uk-icon-medium green\"></i>");
-                            
+
                         } else {
                             $("#" + id + "Error").css("display", "block");
                             $("#" + id + "Button").html("Please give a brief description of your symptoms, to facilitateyour doctor's diagnosis and treatment,within 200 words");
@@ -294,7 +302,7 @@
                         type: "post",
                         url: url,
                         success: function (data) {
-                            
+
                             var result = JSON.parse(data);
                             for (var i = 0; i < result.Result.length; i++) {
                                 $("#nationality").append("<option value='" + result.Result[i].Id + "'>" + result.Result[i].Value + "</option>");
@@ -302,7 +310,7 @@
 
                         },
                         error: function (e) {
-                            
+
 
                         }
                     })
@@ -350,13 +358,13 @@
                     var symptom = $("#symptom").val();
 
                     $("#form-huiButton").click(function (e) {
-                        
+
                         window.location.href = "../Hospital/Doctor?DocId=" + $("#form-OrderDoctorId").val();
                     })
 
                     //时间
                     if ($("#form-OrderType").val() == 1) {
-                        
+
                     }else{
                         var times = $("input:radio[name='radio-time']:checked").val();
                         var beTime = times.split("~");
@@ -365,7 +373,7 @@
                         $("#form-EndTime").val($("#form-OrderDateTime").val() + " " + beTime[1]);
                     }
 
-                    
+
                     //组织数据
                     var data;
                     if ($("#form-OrderType").val() == 1) {
@@ -422,32 +430,32 @@
                                 $("#form-huiDocID").text($("#form-OrderDoctorName").val());
                                 if ($("#form-OrderType").val() == 1) {  //依次
                                     if ($("#form-OrderDateTimeType") == 1) {
-                                        $("#form-huiTime").text("上午");
+                                        $("#form-huiTime").text("AM");
                                     } else if ($("#form-OrderDateTimeType") == 2) {
-                                        $("#form-huiTime").text("下午");
+                                        $("#form-huiTime").text("PM");
                                     } else if ($("#form-OrderDateTimeType") == 3) {
-                                        $("#form-huiTime").text("晚上");
+                                        $("#form-huiTime").text("Night");
                                     }
                                 } else if ($("#form-OrderType").val() == 2) {  //分时间段
-                                    $("#form-huiTime").text($("#form-BeginTime").val() + "~" + beTime[1]);
+                                    $("#form-huiTime").text(result.Result.OrderTime.split(" ")[0]+" "+result.Result.BeginTime.split(' ')[1].substring(0,5) + "~" + result.Result.EndTime.split(' ')[1].substring(0,5));
                                 }
                                 //悬浮层打开
                                 var el = document.getElementById('dialog-form');
                                 el.click();//触发打开事件
-                                
+
                             } else {
                                 alert(result.Reason);
                             }
 
                         },
                         error: function (e) {
-                            
+
                         }
                     })
                 },
                 //清空内容
                 clearContent: function (e) {
-                    
+
                     //e.preventDefault();
                     $("input:radio[name='radio-time']:checked").attr('checked', false);
                     $("input:radio[name='radio']:checked").attr('checked', false);
@@ -480,7 +488,7 @@
                 url: url,
                 data: data,
                 success: function (data) {
-                    
+
                     var result = JSON.parse(data);
                     //渲染页面
                     //获取头部信息，渲染
@@ -508,7 +516,7 @@
 
                     if (result.Result.OrderType == 2) {     //分时段
                         for (var i = 0; i < result.Result.PeriodList.length; i++) {
-                            
+
 
                             var bTime = result.Result.PeriodList[i].BeginTime.split(" ");
                             var bTimeRes = bTime[1];
@@ -516,14 +524,20 @@
                             var eTime = result.Result.PeriodList[i].EndTime.split(" ");
                             var eTimeRes = eTime[1];
                             eTimeRes = eTimeRes.substring(0, eTimeRes.length - 3);
-                            $("#form-PeriodList").append("<span class=\"uk-text-center\"><input type=\"radio\" id=\"radio" + i + 1 + "\" name=\"radio-time\" value = \"" + result.Result.PeriodList[i].BeginTime + "~" + result.Result.PeriodList[i].EndTime + "\">" +
-                                    "<label for=\"radio" + i + 1 + "\">" + bTimeRes + "~" + eTimeRes + "（Surplus:" + result.Result.PeriodList[i].OrderCount + "）</label>" +
-                                        "</span><span class=\"uk-text-center\"></span>");
+
+                            //预约数量大于0
+                            if(result.Result.PeriodList[i].OrderCount>0)
+                            {
+                                $("#form-PeriodList").append("<span class=\"uk-text-center\"><input type=\"radio\" id=\"radio" + i + 1 + "\" name=\"radio-time\" value = \"" + result.Result.PeriodList[i].BeginTime + "~" + result.Result.PeriodList[i].EndTime + "\">" +
+                                     "<label for=\"radio" + i + 1 + "\">" + bTimeRes + "~" + eTimeRes + "（Surplus:" + result.Result.PeriodList[i].OrderCount + "）</label>" +
+                                         "</span><span class=\"uk-text-center\"></span>");
+                            }
+                         
                         }
                     }else if(result.Result.OrderType == 1){ //依次
                         $(".confirm-time").css("display","none");
                     }
-                    
+
                     $("#form-OrderDoctorId").val(docID);
                     $("#form-OrderDateTime").val(result.Result.OrderTime);
                     $("#form-OrderDateTimeType").val(result.Result.OrderTimeType);
@@ -537,11 +551,10 @@
                     //$(".uk-form-help-inline").css("display", "none");
                 },
                 error: function (e) {
-                    
+
                 }
             })
         })
     </script>
 </body>
 </html>
-

@@ -48,10 +48,11 @@ namespace NFine.IRepository.SystemManage
         public AddOrderResponse AddOrder(OrderViewModel model)
         {
             AddOrderResponse addOrderResponse = new AddOrderResponse();
+            MemberEntity memberEntity = new MemberEntity();
             using (var db = new RepositoryBase().BeginTrans())
             {
                 //添加患者信息
-                MemberEntity memberEntity = new MemberEntity();
+              
                 memberEntity.CredentialInformation = model.CredentialInformation;
                 memberEntity.CredentialType = (int)model.CredentialType;
                 memberEntity.FullName = model.FullName;
@@ -64,12 +65,28 @@ namespace NFine.IRepository.SystemManage
                 memberEntity.AddDate = DateTime.Now;
 
                 //验证用户是否存在，如果存在不进行添加
-                var member = db.IQueryable<MemberEntity>(item => item.CredentialInformation == memberEntity.CredentialInformation && item.CredentialType == memberEntity.CredentialType).FirstOrDefault();
-                if (member == null)
+                memberEntity = db.IQueryable<MemberEntity>(item => item.CredentialInformation == memberEntity.CredentialInformation && item.CredentialType == memberEntity.CredentialType).FirstOrDefault();
+                if (memberEntity == null)
                 {
                     db.Insert(memberEntity);
                 }
 
+              
+
+                var orderDate = Convert.ToDateTime(model.OrderDateTime.ToString("yyyy-MM-dd"));
+                //验证是否已经预约当前午别
+                var isExist = db.IQueryable<OrderEntity>(item => item.OrderDate >= orderDate
+                                                       && item.OrderDate <= orderDate && item.OrderType == (int)model.OrderDateTimeType && item.OrderDoctorId == model.OrderDoctorId&&item.MemberId==memberEntity.MemberId).Count() > 0;
+                db.Commit();
+                if (isExist)
+                {
+                    addOrderResponse.IsSuccess = false;
+                    addOrderResponse.Reason = "you made an appointment";
+                    return addOrderResponse;
+                }
+            }
+            using (var db = new RepositoryBase().BeginTrans())
+            {
                 //添加预约信息
                 OrderEntity orderEntity = new OrderEntity();
                 orderEntity.OrderDoctorId = model.OrderDoctorId;
@@ -157,7 +174,7 @@ namespace NFine.IRepository.SystemManage
                                     //查询已预约数量
                                     orderedCount = query.Count();
                                 }
-                              
+
 
                                 //坐诊信息
                                 var visit = linq.FirstOrDefault();
@@ -171,10 +188,12 @@ namespace NFine.IRepository.SystemManage
                 }
                 else
                 {
+                    var beginTime = Convert.ToDateTime(model.OrderDateTime.ToString("yyyy-MM-dd") + " " + model.BeginTime.Value.ToString("HH:mm:ss"));
+                    var endTime = Convert.ToDateTime(model.OrderDateTime.ToString("yyyy-MM-dd") + " " + model.EndTime.Value.ToString("HH:mm:ss"));
                     orderEntity.OrderDate = model.OrderDateTime;
                     orderEntity.NumberType = (int)OrderTypeEnum.Segmentation;
-                    orderEntity.BeginTime = model.BeginTime.Value;
-                    orderEntity.EndTime = model.EndTime.Value;
+                    orderEntity.BeginTime = beginTime;
+                    orderEntity.EndTime = endTime;
                     orderEntity.OrderNumber = DateTime.Now.ToString("yyyyMMddHHmmssfff");
                     switch (model.OrderDateTimeType)
                     {

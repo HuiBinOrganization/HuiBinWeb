@@ -83,6 +83,7 @@
     <Compile Include="02 ViewModel\GetOrderListResponse.cs" />
     <Compile Include="02 ViewModel\OrderViewModel.cs" />
     <Compile Include="02 ViewModel\ResponseBase.cs" />
+    <Compile Include="02 ViewModel\StopDoctorViewModel.cs" />
     <Compile Include="02 ViewModel\UserOderRequest.cs" />
     <Compile Include="03 Entity\Enums\CredentialTypeEnum.cs" />
     <Compile Include="03 Entity\Enums\GenderEnum.cs" />
@@ -92,6 +93,7 @@
     <Compile Include="03 Entity\Enums\OrderTypeEnum.cs" />
     <Compile Include="03 Entity\Enums\WeekEnum.cs" />
     <Compile Include="03 Entity\SystemManage\AreaEntity.cs" />
+    <Compile Include="03 Entity\SystemManage\CloseOrderEntity.cs" />
     <Compile Include="03 Entity\SystemManage\DoctorEntity.cs" />
     <Compile Include="03 Entity\SystemManage\MemberEntity.cs" />
     <Compile Include="03 Entity\SystemManage\ModuleButtonEntity.cs" />
@@ -107,6 +109,7 @@
     <Compile Include="03 Entity\SystemSecurity\LogEntity.cs" />
     <Compile Include="02 ViewModel\AuthorizeActionModel.cs" />
     <Compile Include="04 IRepository\SystemManage\IAreaRepository.cs" />
+    <Compile Include="04 IRepository\SystemManage\ICloseOrderRepository.cs" />
     <Compile Include="04 IRepository\SystemManage\IDoctorRepository.cs" />
     <Compile Include="04 IRepository\SystemManage\IItemsDetailRepository.cs" />
     <Compile Include="04 IRepository\SystemManage\IItemsRepository.cs" />

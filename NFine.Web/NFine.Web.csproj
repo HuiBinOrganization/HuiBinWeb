@@ -405,6 +405,8 @@
     <Content Include="International\International\js\uikit.min.js" />
     <Content Include="International\International\result.html" />
     <Content Include="Readme.txt" />
+    <Content Include="SQL\db.sql" />
+    <Content Include="SQL\V_patient_info_mz1.sql" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -460,7 +462,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\web.config" />
+    <Content Include="Views\web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Areas\ExampleManage\Views\BarCode\Index.cshtml" />
     <Content Include="Areas\ExampleManage\Views\Print\Index.cshtml" />
     <Content Include="Areas\ExampleManage\Views\SendMail\Index.cshtml" />
@@ -559,8 +563,12 @@
     <Content Include="Views\Shared\_LayoutIndex.cshtml" />
     <Content Include="Areas\ExampleManage\Views\Web.config" />
     <Content Include="Areas\HospitalManage\Views\Web.config" />
-    <Content Include="Areas\ReportManage\Views\Web.config" />
-    <Content Include="Areas\SystemSecurity\Views\Web.config" />
+    <Content Include="Areas\ReportManage\Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Areas\SystemSecurity\Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="International\International\.DS_Store" />
     <Content Include="International\International\css\.DS_Store" />
     <Content Include="International\International\fonts\fontawesome-webfont.ttf" />
@@ -573,6 +581,10 @@
     <Content Include="International\International\fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="International\International\imgs\.DS_Store" />
     <Content Include="International\International\js\.DS_Store" />
+    <Content Include="Areas\SystemManage\Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Areas\HospitalManage\Views\Doctor\Stop.cshtml" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

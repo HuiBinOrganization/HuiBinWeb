@@ -9,6 +9,10 @@
     var thisBtn = null;
     var nextBtn = null;
 
+    var isMorningPass = true;
+    var isAfternoonPass = true;
+    var isNightPass = true;
+
     String.format = function () {
         if (arguments.length == 0)
             return null;
@@ -168,13 +172,15 @@
             if (data.direction == "next") {
                 switch (data.step) {
                     case 1:
+
+
                         if (!$('#step-1').Validform()) {
                             return false;
                         }
                         $finish.hide();
                         $next.show();
                         break;
-                    case 2:
+                    case 2:  //上午
                         if (!$('#step-2').Validform()) {
                             return false;
                         }
@@ -187,14 +193,23 @@
 
                         //创建上午分时段
                         if (!!keyValue) {
+                            debugger;
                             $("#MorningCreate").click();
                             $("#MorningCreate").removeClass("disabled");
                         }
+
+                      
+                     
                         $finish.hide();
                         $next.show();
                         break;
-                    case 3:
+                    case 3://下午
                         if (!$('#step-3').Validform()) {
+                            return false;
+                        }
+
+                        //预约数量是否正确
+                        if (!CheckData("step-3", 1)) {
                             return false;
                         }
 
@@ -204,11 +219,19 @@
                             $("#AfternoonCreate").removeClass("disabled");
                             $("#AfternoonCreate").click();
                         }
+
+                       
+
                         $finish.hide();
                         $next.show();
                         break;
-                    case 4:
+                    case 4://晚上
                         if (!$('#step-4').Validform()) {
+                            return false;
+                        }
+
+                        //预约数量是否正确
+                        if (!CheckData("step-4", 2)) {
                             return false;
                         }
 
@@ -217,6 +240,8 @@
                             $("#NightCreate").removeClass("disabled");
                             $("#NightCreate").click();
                         }
+
+
                         $finish.show();
                         $next.hide();
                         break;
@@ -224,6 +249,12 @@
                         break;
                 }
             } else {
+
+                //预约数量是否正确
+                if (!CheckData("step-3", 3)) {
+                    return false;
+                }
+
                 $finish.hide();
                 $next.show();
             }
@@ -248,6 +279,7 @@
         var count = $("#step-2 .form input:checkbox:checked").length;
         return count > 0;
     }
+
     //分段文本框修改
     function segmentationChange(segmentationCountId, createId) {
         $('#' + segmentationCountId).on('input', function () {
@@ -265,6 +297,7 @@
     function morningCreate(stepId, createId, startTimeId, endTimeId, segmentationCountId, orderCountId, dayType, orderTimeType) {
         $("#" + createId).click(function () {
 
+            debugger;
             //表格
             // var form = $(this).parent().parent().parent();
 
@@ -287,7 +320,7 @@
             tr += "                <th class=\"formTitle\">预约数量</th>";
             tr += "                <td class=\"formValue\">";
             tr += "                     <div style=\"float: left; width: 20%;\">";
-            tr += "                        <input id=\"" + dayType + "SegmentationOrderList[{0}].OrderCount\" value=\"{3}\" name=\"" + dayType + "SegmentationOrderList[{0}].OrderCount\" type=\"text\" class=\"form-control\" isvalid=\"yes\" checkexpession=\"Num\" placeholder=\"预约数量\" />";
+            tr += "                        <input id=\"" + dayType + "SegmentationOrderList[{0}].OrderCount\" value=\"{3}\" name=\"" + dayType + "SegmentationOrderList[{0}].OrderCount\" type=\"text\" class=\"form-control segmentation\" isvalid=\"yes\" checkexpession=\"Num\" placeholder=\"预约数量\" />";
             tr += "                     </div>";
             tr += "                 </td>";
             tr += "            </tr>";
@@ -322,15 +355,68 @@
                     //$("#tbData tr").eq(-2)
                     $("#" + stepId + " tbody tr").last().after(temptr);
                 }
+
+                switch (orderTimeType) {
+                    case 1:
+                        isMorningPass = true;
+                        break;
+                    case 2:
+                        isAfternoonPass = true;
+                        break;
+                    case 3:
+                        isNightPass = true;
+                        break;
+                }
             }
             else {
                 alert("总数大于零并且整数倍");
+                switch (orderTimeType)
+                {
+                    case 1:
+                        isMorningPass = false;
+                        break;
+                    case 2:
+                        isAfternoonPass = false;
+                        break;
+                    case 3:
+                        isNightPass = false;
+                        break;
+                }
             }
         });
 
 
     }
 
+    //验证分时段数据
+    function CheckData(stepid,dateType)
+    {
+        var array = $("#" + stepid + " .segmentation");
+        var segmentationOrderCount = 0;
+        $("#" + stepid + " .segmentation").each(function (index, item) {
+            segmentationOrderCount += parseInt($(item).val());
+        });
+
+        var orderCount = 0;
+        switch (dateType)
+        {
+            case 1://上午
+                orderCount = parseInt($("#MorningOrderCount").val());
+                break;
+            case 2://上午
+                orderCount = parseInt($("#AfternoonOrderCount").val());
+                break;
+            case 3://晚上
+                orderCount = parseInt($("#NightOrderCount").val());
+                break;
+        }
+        if (segmentationOrderCount > orderCount)
+        {
+            alert("预约分段总数量【" + segmentationOrderCount + "】大于预约总数【" + orderCount+"】");
+            return false;
+        }
+        return true;
+    }
 </script>
 <form id="form1">
     <div class="widget-body">
