@@ -663,7 +663,22 @@ namespace NFine.Web.Areas.UIManage.Controllers
 
             try
             {
-                
+                int orderCycle = 0;
+
+                ////配置文件读取
+                int.TryParse(Configs.GetValue("OrderCycle"), out orderCycle);
+
+                var orderBeginDate = DateTime.Now;
+                var orderEndDate = DateTime.Now.AddDays(orderCycle);
+
+             
+                //验证预约周期以外时间
+                if (request.OrderDateTime < request.OrderDateTime || request.OrderDateTime > orderEndDate)
+                {
+                    response.IsSuccess = false;
+                    response.Reason = "Order Fail";
+                    return Content(response.ToJson());
+                }
 
                 OrderViewModel orderViewModel = new OrderViewModel();
                 orderViewModel.CredentialInformation = request.CredentialInformation;
@@ -714,6 +729,7 @@ namespace NFine.Web.Areas.UIManage.Controllers
             response.IsSuccess = false;
             response.Reason = "系统出错，请联系管理员";
             List<GetOrderListResponse> list = new List<GetOrderListResponse>();
+            response.Result = list;
             #region 验证
             if (request == null)
             {
@@ -772,6 +788,10 @@ namespace NFine.Web.Areas.UIManage.Controllers
                     }
                     response.IsSuccess = true;
                     response.Result = list;
+                }
+                else {
+                    //没有找到信息
+                    response.IsSuccess = true;
                 }
 
             }

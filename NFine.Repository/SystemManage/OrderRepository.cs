@@ -48,6 +48,8 @@ namespace NFine.IRepository.SystemManage
         public AddOrderResponse AddOrder(OrderViewModel model)
         {
             AddOrderResponse addOrderResponse = new AddOrderResponse();
+            addOrderResponse.IsSuccess = true;
+
             MemberEntity memberEntity = new MemberEntity();
             using (var db = new RepositoryBase().BeginTrans())
             {
@@ -65,10 +67,14 @@ namespace NFine.IRepository.SystemManage
                 memberEntity.AddDate = DateTime.Now;
 
                 //验证用户是否存在，如果存在不进行添加
-                memberEntity = db.IQueryable<MemberEntity>(item => item.CredentialInformation == memberEntity.CredentialInformation && item.CredentialType == memberEntity.CredentialType).FirstOrDefault();
-                if (memberEntity == null)
+                var isExistMember = db.IQueryable<MemberEntity>(item => item.CredentialInformation == memberEntity.CredentialInformation && item.CredentialType == memberEntity.CredentialType).Count()>0;
+                if (!isExistMember)
                 {
                     db.Insert(memberEntity);
+                }
+                else {
+
+                    memberEntity=db.IQueryable<MemberEntity>(item => item.CredentialInformation == memberEntity.CredentialInformation && item.CredentialType == memberEntity.CredentialType).FirstOrDefault();
                 }
 
               

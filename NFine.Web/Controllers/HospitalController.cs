@@ -5,8 +5,6 @@ using System.Web;
 using System.Web.Mvc;
 
 using NFine.Web.Areas.UIManage.Controllers;
-using NFine.Web.Areas.ExampleManage;
-using NFine.Web.Areas.UIManage.Controllers;
 using System.Configuration;
 
 namespace NFine.Web.Controllers
