@@ -234,10 +234,27 @@ namespace NFine.Web.Areas.HospitalManage.Controllers
             return Content(model.ToJson());
         }
 
+        [HttpGet]
+        [HandlerAjaxOnly]
+        public ActionResult GetStopFormJson(string keyValue)
+        {
+          
+            StopViewModel model = new StopViewModel();
+            model.CloseDate = DateTime.Now.ToString("yyyy-MM-dd");
+            return Content(model.ToJson());
+        }
+
 
         [HttpGet]
         [HandlerAuthorize]
         public virtual ActionResult Stop()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        [HandlerAuthorize]
+        public virtual ActionResult StopList()
         {
             return View();
         }
@@ -249,6 +266,20 @@ namespace NFine.Web.Areas.HospitalManage.Controllers
             var data = new
             {
                 rows = doctorApp.GetList(pagination, keyword),
+                total = pagination.total,
+                page = pagination.page,
+                records = pagination.records
+            };
+            return Content(data.ToJson());
+        }
+
+        [HttpGet]
+        [HandlerAjaxOnly]
+        public ActionResult GetDoctorStopListGrid(Pagination pagination, string keyValue)
+        {
+            var data = new
+            {
+                rows = stopApp.GetList(pagination, keyValue),
                 total = pagination.total,
                 page = pagination.page,
                 records = pagination.records

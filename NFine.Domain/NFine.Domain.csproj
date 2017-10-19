@@ -84,6 +84,7 @@
     <Compile Include="02 ViewModel\OrderViewModel.cs" />
     <Compile Include="02 ViewModel\ResponseBase.cs" />
     <Compile Include="02 ViewModel\StopDoctorViewModel.cs" />
+    <Compile Include="02 ViewModel\StopViewModel.cs" />
     <Compile Include="02 ViewModel\UserOderRequest.cs" />
     <Compile Include="03 Entity\Enums\CredentialTypeEnum.cs" />
     <Compile Include="03 Entity\Enums\GenderEnum.cs" />

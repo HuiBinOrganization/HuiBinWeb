@@ -170,6 +170,22 @@
             }
         });
     }
+
+    function btn_stopList() {
+        var keyValue = $("#gridList").jqGridRowValue().DoctorId;
+
+        $.modalOpen({
+            id: "Form",
+            title: "停诊列表",
+            url: "/HospitalManage/Doctor/StopList?keyValue=" + keyValue,
+            width: "400px",
+            height: "400px",
+            btn: null,
+            callBack: function (iframeId) {
+                top.frames[iframeId].submitForm();
+            }
+        });
+    }
 </script>
 
 <div class="topPanel">
@@ -187,6 +203,7 @@
                 <li><a id="NF-edit" authorize="yes" onclick="btn_edit()"><i class="fa fa-pencil-square-o"></i>修改医生</a></li>
                 <li><a id="NF-delete" authorize="yes" onclick="btn_delete()"><i class="fa fa-trash-o"></i>删除医生</a></li>
                 <li><a id="NF-stop" authorize="yes" onclick="btn_stop()"><i class="fa fa-trash-o"></i>停诊</a></li>
+                <li><a id="NF-stopList" authorize="yes" onclick="btn_stopList()"><i class="fa fa-trash-o"></i>停诊详情</a></li>
                 <li class="split"></li>
             </ul>
             <a href="javascript:;" class="close"></a>
@@ -198,7 +215,7 @@
             <tr>
                 <td>
                     <div class="input-group">
-                        <input id="txt_keyword" type="text" class="form-control" placeholder="账户/姓名/手机" style="width: 200px;">
+                        <input id="txt_keyword" type="text" class="form-control" placeholder="姓名" style="width: 200px;">
                         <span class="input-group-btn">
                             <button id="btn_search" type="button" class="btn  btn-primary"><i class="fa fa-search"></i></button>
                         </span>

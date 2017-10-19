@@ -47,7 +47,19 @@ namespace NFine.Application.SystemManage
 
         public List<OrderViewModel> GetList(Pagination pagination, string keyword)
         {
+
+            //查询用户信息
+            var memberList = memberService.IQueryable(item => item.FullName.Contains(keyword)
+                                                     || item.VisitingCardNumber.Contains(keyword)
+                                                     || item.ContactNumber.Contains(keyword)
+                                                     || item.CredentialInformation.Contains(keyword));
             var expression = ExtLinq.True<OrderEntity>();
+            if (memberList!=null&& memberList.Any())
+            {
+                List<int> memberIdList = memberList.Select(item => item.MemberId).ToList();
+                expression = expression.And(t => memberIdList.Contains(t.MemberId));
+            }
+
             List<OrderEntity> list = service.FindList(expression, pagination);
             List<OrderViewModel> viewModelList = new List<OrderViewModel>();
 

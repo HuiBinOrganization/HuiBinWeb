@@ -30,7 +30,7 @@ namespace NFine.Application.SystemManage
             var expression = ExtLinq.True<MemberEntity>();
             if (!string.IsNullOrEmpty(keyword))
             {
-                expression = expression.And(t => t.FullName.Contains(keyword));
+                expression = expression.And(t => t.FullName.Contains(keyword)|| t.ContactNumber.Contains(keyword)|| t.VisitingCardNumber.Contains(keyword) || t.CredentialInformation.Contains(keyword));
             }
             List<MemberEntity> list= service.FindList(expression, pagination);
 
