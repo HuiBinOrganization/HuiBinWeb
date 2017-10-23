@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NFine.Web", "NFine.Web\NFin
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestForms", "TestForms\TestForms.csproj", "{D2E13922-C319-436B-81AB-7230EED61194}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NFine.Web.Config", "NFine.Web.Config\NFine.Web.Config.csproj", "{210DAFC1-15E3-43BF-BA0F-7DBCEAAB3813}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{D2E13922-C319-436B-81AB-7230EED61194}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D2E13922-C319-436B-81AB-7230EED61194}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D2E13922-C319-436B-81AB-7230EED61194}.Release|Any CPU.Build.0 = Release|Any CPU
+		{210DAFC1-15E3-43BF-BA0F-7DBCEAAB3813}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{210DAFC1-15E3-43BF-BA0F-7DBCEAAB3813}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{210DAFC1-15E3-43BF-BA0F-7DBCEAAB3813}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{210DAFC1-15E3-43BF-BA0F-7DBCEAAB3813}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -76,6 +82,7 @@ Global
 		{4E642CBE-F6C5-4CB9-9474-6B349652FE77} = {F2C0CC86-CD58-4803-B43A-10FA559A355B}
 		{260FE9E9-29AD-43D7-8D98-F12A5CAC49F4} = {748B2C30-CB38-49EE-AD5A-391272786FA7}
 		{D2E13922-C319-436B-81AB-7230EED61194} = {748B2C30-CB38-49EE-AD5A-391272786FA7}
+		{210DAFC1-15E3-43BF-BA0F-7DBCEAAB3813} = {748B2C30-CB38-49EE-AD5A-391272786FA7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6483CDA1-2FDF-474F-A991-3E3FA2EAF058}
