@@ -205,6 +205,9 @@ namespace NFine.IRepository.SystemManage
                 visit.AddDate = DateTime.Now;
                 SetVisit(visit, visit.Morning, visit.Afternoon, visit.Night, model);
                 visitList.Add(visit);
+
+                //更新预约数量
+
                 #endregion
 
                 //添加坐诊
@@ -317,65 +320,58 @@ namespace NFine.IRepository.SystemManage
             bool night,
             DoctorViewModel model)
         {
-            #region 星期一
-            //计算上午预约数量
-            //星期一上午预约
-            if (morning)
-            {
-                //依次预约
-                if (model.MorningSegmentationCount == 0)
-                {
-                    visit.MorningCount = model.MorningOrderCount;
-                }
-                else
-                {
-                    //存在分段数量
-                    if (model.MorningSegmentationOrderList != null && model.MorningSegmentationOrderList.Any())
-                    {
-                        //分时间预约
-                        visit.MorningCount = model.MorningSegmentationOrderList.Sum(item => item.OrderCount);
-                    }
-                }
-            }
 
-            //星期一上午预约
-            if (afternoon)
+            #region 上午
+            //依次预约
+            if (model.MorningSegmentationCount == 0)
             {
-                //依次预约
-                if (model.AfternoonSegmentationCount == 0)
-                {
-                    visit.AfternoonCount = model.AfternoonOrderCount;
-                }
-                else
-                {
-                    //存在分段数量
-                    if (model.AfternoonSegmentationOrderList != null && model.AfternoonSegmentationOrderList.Any())
-                    {
-                        //分时间预约
-                        visit.AfternoonCount = model.AfternoonSegmentationOrderList.Sum(item => item.OrderCount);
-                    }
-                }
+                visit.MorningCount = model.MorningOrderCount;
             }
-
-            //星期一晚上预约
-            if (night)
+            else
             {
-                //依次预约
-                if (model.NightSegmentationCount == 0)
+                //存在分段数量
+                if (model.MorningSegmentationOrderList != null && model.MorningSegmentationOrderList.Any())
                 {
-                    visit.NightCount = model.NightOrderCount;
-                }
-                else
-                {
-                    //存在分段数量
-                    if (model.NightSegmentationOrderList != null && model.NightSegmentationOrderList.Any())
-                    {
-                        //分时间预约
-                        visit.NightCount = model.NightSegmentationOrderList.Sum(item => item.OrderCount);
-                    }
+                    //分时间预约
+                    visit.MorningCount = model.MorningSegmentationOrderList.Sum(item => item.OrderCount);
                 }
             }
             #endregion
+
+            #region 下午
+            //依次预约
+            if (model.AfternoonSegmentationCount == 0)
+            {
+                visit.AfternoonCount = model.AfternoonOrderCount;
+            }
+            else
+            {
+                //存在分段数量
+                if (model.AfternoonSegmentationOrderList != null && model.AfternoonSegmentationOrderList.Any())
+                {
+                    //分时间预约
+                    visit.AfternoonCount = model.AfternoonSegmentationOrderList.Sum(item => item.OrderCount);
+                }
+            }
+            #endregion
+
+            #region  晚上
+            //依次预约
+            if (model.NightSegmentationCount == 0)
+            {
+                visit.NightCount = model.NightOrderCount;
+            }
+            else
+            {
+                //存在分段数量
+                if (model.NightSegmentationOrderList != null && model.NightSegmentationOrderList.Any())
+                {
+                    //分时间预约
+                    visit.NightCount = model.NightSegmentationOrderList.Sum(item => item.OrderCount);
+                }
+            }
+            #endregion
+
         }
     }
 }

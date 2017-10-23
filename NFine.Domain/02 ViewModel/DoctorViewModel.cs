@@ -405,6 +405,15 @@ namespace NFine.Domain.ViewModel
             set;
         }
 
+
+        /// <summary>
+        /// 上午分段数量
+        /// </summary>
+        public string MorningSegmentationOrderCount
+        {
+            get;
+            set;
+        }
         /// <summary>
         /// 下午分段
         /// </summary>
@@ -416,10 +425,29 @@ namespace NFine.Domain.ViewModel
         }
 
         /// <summary>
+        /// 下午分段数量
+        /// </summary>
+        public string AfternoonSegmentationOrderCount
+        {
+            get;
+            set;
+        }
+
+
+        /// <summary>
         /// 晚上分段
         /// </summary>
 
         public List<SegmentationOrder> NightSegmentationOrderList
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// 下午分段数量
+        /// </summary>
+        public string NightSegmentationOrderCount
         {
             get;
             set;

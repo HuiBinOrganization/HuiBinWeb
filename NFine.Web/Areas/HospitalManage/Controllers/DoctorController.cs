@@ -144,6 +144,9 @@ namespace NFine.Web.Areas.HospitalManage.Controllers
                 if (morningList != null && morningList.Any())
                 {
                     List<SegmentationOrder> list = new List<SegmentationOrder>();
+
+                    //分段预约数量
+                    string segmentationOrderCount = string.Empty;
                     foreach (var segmentation in morningList)
                     {
 
@@ -153,11 +156,15 @@ namespace NFine.Web.Areas.HospitalManage.Controllers
                         segmentationOrder.BeginTime = segmentation.BeginTime;
                         segmentationOrder.EndTime = segmentation.EndTime;
                         list.Add(segmentationOrder);
+                        segmentationOrderCount += segmentation.OrderCount + ",";
                     }
+
+                    segmentationOrderCount = segmentationOrderCount.TrimEnd(',');
                     model.MorningSegmentationOrderList = list;
 
                     //上午预约数量
                     model.MorningOrderCount = list.Sum(item => item.OrderCount);
+                    model.MorningSegmentationOrderCount = segmentationOrderCount;
                 }
                 #endregion
 
@@ -167,6 +174,8 @@ namespace NFine.Web.Areas.HospitalManage.Controllers
                 if (afternoonList != null && afternoonList.Any())
                 {
                     List<SegmentationOrder> list = new List<SegmentationOrder>();
+                    //分段预约数量
+                    string segmentationOrderCount = string.Empty;
                     foreach (var segmentation in afternoonList)
                     {
 
@@ -176,11 +185,14 @@ namespace NFine.Web.Areas.HospitalManage.Controllers
                         segmentationOrder.BeginTime = segmentation.BeginTime;
                         segmentationOrder.EndTime = segmentation.EndTime;
                         list.Add(segmentationOrder);
+                        segmentationOrderCount += segmentation.OrderCount + ",";
                     }
+                    segmentationOrderCount = segmentationOrderCount.TrimEnd(',');
                     model.AfternoonSegmentationOrderList = list;
 
                     //下午预约数量
                     model.AfternoonOrderCount = list.Sum(item => item.OrderCount);
+                    model.AfternoonSegmentationOrderCount = segmentationOrderCount;
                 }
                 #endregion
 
@@ -189,6 +201,8 @@ namespace NFine.Web.Areas.HospitalManage.Controllers
                 if (nightList != null && nightList.Any())
                 {
                     List<SegmentationOrder> list = new List<SegmentationOrder>();
+                    //分段预约数量
+                    string segmentationOrderCount = string.Empty;
                     foreach (var segmentation in nightList)
                     {
 
@@ -198,11 +212,14 @@ namespace NFine.Web.Areas.HospitalManage.Controllers
                         segmentationOrder.BeginTime = segmentation.BeginTime;
                         segmentationOrder.EndTime = segmentation.EndTime;
                         list.Add(segmentationOrder);
+                        segmentationOrderCount += segmentation.OrderCount + ",";
                     }
                     model.NightSegmentationOrderList = list;
 
                     //预约数量
                     model.NightOrderCount = list.Sum(item => item.OrderCount);
+                    segmentationOrderCount = segmentationOrderCount.TrimEnd(',');
+                    model.NightSegmentationOrderCount = segmentationOrderCount;
                 }
                 #endregion
 
@@ -228,6 +245,16 @@ namespace NFine.Web.Areas.HospitalManage.Controllers
                     model.NightSegmentationCount = segmentationCountList.Count();
                 }
 
+            }
+            else
+            {
+                if (visitList != null && visitList.Any())
+                {
+                    model.MorningOrderCount = visitList.Max(item => item.MorningCount);
+                    model.AfternoonOrderCount = visitList.Max(item => item.AfternoonCount);
+                    model.NightOrderCount = visitList.Max(item => item.NightCount);
+                }
+              
             }
             #endregion
 

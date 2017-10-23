@@ -20,6 +20,8 @@ namespace NFine.Web.Areas.UIManage.Controllers
         private VisitApp visitApp = new VisitApp();
         private OrderApp orderApp = new OrderApp();
         private MemberApp memberApp = new MemberApp();
+
+        private StopApp stopApp = new StopApp();
         private SegmentationOrderApp segmentationOrderApp = new SegmentationOrderApp();
 
 
@@ -76,7 +78,7 @@ namespace NFine.Web.Areas.UIManage.Controllers
         }
 
         /// <summary>
-        /// 获取医生信息
+        /// 获取医生出诊信息
         /// </summary>
         /// <param name="request">请求参数</param>
         /// <returns></returns>
@@ -170,44 +172,20 @@ namespace NFine.Web.Areas.UIManage.Controllers
                                 //下午出诊
                                 if (visit.Morning)
                                 {
-                                    #region 上午
-
-                                    //预约时间是今天
-                                    if (beginTime.ToString("yyyy-MM-dd") == DateTime.Now.ToString("yyyy-MM-dd"))
+                                    //验证是否上午停诊
+                                    var isStopOrder = stopApp.GetList(item => item.DoctorId == request.DoctorId
+                                      && item.CloseDate >= beginTime
+                                      && item.CloseDate <= beginTime
+                                      && item.OrderTimeType == 1).Count() > 0;
+                                    if (!isStopOrder)
                                     {
-                                        //现在时间大于上午
-                                        if (DateTime.Now < Convert.ToDateTime(DateTime.Now.ToString("yyy-MM-dd 12:00:00")))
-                                        {
-                                            //查询预约人数,上午
-                                            var orderUserCount = 0;
-                                            orderList = orderList.Where(item => item.OrderType == 1);
-                                            if (orderList != null && orderList.Any())
-                                            {
-                                                orderUserCount = orderList.Count();
-                                            }
-
-
-                                            if (orderUserCount < visit.MorningCount)
-                                            {
-                                                //预约状态，可预约
-                                                orderCycleInfo.MorningOrderType = 1;
-                                            }
-
-                                            if (visit.MorningCount == orderUserCount)
-                                            {
-                                                //预约状态，预约已满
-                                                orderCycleInfo.MorningOrderType = 2;
-                                            }
-                                        }
-                                    }
-                                    else
-                                    {
+                                        #region 上午
 
                                         //预约时间是今天
                                         if (beginTime.ToString("yyyy-MM-dd") == DateTime.Now.ToString("yyyy-MM-dd"))
                                         {
                                             //现在时间大于上午
-                                            if (DateTime.Now < Convert.ToDateTime(DateTime.Now.ToString("yyy-MM-dd 18:00:00")))
+                                            if (DateTime.Now < Convert.ToDateTime(DateTime.Now.ToString("yyy-MM-dd 12:00:00")))
                                             {
                                                 //查询预约人数,上午
                                                 var orderUserCount = 0;
@@ -233,31 +211,68 @@ namespace NFine.Web.Areas.UIManage.Controllers
                                         }
                                         else
                                         {
-                                            //查询预约人数,上午
-                                            var orderUserCount = 0;
-                                            orderList = orderList.Where(item => item.OrderType == 1);
-                                            if (orderList != null && orderList.Any())
+
+                                            //预约时间是今天
+                                            if (beginTime.ToString("yyyy-MM-dd") == DateTime.Now.ToString("yyyy-MM-dd"))
                                             {
-                                                orderUserCount = orderList.Count();
-                                            }
+                                                //现在时间大于上午
+                                                if (DateTime.Now < Convert.ToDateTime(DateTime.Now.ToString("yyy-MM-dd 18:00:00")))
+                                                {
+                                                    //查询预约人数,上午
+                                                    var orderUserCount = 0;
+                                                    orderList = orderList.Where(item => item.OrderType == 1);
+                                                    if (orderList != null && orderList.Any())
+                                                    {
+                                                        orderUserCount = orderList.Count();
+                                                    }
 
 
-                                            if (orderUserCount < visit.MorningCount)
+                                                    if (orderUserCount < visit.MorningCount)
+                                                    {
+                                                        //预约状态，可预约
+                                                        orderCycleInfo.MorningOrderType = 1;
+                                                    }
+
+                                                    if (visit.MorningCount == orderUserCount)
+                                                    {
+                                                        //预约状态，预约已满
+                                                        orderCycleInfo.MorningOrderType = 2;
+                                                    }
+                                                }
+                                            }
+                                            else
                                             {
-                                                //预约状态，可预约
-                                                orderCycleInfo.MorningOrderType = 1;
+                                                //查询预约人数,上午
+                                                var orderUserCount = 0;
+                                                orderList = orderList.Where(item => item.OrderType == 1);
+                                                if (orderList != null && orderList.Any())
+                                                {
+                                                    orderUserCount = orderList.Count();
+                                                }
+
+
+                                                if (orderUserCount < visit.MorningCount)
+                                                {
+                                                    //预约状态，可预约
+                                                    orderCycleInfo.MorningOrderType = 1;
+                                                }
+
+                                                if (visit.MorningCount == orderUserCount)
+                                                {
+                                                    //预约状态，预约已满
+                                                    orderCycleInfo.MorningOrderType = 2;
+                                                }
                                             }
 
-                                            if (visit.MorningCount == orderUserCount)
-                                            {
-                                                //预约状态，预约已满
-                                                orderCycleInfo.MorningOrderType = 2;
-                                            }
                                         }
 
+                                        #endregion
                                     }
-
-                                    #endregion
+                                    else
+                                    {
+                                        //预约状态，停诊
+                                        orderCycleInfo.MorningOrderType = 3;
+                                    }
                                 }
                                 #endregion
 
@@ -265,13 +280,43 @@ namespace NFine.Web.Areas.UIManage.Controllers
                                 //下午出诊
                                 if (visit.Afternoon)
                                 {
-                                    #region 下午
-
-                                    //预约时间是今天
-                                    if (beginTime.ToString("yyyy-MM-dd") == DateTime.Now.ToString("yyyy-MM-dd"))
+                                    //验证是否下午停诊
+                                    var isStopOrder = stopApp.GetList(item => item.DoctorId == request.DoctorId
+                                      && item.CloseDate >= beginTime
+                                      && item.CloseDate <= beginTime
+                                      && item.OrderTimeType == 2).Count() > 0;
+                                    if (!isStopOrder)
                                     {
-                                        //现在时间大于上午
-                                        if (DateTime.Now < Convert.ToDateTime(DateTime.Now.ToString("yyy-MM-dd 22:00:00")))
+                                        #region 下午
+
+                                        //预约时间是今天
+                                        if (beginTime.ToString("yyyy-MM-dd") == DateTime.Now.ToString("yyyy-MM-dd"))
+                                        {
+                                            //现在时间大于上午
+                                            if (DateTime.Now < Convert.ToDateTime(DateTime.Now.ToString("yyy-MM-dd 22:00:00")))
+                                            {
+                                                //查询预约人数,下午
+                                                var orderUserCount = 0;
+                                                orderList = orderList.Where(item => item.OrderType == 2);
+                                                if (orderList != null && orderList.Any())
+                                                {
+                                                    orderUserCount = orderList.Count();
+                                                }
+
+                                                if (orderUserCount < visit.AfternoonCount)
+                                                {
+                                                    //预约状态，可预约
+                                                    orderCycleInfo.AfterNoonOrderType = 1;
+                                                }
+
+                                                if (visit.MorningCount == orderUserCount)
+                                                {
+                                                    //预约状态，预约已满
+                                                    orderCycleInfo.AfterNoonOrderType = 2;
+                                                }
+                                            }
+                                        }
+                                        else
                                         {
                                             //查询预约人数,下午
                                             var orderUserCount = 0;
@@ -293,31 +338,14 @@ namespace NFine.Web.Areas.UIManage.Controllers
                                                 orderCycleInfo.AfterNoonOrderType = 2;
                                             }
                                         }
+
+                                        #endregion
                                     }
                                     else
                                     {
-                                        //查询预约人数,下午
-                                        var orderUserCount = 0;
-                                        orderList = orderList.Where(item => item.OrderType == 2);
-                                        if (orderList != null && orderList.Any())
-                                        {
-                                            orderUserCount = orderList.Count();
-                                        }
-
-                                        if (orderUserCount < visit.AfternoonCount)
-                                        {
-                                            //预约状态，可预约
-                                            orderCycleInfo.AfterNoonOrderType = 1;
-                                        }
-
-                                        if (visit.MorningCount == orderUserCount)
-                                        {
-                                            //预约状态，预约已满
-                                            orderCycleInfo.AfterNoonOrderType = 2;
-                                        }
+                                        //预约状态，停诊
+                                        orderCycleInfo.AfterNoonOrderType = 3;
                                     }
-                                   
-                                    #endregion
                                 }
                                 #endregion
 
@@ -325,27 +353,40 @@ namespace NFine.Web.Areas.UIManage.Controllers
                                 //晚上出诊
                                 if (visit.Night)
                                 {
-                                    #region 晚上
-                                    //查询预约人数,晚上
-                                    var orderUserCount = 0;
-                                    orderList = orderList.Where(item => item.OrderType == 3);
-                                    if (orderList != null && orderList.Any())
+                                    //验证是否下午停诊
+                                    var isStopOrder = stopApp.GetList(item => item.DoctorId == request.DoctorId
+                                      && item.CloseDate >= beginTime
+                                      && item.CloseDate <= beginTime
+                                      && item.OrderTimeType == 3).Count() > 0;
+                                    if (!isStopOrder)
                                     {
-                                        orderUserCount = orderList.Count();
-                                    }
+                                        #region 晚上
+                                        //查询预约人数,晚上
+                                        var orderUserCount = 0;
+                                        orderList = orderList.Where(item => item.OrderType == 3);
+                                        if (orderList != null && orderList.Any())
+                                        {
+                                            orderUserCount = orderList.Count();
+                                        }
 
-                                    if (orderUserCount < visit.NightCount)
-                                    {
-                                        //预约状态，可预约
-                                        orderCycleInfo.NightOrderType = 1;
-                                    }
+                                        if (orderUserCount < visit.NightCount)
+                                        {
+                                            //预约状态，可预约
+                                            orderCycleInfo.NightOrderType = 1;
+                                        }
 
-                                    if (visit.MorningCount == orderUserCount)
-                                    {
-                                        //预约状态，预约已满
-                                        orderCycleInfo.NightOrderType = 2;
+                                        if (visit.MorningCount == orderUserCount)
+                                        {
+                                            //预约状态，预约已满
+                                            orderCycleInfo.NightOrderType = 2;
+                                        }
+                                        #endregion
                                     }
-                                    #endregion
+                                    else
+                                    {
+                                        //预约状态，停诊
+                                        orderCycleInfo.NightOrderType = 3;
+                                    }
                                 }
                                 #endregion
 
@@ -448,7 +489,7 @@ namespace NFine.Web.Areas.UIManage.Controllers
                 var linq = visitApp.GetList(item => item.DoctorId == request.DoctorId && item.Week == week);
                 switch (request.OrderTimeType)
                 {
-                    //早止
+                    //上午
                     case OrderTimeTypeEnum.Morning:
                         {
                             linq = linq.Where(item => item.Morning == true);
@@ -497,7 +538,7 @@ namespace NFine.Web.Areas.UIManage.Controllers
                                  var orderTime = Convert.ToDateTime(request.OrderDate.ToString("yyyy-MM-dd"));
                                  //已经预约数量
                                  var list = orderApp.GetList(order =>
-                                 order.OrderDoctorId == request.DoctorId 
+                                 order.OrderDoctorId == request.DoctorId
                                  && order.OrderDate >= orderTime
                                  && order.OrderDate <= orderTime
                                  && order.BeginTime == orderBeginTime
@@ -671,7 +712,7 @@ namespace NFine.Web.Areas.UIManage.Controllers
                 var orderBeginDate = DateTime.Now;
                 var orderEndDate = DateTime.Now.AddDays(orderCycle);
 
-             
+
                 //验证预约周期以外时间
                 if (request.OrderDateTime < request.OrderDateTime || request.OrderDateTime > orderEndDate)
                 {
@@ -789,7 +830,8 @@ namespace NFine.Web.Areas.UIManage.Controllers
                     response.IsSuccess = true;
                     response.Result = list;
                 }
-                else {
+                else
+                {
                     //没有找到信息
                     response.IsSuccess = true;
                 }

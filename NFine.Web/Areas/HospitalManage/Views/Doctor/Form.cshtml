@@ -143,6 +143,9 @@
         $("#Category").bindSelect();
         $("#OrderType").bindSelect();
 
+        //隐藏分段
+        $(".btn-success").hide();
+
         //上午分段文本框更改
         segmentationChange("MorningSegmentationCount", "MorningCreate");
         //下午分段文本框更改
@@ -151,13 +154,13 @@
         segmentationChange("NightSegmentationCount", "NightCreate");
 
         //上午
-        morningCreate("step-3", "MorningCreate", "MorningStartTime", "MorningEndTime", "MorningSegmentationCount", "MorningOrderCount", "Morning", "1");
+        morningCreate("step-3", "MorningCreate", "MorningStartTime", "MorningEndTime", "MorningSegmentationCount", "MorningOrderCount", "Morning", 1);
 
         //下午
-        morningCreate("step-4", "AfternoonCreate", "AfternoonStartTime", "AfternoonEndTime", "AfternoonSegmentationCount", "AfternoonOrderCount", "Afternoon", "2");
+        morningCreate("step-4", "AfternoonCreate", "AfternoonStartTime", "AfternoonEndTime", "AfternoonSegmentationCount", "AfternoonOrderCount", "Afternoon", 2);
 
         //晚上
-        morningCreate("step-5", "NightCreate", "NightStartTime", "NightEndTime", "NightSegmentationCount", "NightOrderCount", "Night", "3");
+        morningCreate("step-5", "NightCreate", "NightStartTime", "NightEndTime", "NightSegmentationCount", "NightOrderCount", "Night", 3);
 
         $("#F_OrganizeId").bindSelect({
             url: "/SystemManage/Organize/GetTreeSelectJson",
@@ -285,10 +288,10 @@
         $('#' + segmentationCountId).on('input', function () {
             var value = parseInt($(this).val());
             if (value > 0) {
-                $("#" + createId).removeClass("disabled");
+                $("#" + createId).show();
             }
             else {
-                $("#" + createId).addClass("disabled");
+                $("#" + createId).hide();
             }
         })
     }
@@ -296,93 +299,189 @@
     //生成出生坐诊
     function morningCreate(stepId, createId, startTimeId, endTimeId, segmentationCountId, orderCountId, dayType, orderTimeType) {
         $("#" + createId).click(function () {
-
-            debugger;
-            //表格
-            // var form = $(this).parent().parent().parent();
-
             $("#" + stepId + " tbody .first").nextAll().empty();
             //验证总数是分段的整数倍
             var segmentationCount = parseInt($("#" + segmentationCountId).val());
-            var orderCount = parseInt($("#" + orderCountId).val());
 
-            var tr = "<tr> <input hidden=\"hidden\" id=\"" + dayType + "SegmentationOrderList[{0}].OrderTimeType\" name=\"" + dayType + "SegmentationOrderList[{0}].OrderTimeType\" value=\"" + orderTimeType + "\" />";
-            tr += "  <th class=\"formTitle\"> 时间段</th>";
-            tr += "        <td class=\"formValue\">";
-            tr += "            <div style=\"float: left; width: 45%;\">";
-            tr += "                 <input id=\"" + dayType + "SegmentationOrderList[{0}].BeginTime\" name=\"" + dayType + "SegmentationOrderList[{0}].BeginTime\" readonly type=\"text\" value=\"{1}\" class=\"form-control input-wdatepicker\" isvalid=\"yes\" checkexpession=\"NotNull\" onfocus=\"WdatePicker({ dateFmt: 'HH:mm' })\">";
-            tr += "                     </div>";
-            tr += "                 <div style=\"float: left; width: 10%; text-align:center; line-height:35px; height: 35px\">至</div>";
-            tr += "                <div style=\"float: left; width: 45%;\">";
-            tr += "                    <input id=\"" + dayType + "SegmentationOrderList[{0}].EndTime\" name=\"" + dayType + "SegmentationOrderList[{0}].EndTime\" readonly type=\"text\" value=\"{2}\" class=\"form-control input-wdatepicker\" isvalid=\"yes\" checkexpession=\"NotNull\" onfocus=\"WdatePicker({ dateFmt: 'HH:mm' })\">";
-            tr += "                    </div>";
-            tr += "                </td>";
-            tr += "                <th class=\"formTitle\">预约数量</th>";
-            tr += "                <td class=\"formValue\">";
-            tr += "                     <div style=\"float: left; width: 20%;\">";
-            tr += "                        <input id=\"" + dayType + "SegmentationOrderList[{0}].OrderCount\" value=\"{3}\" name=\"" + dayType + "SegmentationOrderList[{0}].OrderCount\" type=\"text\" class=\"form-control segmentation\" isvalid=\"yes\" checkexpession=\"Num\" placeholder=\"预约数量\" />";
-            tr += "                     </div>";
-            tr += "                 </td>";
-            tr += "            </tr>";
+            var doctorId = parseInt(keyValue);
 
-            //开始和结束时间
-            var beginTime = $("#" + startTimeId).val();
-            var endTime = $("#" + endTimeId).val();
+            debugger;
+            if (doctorId > 0) {
 
-            //时间差
-            var begin = new Date('2016/03/28 ' + beginTime + ':00');
-            var end = new Date('2016/03/28 ' + endTime + ':00');
+                //编辑操作
 
-            //上班时间总和单位分钟
-            var allMinutes = parseInt(end - begin) / 1000 / 60;
+                //分段预约执行
+                if (segmentationCount > 0) {
+                    var orderCount = parseInt($("#" + orderCountId).val());
 
-            //每一段分钟数
-            var segmentationMinutes = allMinutes / segmentationCount;
+                    var tr = "<tr> <input hidden=\"hidden\" id=\"" + dayType + "SegmentationOrderList[{0}].OrderTimeType\" name=\"" + dayType + "SegmentationOrderList[{0}].OrderTimeType\" value=\"" + orderTimeType + "\" />";
+                    tr += "  <th class=\"formTitle\"> 时间段</th>";
+                    tr += "        <td class=\"formValue\">";
+                    tr += "            <div style=\"float: left; width: 45%;\">";
+                    tr += "                 <input id=\"" + dayType + "SegmentationOrderList[{0}].BeginTime\" name=\"" + dayType + "SegmentationOrderList[{0}].BeginTime\" readonly type=\"text\" value=\"{1}\" class=\"form-control input-wdatepicker\" isvalid=\"yes\" checkexpession=\"NotNull\" onfocus=\"WdatePicker({ dateFmt: 'HH:mm' })\">";
+                    tr += "                     </div>";
+                    tr += "                 <div style=\"float: left; width: 10%; text-align:center; line-height:35px; height: 35px\">至</div>";
+                    tr += "                <div style=\"float: left; width: 45%;\">";
+                    tr += "                    <input id=\"" + dayType + "SegmentationOrderList[{0}].EndTime\" name=\"" + dayType + "SegmentationOrderList[{0}].EndTime\" readonly type=\"text\" value=\"{2}\" class=\"form-control input-wdatepicker\" isvalid=\"yes\" checkexpession=\"NotNull\" onfocus=\"WdatePicker({ dateFmt: 'HH:mm' })\">";
+                    tr += "                    </div>";
+                    tr += "                </td>";
+                    tr += "                <th class=\"formTitle\">预约数量</th>";
+                    tr += "                <td class=\"formValue\">";
+                    tr += "                     <div style=\"float: left; width: 20%;\">";
+                    tr += "                        <input id=\"" + dayType + "SegmentationOrderList[{0}].OrderCount\" value=\"{3}\" name=\"" + dayType + "SegmentationOrderList[{0}].OrderCount\" type=\"text\" class=\"form-control segmentation\" isvalid=\"yes\" checkexpession=\"Num\" placeholder=\"预约数量\" />";
+                    tr += "                     </div>";
+                    tr += "                 </td>";
+                    tr += "            </tr>";
 
-            //每一段人数
-            var count = orderCount / segmentationCount;
+                    //开始和结束时间
+                    var beginTime = $("#" + startTimeId).val();
+                    var endTime = $("#" + endTimeId).val();
 
-            //大于零,并且整除
-            if (orderCount > 0 && (orderCount % segmentationCount) == 0 && (allMinutes % segmentationCount) == 0) {
+                    //时间差
+                    var begin = new Date('2016/03/28 ' + beginTime + ':00');
+                    var end = new Date('2016/03/28 ' + endTime + ':00');
 
-                var segmentationBegin = begin;
-                var segmentationEnd = begin;
-                for (var i = 0; i < segmentationCount; i++) {
+                    //上班时间总和单位分钟
+                    var allMinutes = parseInt(end - begin) / 1000 / 60;
 
-                    //设置每一个分段
-                    var temptr = String.format(tr, i, begin.Format("hh:mm"), dateAdd(begin, "minute", segmentationMinutes).Format("hh:mm"), count);
+                    //每一段分钟数
+                    var segmentationMinutes = allMinutes / segmentationCount;
 
-                    //$("#tbData tr").eq(-2)
-                    $("#" + stepId + " tbody tr").last().after(temptr);
+                    //每一段人数
+                    var count = orderCount / segmentationCount;
+
+                    //大于零,并且整除
+                    if (orderCount > 0 && (orderCount % segmentationCount) == 0 && (allMinutes % segmentationCount) == 0) {
+
+                        debugger;
+                        var segmentationBegin = begin;
+                        var segmentationEnd = begin;
+                        for (var i = 0; i < segmentationCount; i++) {
+                            //修改数量
+                            switch (orderTimeType) {
+                                case 1:
+                                    isMorningPass = true;
+                                    count = $("#MorningSegmentationOrderCount").val().toString().split(',')[i];
+                                    break;
+                                case 2:
+                                    isAfternoonPass = true;
+                                    count = $("#AfternoonSegmentationOrderCount").val().toString().split(',')[i];
+                                    break;
+                                case 3:
+                                    isNightPass = true;
+                                    count = $("#NightSegmentationOrderCount").val().toString().split(',')[i];
+                                    break;
+                            }
+
+                            //设置每一个分段
+                            var temptr = String.format(tr, i, begin.Format("hh:mm"), dateAdd(begin, "minute", segmentationMinutes).Format("hh:mm"), count);
+
+                            $("#" + stepId + " tbody tr").last().after(temptr);
+                        }
+                    }
+                    else {
+                        alert("总数大于零并且整数倍");
+                        switch (orderTimeType) {
+                            case 1:
+                                isMorningPass = false;
+                                break;
+                            case 2:
+                                isAfternoonPass = false;
+                                break;
+                            case 3:
+                                isNightPass = false;
+                                break;
+                        }
+                    }
                 }
+               
+            }
+            else
+            {
+                //分段预约执行
+                if (segmentationCount > 0) {
+                    var orderCount = parseInt($("#" + orderCountId).val());
 
-                switch (orderTimeType) {
-                    case 1:
-                        isMorningPass = true;
-                        break;
-                    case 2:
-                        isAfternoonPass = true;
-                        break;
-                    case 3:
-                        isNightPass = true;
-                        break;
+                    var tr = "<tr> <input hidden=\"hidden\" id=\"" + dayType + "SegmentationOrderList[{0}].OrderTimeType\" name=\"" + dayType + "SegmentationOrderList[{0}].OrderTimeType\" value=\"" + orderTimeType + "\" />";
+                    tr += "  <th class=\"formTitle\"> 时间段</th>";
+                    tr += "        <td class=\"formValue\">";
+                    tr += "            <div style=\"float: left; width: 45%;\">";
+                    tr += "                 <input id=\"" + dayType + "SegmentationOrderList[{0}].BeginTime\" name=\"" + dayType + "SegmentationOrderList[{0}].BeginTime\" readonly type=\"text\" value=\"{1}\" class=\"form-control input-wdatepicker\" isvalid=\"yes\" checkexpession=\"NotNull\" onfocus=\"WdatePicker({ dateFmt: 'HH:mm' })\">";
+                    tr += "                     </div>";
+                    tr += "                 <div style=\"float: left; width: 10%; text-align:center; line-height:35px; height: 35px\">至</div>";
+                    tr += "                <div style=\"float: left; width: 45%;\">";
+                    tr += "                    <input id=\"" + dayType + "SegmentationOrderList[{0}].EndTime\" name=\"" + dayType + "SegmentationOrderList[{0}].EndTime\" readonly type=\"text\" value=\"{2}\" class=\"form-control input-wdatepicker\" isvalid=\"yes\" checkexpession=\"NotNull\" onfocus=\"WdatePicker({ dateFmt: 'HH:mm' })\">";
+                    tr += "                    </div>";
+                    tr += "                </td>";
+                    tr += "                <th class=\"formTitle\">预约数量</th>";
+                    tr += "                <td class=\"formValue\">";
+                    tr += "                     <div style=\"float: left; width: 20%;\">";
+                    tr += "                        <input id=\"" + dayType + "SegmentationOrderList[{0}].OrderCount\" value=\"{3}\" name=\"" + dayType + "SegmentationOrderList[{0}].OrderCount\" type=\"text\" class=\"form-control segmentation\" isvalid=\"yes\" checkexpession=\"Num\" placeholder=\"预约数量\" />";
+                    tr += "                     </div>";
+                    tr += "                 </td>";
+                    tr += "            </tr>";
+
+                    //开始和结束时间
+                    var beginTime = $("#" + startTimeId).val();
+                    var endTime = $("#" + endTimeId).val();
+
+                    //时间差
+                    var begin = new Date('2016/03/28 ' + beginTime + ':00');
+                    var end = new Date('2016/03/28 ' + endTime + ':00');
+
+                    //上班时间总和单位分钟
+                    var allMinutes = parseInt(end - begin) / 1000 / 60;
+
+                    //每一段分钟数
+                    var segmentationMinutes = allMinutes / segmentationCount;
+
+                    //每一段人数
+                    var count = orderCount / segmentationCount;
+
+                    //大于零,并且整除
+                    if (orderCount > 0 && (orderCount % segmentationCount) == 0 && (allMinutes % segmentationCount) == 0) {
+
+                        var segmentationBegin = begin;
+                        var segmentationEnd = begin;
+                        for (var i = 0; i < segmentationCount; i++) {
+
+                            //设置每一个分段
+                            var temptr = String.format(tr, i, begin.Format("hh:mm"), dateAdd(begin, "minute", segmentationMinutes).Format("hh:mm"), count);
+
+                            //$("#tbData tr").eq(-2)
+                            $("#" + stepId + " tbody tr").last().after(temptr);
+                        }
+
+                        switch (orderTimeType) {
+                            case 1:
+                                isMorningPass = true;
+                                break;
+                            case 2:
+                                isAfternoonPass = true;
+                                break;
+                            case 3:
+                                isNightPass = true;
+                                break;
+                        }
+                    }
+                    else {
+                        alert("总数大于零并且整数倍");
+                        switch (orderTimeType) {
+                            case 1:
+                                isMorningPass = false;
+                                break;
+                            case 2:
+                                isAfternoonPass = false;
+                                break;
+                            case 3:
+                                isNightPass = false;
+                                break;
+                        }
+                    }
                 }
             }
-            else {
-                alert("总数大于零并且整数倍");
-                switch (orderTimeType)
-                {
-                    case 1:
-                        isMorningPass = false;
-                        break;
-                    case 2:
-                        isAfternoonPass = false;
-                        break;
-                    case 3:
-                        isNightPass = false;
-                        break;
-                }
-            }
+
+         
         });
 
 
@@ -419,6 +518,9 @@
     }
 </script>
 <form id="form1">
+    <input name="NightSegmentationOrderCount" id="NightSegmentationOrderCount"  type="hidden" value="" />
+    <input name="AfternoonSegmentationOrderCount" id="AfternoonSegmentationOrderCount" type="hidden" value="" />
+    <input name="MorningSegmentationOrderCount" id="MorningSegmentationOrderCount" type="hidden" value="" />
     <div class="widget-body">
         <div id="wizard" class="wizard" data-target="#wizard-steps" style="border-left: none; border-top: none; border-right: none;">
             <ul class="steps">
@@ -501,9 +603,9 @@
                             <div class="ckbox" style="padding-top: 1px;">
                                 <input id="MondayNight" name="MondayNight" type="checkbox"><label for="MondayNight">晚上</label>
                             </div>
-                            <div class="ckbox" style="padding-top: 1px;">
+                            @*<div class="ckbox" style="padding-top: 1px;">
                                 <input id="MondayStop" name="MondayStop" type="checkbox"><label for="MondayStop">停诊</label>
-                            </div>
+                            </div>*@
                         </td>
                     </tr>
                     <tr>
@@ -518,9 +620,9 @@
                             <div class="ckbox" style="padding-top: 1px;">
                                 <input id="TuesdayNight" name="TuesdayNight" type="checkbox"><label for="TuesdayNight">晚上</label>
                             </div>
-                            <div class="ckbox" style="padding-top: 1px;">
+                            @*<div class="ckbox" style="padding-top: 1px;">
                                 <input id="TuesdayStop" name="TuesdayStop" type="checkbox"><label for="TuesdayStop">停诊</label>
-                            </div>
+                            </div>*@
                         </td>
 
                     </tr>
@@ -536,9 +638,9 @@
                             <div class="ckbox">
                                 <input id="WednesdayNight" name="WednesdayNight" type="checkbox"><label for="WednesdayNight">晚上</label>
                             </div>
-                            <div class="ckbox">
+                            @*<div class="ckbox">
                                 <input id="WednesdayStop" name="WednesdayStop" type="checkbox"><label for="WednesdayStop">停诊</label>
-                            </div>
+                            </div>*@
                         </td>
 
                     </tr>
@@ -554,9 +656,9 @@
                             <div class="ckbox">
                                 <input id="ThursdayNight" name="ThursdayNight" type="checkbox"><label for="ThursdayNight">晚上</label>
                             </div>
-                            <div class="ckbox">
+                            @*<div class="ckbox">
                                 <input id="ThursdayStop" name="ThursdayStop" type="checkbox"><label for="ThursdayStop">停诊</label>
-                            </div>
+                            </div>*@
                         </td>
 
                     </tr>
@@ -572,9 +674,9 @@
                             <div class="ckbox">
                                 <input id="FridayNight" name="FridayNight" type="checkbox"><label for="FridayNight">晚上</label>
                             </div>
-                            <div class="ckbox">
+                            @*<div class="ckbox">
                                 <input id="FridayStop" name="FridayStop" type="checkbox"><label for="FridayStop">停诊</label>
-                            </div>
+                            </div>*@
                         </td>
 
                     </tr>
@@ -590,9 +692,9 @@
                             <div class="ckbox">
                                 <input id="SaturdayNight" name="SaturdayNight" type="checkbox"><label for="SaturdayNight">晚上</label>
                             </div>
-                            <div class="ckbox">
+                            @*<div class="ckbox">
                                 <input id="SaturdayStop" name="SaturdayStop" type="checkbox"><label for="SaturdayStop">停诊</label>
-                            </div>
+                            </div>*@
                         </td>
 
                     </tr>
@@ -608,16 +710,19 @@
                             <div class="ckbox">
                                 <input id="SundayNight" name="SundayNight" type="checkbox"><label for="SundayNight">晚上</label>
                             </div>
-                            <div class="ckbox">
+                            @*<div class="ckbox">
                                 <input id="SundayStop" name="SundayStop" type="checkbox"><label for="SundayStop">停诊</label>
-                            </div>
+                            </div>*@
                         </td>
 
                     </tr>
                 </table>
             </div>
             <div class="step-pane" id="step-3" style="padding-top: 20px; margin-right: 40px;">
-
+                <div class="alert alert-danger" style="text-align: left; margin-bottom: 10px;">
+                    <i class="fa fa-warning alert-dismissible" style="position: relative; top: 1px; font-size: 15px; padding-right: 5px;"></i>
+                    分段量为0时，为依次预约！
+                </div>
                 <table class="form">
                     <tbody>
                         <tr class="first">
@@ -642,7 +747,7 @@
                                     <input id="MorningOrderCount" name="MorningOrderCount" type="text" class="form-control" isvalid="yes" checkexpession="Num" placeholder="预约总数" />
                                 </div>
                                 <div style="float: left; width: 20%; margin-left:20px;">
-                                    <a id="MorningCreate" class="btn  btn-success disabled"><i class="fa fa-plus"></i>&nbsp;创建分段</a>
+                                    <a id="MorningCreate"  class="btn  btn-success"><i class="fa fa-plus"></i>&nbsp;创建分段</a>
                                 </div>
                             </td>
                         </tr>
@@ -650,7 +755,10 @@
                 </table>
             </div>
             <div class="step-pane" id="step-4" style="padding-top: 20px; margin-right: 40px;">
-
+                <div class="alert alert-danger" style="text-align: left; margin-bottom: 10px;">
+                    <i class="fa fa-warning alert-dismissible" style="position: relative; top: 1px; font-size: 15px; padding-right: 5px;"></i>
+                    分段量为0时，为依次预约！
+                </div>
                 <table class="form">
                     <tr class="first">
                         <th class="formTitle">上班时间</th>
@@ -673,13 +781,17 @@
                                 <input id="AfternoonOrderCount" name="AfternoonOrderCount" type="text" class="form-control" isvalid="yes" checkexpession="Num" placeholder="预约总数" />
                             </div>
                             <div style="float: left; width: 20%; margin-left:20px;">
-                                <a id="AfternoonCreate" class="btn  btn-success disabled"><i class="fa fa-plus"></i>&nbsp;创建分段</a>
+                                <a id="AfternoonCreate" class="btn  btn-success"><i class="fa fa-plus"></i>&nbsp;创建分段</a>
                             </div>
                         </td>
                     </tr>
                 </table>
             </div>
             <div class="step-pane" id="step-5" style="padding-top: 20px; margin-right: 40px;">
+                <div class="alert alert-danger" style="text-align: left; margin-bottom: 10px;">
+                    <i class="fa fa-warning alert-dismissible" style="position: relative; top: 1px; font-size: 15px; padding-right: 5px;"></i>
+                    分段量为0时，为依次预约！
+                </div>
                 <table class="form">
                     <tr class="first">
                         <th class="formTitle">上班时间</th>
@@ -702,7 +814,7 @@
                                 <input id="NightOrderCount" name="NightOrderCount" type="text" class="form-control" isvalid="yes" checkexpession="Num" placeholder="预约总数" />
                             </div>
                             <div style="float: left; width: 20%; margin-left:20px;">
-                                <a id="NightCreate" class="btn  btn-success disabled"><i class="fa fa-plus"></i>&nbsp;创建分段</a>
+                                <a id="NightCreate" class="btn  btn-success"><i class="fa fa-plus"></i>&nbsp;创建分段</a>
                             </div>
                         </td>
                     </tr>

@@ -407,7 +407,9 @@
     <Content Include="Readme.txt" />
     <Content Include="SQL\db.sql" />
     <Content Include="SQL\DB20171019.sql" />
+    <Content Include="SQL\HuiBinSQL.sql" />
     <Content Include="SQL\V_patient_info_mz1.sql" />
+    <Content Include="SQL\数据库安装工具.exe" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -443,6 +445,7 @@
     <Compile Include="Areas\UIManage\Controllers\CommonController.cs" />
     <Compile Include="Areas\UIManage\Controllers\DoctorController.cs" />
     <Compile Include="Areas\UIManage\Controllers\OrderController.cs" />
+    <Compile Include="Areas\UIManage\Controllers\UserController.cs" />
     <Compile Include="Areas\UIManage\UIManageAreaRegistration.cs" />
     <Compile Include="Controllers\ClientsDataController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -562,6 +565,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\SystemSecurity\Views\Log\" />
+    <Folder Include="Areas\UIManage\Views\User\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>

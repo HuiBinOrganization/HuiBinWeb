@@ -1,4 +1,5 @@
 ﻿using NFine.Code;
+using NFine.Domain.Entity.Enums;
 using NFine.Domain.Entity.SystemManage;
 using NFine.Domain.ViewModel;
 using NFine.IRepository.SystemManage;
@@ -17,14 +18,17 @@ namespace NFine.Application.SystemManage
     public class StopApp
     {
         private ICloseOrderRepository service = new CloseOrderRepository();
+        private IOrderRepository orderService = new OrderRepository();
 
         public void DoctorStop(StopDoctorViewModel model)
         {
+            var closeData = Convert.ToDateTime(model.CloseDate.ToString("yyyy-MM-dd"));
+            var orderTimeType = 1;
             //上午
             if (model.Morning)
             {
-                var orderTimeType = 1;
-                var closeData = Convert.ToDateTime(model.CloseDate.ToString("yyyy-MM-dd"));
+                 orderTimeType = 1;
+              
                 var isExist = service.IQueryable(item => item.DoctorId == model.DoctorId
                                                  && item.OrderTimeType == orderTimeType
                                                  && item.CloseDate >= closeData && item.CloseDate <= closeData).Count() > 0;
@@ -42,8 +46,7 @@ namespace NFine.Application.SystemManage
             //下午
             if (model.Afternoon)
             {
-                var orderTimeType = 2;
-                var closeData = Convert.ToDateTime(model.CloseDate.ToString("yyyy-MM-dd"));
+                orderTimeType = 2;
                 var isExist = service.IQueryable(item => item.DoctorId == model.DoctorId
                                                  && item.OrderTimeType == orderTimeType
                                                  && item.CloseDate >= closeData && item.CloseDate <= closeData).Count() > 0;
@@ -61,8 +64,7 @@ namespace NFine.Application.SystemManage
             //晚上
             if (model.Night)
             {
-                var orderTimeType = 3;
-                var closeData = Convert.ToDateTime(model.CloseDate.ToString("yyyy-MM-dd"));
+                 orderTimeType = 3;
                 var isExist = service.IQueryable(item => item.DoctorId == model.DoctorId
                                                  && item.OrderTimeType == orderTimeType
                                                  && item.CloseDate >= closeData && item.CloseDate <= closeData).Count() > 0;
@@ -77,6 +79,18 @@ namespace NFine.Application.SystemManage
                 }
             }
 
+            //修改预约信息
+            var orderList = orderService.IQueryable(item => item.OrderDoctorId == model.DoctorId
+                                                    && item.OrderDate >= closeData && item.OrderDate <= closeData
+                                                    && item.OrderType == orderTimeType).ToList();
+            if (orderList != null && orderList.Any())
+            {
+                foreach (var order in orderList)
+                {
+                    order.OrderStatus = OrderStatusEnum.Stop;
+                    orderService.Update(order);
+                }
+            }
         }
 
         /// <summary>
