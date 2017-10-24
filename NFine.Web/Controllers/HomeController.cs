@@ -1,8 +1,8 @@
 ﻿/*******************************************************************************
  * Copyright © 2016 NFine.Framework 版权所有
- * Author: NFine
- * Description: NFine快速开发平台
- * Website：http://www.nfine.cn
+ * Author:HuiBin
+ * Description: 陕西惠宾电子科技有限公司-国际诊疗网开发平台
+ * Website：http://www.hbdzoms.com
 *********************************************************************************/
 using NFine.Application.SystemManage;
 using NFine.Code;
@@ -13,6 +13,10 @@ using System.Web.Mvc;
 
 namespace NFine.Web.Controllers
 {
+    #region 首页
+    /// <summary>
+    /// 首页
+    /// </summary>
     [HandlerLogin]
     public class HomeController : Controller
     {
@@ -33,4 +37,5 @@ namespace NFine.Web.Controllers
             return View();
         }
     }
+    #endregion
 }

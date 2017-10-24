@@ -1,20 +1,29 @@
-﻿using NFine.Application.SystemManage;
-using NFine.Code;
-using NFine.Domain.ViewModel;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
+using NFine.Application.SystemManage;
+using NFine.Code;
+using NFine.Domain.ViewModel;
 
 namespace NFine.Web.Areas.UIManage.Controllers
 {
+    #region 通用
+    /// <summary>
+    /// 通用
+    /// </summary>
     public class CommonController : Controller
     {
+        #region 变量
         ItemsDetailApp itemsDetailApp = new ItemsDetailApp();
-        //
-        // GET: /UIManage/Common/
+        #endregion
 
+        #region 获取国籍
+        /// <summary>
+        /// 获取国籍
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [HandlerAjaxOnly]
         public ActionResult GetNationality()
@@ -47,5 +56,7 @@ namespace NFine.Web.Areas.UIManage.Controllers
             }
             return Content(response.ToJson());
         }
+        #endregion
     }
+    #endregion
 }

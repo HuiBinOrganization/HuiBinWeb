@@ -1,8 +1,8 @@
 ﻿/*******************************************************************************
  * Copyright © 2016 NFine.Framework 版权所有
- * Author: NFine
- * Description: NFine快速开发平台
- * Website：http://www.nfine.cn
+ * Author:HuiBin
+ * Description: 陕西惠宾电子科技有限公司-国际诊疗网开发平台
+ * Website：http://www.hbdzoms.com
 *********************************************************************************/
 using NFine.Application.SystemManage;
 using NFine.Code;
@@ -14,9 +14,18 @@ using System.Web.Mvc;
 
 namespace NFine.Web.Controllers
 {
+    #region 客户端数据
+    /// <summary>
+    /// 客户端数据
+    /// </summary>
     [HandlerLogin]
     public class ClientsDataController : Controller
     {
+        #region 获取客户端数据
+        /// <summary>
+        /// 获取客户端数据
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [HandlerAjaxOnly]
         public ActionResult GetClientsDataJson()
@@ -33,6 +42,13 @@ namespace NFine.Web.Controllers
             };
             return Content(data.ToJson());
         }
+        #endregion
+
+        #region 获取数据列表
+        /// <summary>
+        /// 获取数据列表
+        /// </summary>
+        /// <returns></returns>
         private object GetDataItemList()
         {
             var itemdata = new ItemsDetailApp().GetList();
@@ -49,6 +65,13 @@ namespace NFine.Web.Controllers
             }
             return dictionaryItem;
         }
+        #endregion
+
+        #region 获取
+        /// <summary>
+        /// 获取
+        /// </summary>
+        /// <returns></returns>
         private object GetOrganizeList()
         {
             OrganizeApp organizeApp = new OrganizeApp();
@@ -65,6 +88,9 @@ namespace NFine.Web.Controllers
             }
             return dictionary;
         }
+        #endregion
+
+        #region 获取角色
         private object GetRoleList()
         {
             RoleApp roleApp = new RoleApp();
@@ -81,6 +107,13 @@ namespace NFine.Web.Controllers
             }
             return dictionary;
         }
+        #endregion
+
+        #region 获取职责
+        /// <summary>
+        /// 获取职责
+        /// </summary>
+        /// <returns></returns>
         private object GetDutyList()
         {
             DutyApp dutyApp = new DutyApp();
@@ -97,11 +130,27 @@ namespace NFine.Web.Controllers
             }
             return dictionary;
         }
+        #endregion
+
+        #region 获取目录
+        /// <summary>
+        /// 获取目录
+        /// </summary>
+        /// <returns></returns>
         private object GetMenuList()
         {
             var roleId = OperatorProvider.Provider.GetCurrent().RoleId;
             return ToMenuJson(new RoleAuthorizeApp().GetMenuList(roleId), "0");
         }
+        #endregion
+
+        #region 转换成目录json
+        /// <summary>
+        /// 转换成目录json
+        /// </summary>
+        /// <param name="data">数据</param>
+        /// <param name="parentId">父节点</param>
+        /// <returns></returns>
         private string ToMenuJson(List<ModuleEntity> data, string parentId)
         {
             StringBuilder sbJson = new StringBuilder();
@@ -120,6 +169,13 @@ namespace NFine.Web.Controllers
             sbJson.Append("]");
             return sbJson.ToString();
         }
+        #endregion
+
+        #region 获取目录按钮
+        /// <summary>
+        /// 获取目录按钮
+        /// </summary>
+        /// <returns></returns>
         private object GetMenuButtonList()
         {
             var roleId = OperatorProvider.Provider.GetCurrent().RoleId;
@@ -133,5 +189,7 @@ namespace NFine.Web.Controllers
             }
             return dictionary;
         }
+        #endregion
     }
+    #endregion
 }

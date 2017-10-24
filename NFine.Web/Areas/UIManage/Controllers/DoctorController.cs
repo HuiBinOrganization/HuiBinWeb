@@ -11,20 +11,22 @@ using NFine.Domain.Entity.SystemManage;
 
 namespace NFine.Web.Areas.UIManage.Controllers
 {
+    #region 医生预约信息
+    /// <summary>
+    /// 医生预约信息
+    /// </summary>
     public class DoctorController : Controller
     {
-        //
-        // GET: /UIManage/Doctor/
-
+        #region 变量
         private DoctorApp doctorApp = new DoctorApp();
         private VisitApp visitApp = new VisitApp();
         private OrderApp orderApp = new OrderApp();
         private MemberApp memberApp = new MemberApp();
-
         private StopApp stopApp = new StopApp();
         private SegmentationOrderApp segmentationOrderApp = new SegmentationOrderApp();
+        #endregion
 
-
+        #region 获取医生列表
         /// <summary>
         /// 获取医生列表
         /// </summary>
@@ -76,7 +78,9 @@ namespace NFine.Web.Areas.UIManage.Controllers
             }
             return Content(response.ToJson());
         }
+        #endregion
 
+        #region 获取医生出诊信息
         /// <summary>
         /// 获取医生出诊信息
         /// </summary>
@@ -409,7 +413,9 @@ namespace NFine.Web.Areas.UIManage.Controllers
             }
             return Content(response.ToJson());
         }
+        #endregion
 
+        #region 获取医生预约信息
         /// <summary>
         /// 获取医生预约信息
         /// </summary>
@@ -532,31 +538,31 @@ namespace NFine.Web.Areas.UIManage.Controllers
                         if (segmentationList != null && segmentationList.Any())
                         {
                             getDoctorOrderInfoResponse.PeriodList = segmentationList.ToList().Select(item =>
-                             {
-                                 var orderBeginTime = Convert.ToDateTime(request.OrderDate.ToString("yyyy-MM-dd") + " " + item.BeginTime.ToString("HH:mm:ss"));
-                                 var orderEndTime = Convert.ToDateTime(request.OrderDate.ToString("yyyy-MM-dd") + " " + item.EndTime.ToString("HH:mm:ss"));
-                                 var orderTime = Convert.ToDateTime(request.OrderDate.ToString("yyyy-MM-dd"));
-                                 //已经预约数量
-                                 var list = orderApp.GetList(order =>
-                                 order.OrderDoctorId == request.DoctorId
-                                 && order.OrderDate >= orderTime
-                                 && order.OrderDate <= orderTime
-                                 && order.BeginTime == orderBeginTime
-                                 && order.EndTime == orderEndTime
-                                 && order.OrderType == (int)request.OrderTimeType);
-                                 var count = 0;
-                                 if (list != null && list.Any())
-                                 {
-                                     count = list.Count();
-                                 }
+                            {
+                                var orderBeginTime = Convert.ToDateTime(request.OrderDate.ToString("yyyy-MM-dd") + " " + item.BeginTime.ToString("HH:mm:ss"));
+                                var orderEndTime = Convert.ToDateTime(request.OrderDate.ToString("yyyy-MM-dd") + " " + item.EndTime.ToString("HH:mm:ss"));
+                                var orderTime = Convert.ToDateTime(request.OrderDate.ToString("yyyy-MM-dd"));
+                                //已经预约数量
+                                var list = orderApp.GetList(order =>
+                                order.OrderDoctorId == request.DoctorId
+                                && order.OrderDate >= orderTime
+                                && order.OrderDate <= orderTime
+                                && order.BeginTime == orderBeginTime
+                                && order.EndTime == orderEndTime
+                                && order.OrderType == (int)request.OrderTimeType);
+                                var count = 0;
+                                if (list != null && list.Any())
+                                {
+                                    count = list.Count();
+                                }
 
-                                 return new Period
-                                 {
-                                     BeginTime = item.BeginTime,
-                                     EndTime = item.EndTime,
-                                     OrderCount = item.OrderCount - count,//可预约数量
-                                 };
-                             }).ToList();
+                                return new Period
+                                {
+                                    BeginTime = item.BeginTime,
+                                    EndTime = item.EndTime,
+                                    OrderCount = item.OrderCount - count,//可预约数量
+                                };
+                            }).ToList();
                         }
 
                     }
@@ -572,8 +578,9 @@ namespace NFine.Web.Areas.UIManage.Controllers
             }
             return Content(response.ToJson());
         }
+        #endregion
 
-
+        #region 用户预约
         /// <summary>
         /// 用户预约
         /// </summary>
@@ -756,9 +763,11 @@ namespace NFine.Web.Areas.UIManage.Controllers
             }
             return Content(response.ToJson());
         }
+        #endregion
 
+        #region 获取预约列表
         /// <summary>
-        /// 用户预约
+        /// 获取预约列表
         /// </summary>
         /// <param name="request">参数</param>
         /// <returns></returns>
@@ -843,6 +852,7 @@ namespace NFine.Web.Areas.UIManage.Controllers
             }
             return Content(response.ToJson());
         }
-
+        #endregion
     }
+    #endregion
 }

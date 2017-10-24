@@ -244,7 +244,7 @@ namespace NFine.IRepository.SystemManage
                             break;
                         case OrderTimeTypeEnum.Night:
                             {
-                                var orderTimetype = (int)OrderTimeTypeEnum.Afternoon;
+                                var orderTimetype = (int)OrderTimeTypeEnum.Night;
                                 orderEntity.OrderType = orderTimetype;
                                 //分时段
                                 var segmentationOrder = db.IQueryable<SegmentationOrderEntity>(item => item.DoctorId == model.OrderDoctorId && item.OrderTimeType == orderTimetype).FirstOrDefault();

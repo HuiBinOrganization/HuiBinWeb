@@ -1,8 +1,8 @@
 ﻿/*******************************************************************************
  * Copyright © 2016 NFine.Framework 版权所有
- * Author: NFine
- * Description: NFine快速开发平台
- * Website：http://www.nfine.cn
+ * Author:HuiBin
+ * Description: 陕西惠宾电子科技有限公司-国际诊疗网开发平台
+ * Website：http://www.hbdzoms.com
 *********************************************************************************/
 using NFine.Domain.Entity.SystemSecurity;
 using NFine.Application.SystemSecurity;
@@ -18,19 +18,42 @@ using NFine.Application;
 
 namespace NFine.Web.Controllers
 {
+    #region 登录
+    /// <summary>
+    /// 登录
+    /// </summary>
     public class LoginController : Controller
     {
+        #region 首页
+        /// <summary>
+        /// 首页
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public virtual ActionResult Index()
         {
             var test = string.Format("{0:E2}", 1);
             return View();
         }
+        #endregion
+
+        #region 验证码
+        /// <summary>
+        /// 验证码
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public ActionResult GetAuthCode()
         {
             return File(new VerifyCode().GetVerifyCode(), @"image/Gif");
         }
+        #endregion
+
+        #region 退出登录
+        /// <summary>
+        /// 退出登录
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public ActionResult OutLogin()
         {
@@ -48,6 +71,16 @@ namespace NFine.Web.Controllers
             OperatorProvider.Provider.RemoveCurrent();
             return RedirectToAction("Index", "Login");
         }
+        #endregion
+
+        #region 验证登录
+        /// <summary>
+        /// 验证登录
+        /// </summary>
+        /// <param name="username">用户名</param>
+        /// <param name="password">密码</param>
+        /// <param name="code">验证码</param>
+        /// <returns></returns>
         [HttpPost]
         [HandlerAjaxOnly]
         public ActionResult CheckLogin(string username, string password, string code)
@@ -103,5 +136,7 @@ namespace NFine.Web.Controllers
                 return Content(new AjaxResult { state = ResultType.error.ToString(), message = ex.Message }.ToJson());
             }
         }
+        #endregion
     }
+    #endregion
 }

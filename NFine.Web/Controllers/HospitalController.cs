@@ -9,6 +9,10 @@ using System.Configuration;
 
 namespace NFine.Web.Controllers
 {
+    #region 医院
+    /// <summary>
+    /// 医院
+    /// </summary>
     public class HospitalController : Controller
     {
         //1.医生列表展示
@@ -71,4 +75,5 @@ namespace NFine.Web.Controllers
         }
 
     }
+    #endregion
 }
