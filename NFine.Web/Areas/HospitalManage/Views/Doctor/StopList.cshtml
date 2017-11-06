@@ -1,0 +1,54 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Index.cshtml";
+}
+<script>
+    var keyValue = $.request("keyValue");
+
+    $(function () {
+        gridList();
+    })
+
+    function gridList() {
+        var $gridList = $("#gridList");
+        $gridList.dataGrid({
+            url: "/HospitalManage/Doctor/GetDoctorStopListGrid?keyValue=" + keyValue,
+            height: 310,
+            rowNum: 10,
+            rowList: [10, 15, 30],
+            colModel: [
+                { label: '主键', name: 'CloseOrderId', hidden: true },
+                {
+                    label: '停诊时间', name: 'CloseDate', width: 60, align: 'left',
+                    formatter: "date", formatoptions: { srcformat: 'Y-m-d', newformat: 'Y-m-d' }
+                },
+                {
+                    label: '号别', name: 'OrderTimeType', width: 60, align: 'center',
+                    formatter: function (cellvalue, options, rowObject) {
+                        var type = "";
+                        switch (cellvalue)
+                        {
+                            case 1:
+                                type = "上午";
+                                break;
+                            case 2:
+                                type = "下午";
+                                break;
+                            case 3:
+                                type = "晚上";
+                                break;
+                        }
+                        return type;
+                    }
+                },
+            ],
+            pager: "#gridPager",
+            sortname: 'CloseOrderId desc',
+            viewrecords: true
+        });
+    }
+</script>
+<div class="gridPanel">
+    <table id="gridList"></table>
+    <div id="gridPager"></div>
+</div>
