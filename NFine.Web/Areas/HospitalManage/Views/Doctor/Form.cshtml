@@ -2,6 +2,112 @@
     ViewBag.Title = "Form";
     Layout = "~/Views/Shared/_Form.cshtml";
 }
+<style scoped>
+    .webuploader-pick {
+        width: 100px;
+        height: 35px;
+    }
+
+    #uploader-demo .thumbnail {
+        width: 110px;
+        height: 110px;
+    }
+
+        #uploader-demo .thumbnail img {
+            width: 100%;
+        }
+
+    .uploader-list {
+        width: 100%;
+        overflow: hidden;
+    }
+
+    .wu-example {
+        position: relative;
+        padding: 10px 15px 10px;
+        margin: 15px 0;
+        background-color: #fafafa;
+        box-shadow: inset 0 3px 6px rgba(0, 0, 0, .05);
+        border-color: #e5e5e5 #eee #eee;
+        border-style: solid;
+        border-width: 1px 0;
+    }
+
+    .uploader-list div {
+        display: block;
+    }
+
+    .file-item {
+        float: left;
+        position: relative;
+        margin: 0 20px 20px 0;
+        padding: 4px;
+    }
+
+        .file-item .error {
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            right: 4px;
+            background: red;
+            color: white;
+            text-align: center;
+            height: 20px;
+            font-size: 14px;
+            line-height: 23px;
+        }
+
+        .file-item .info {
+            position: absolute;
+            left: 4px;
+            bottom: 4px;
+            right: 4px;
+            height: 20px;
+            line-height: 20px;
+            text-indent: 5px;
+            background: rgba(0, 0, 0, 0.6);
+            color: white;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            font-size: 12px;
+            z-index: 10;
+        }
+
+    .wu-example:after {
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        font-size: 12px;
+        font-weight: bold;
+        color: #bbb;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .cp_img {
+        width: 100px;
+        height: 100px;
+        float: left;
+        border: 1px solid #d3d3d3;
+        position: relative;
+        top: 4px;
+        left: 4px;
+        right: 4px;
+    }
+
+    .cp_img_jian {
+        width: 100px;
+        height: 100px;
+        position: absolute;
+        background: url(/Content/img/cp_img_sc.png) no-repeat;
+        top: 4px;
+        left: 4px;
+        right: 4px;
+        z-index: 100;
+        display: none;
+    }
+</style>
 <script>
     var keyValue = $.request("keyValue");
 
@@ -516,6 +622,150 @@
         }
         return true;
     }
+
+    //上传图片
+    var fileUpLoad = function (fileList, uploadbtn, isadd, name, type) {
+        var $list = $("#" + fileList);   //这几个初始化全局的百度文档上没说明，好蛋疼。
+        var $btn = $("#ctlBtn");   //开始上传
+        var thumbnailWidth = 100;   //缩略图高度和宽度 （单位是像素），当宽高度是0~1的时候，是按照百分比计算，具体可以看api文档
+        var thumbnailHeight = 100;
+        // 初始化Web Uploader
+        var uploader = WebUploader.create({
+
+            // 选完文件后，是否自动上传。
+            auto: true,
+            // swf文件路径
+            swf: '/Content/js/webuploader/Uploader.swf',
+
+
+            //    // 文件接收服务端。
+            server: '/ProductManage/Product/UpLoadProcess',
+
+            // 选择文件的按钮。可选。
+            // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+            pick: '#' + uploadbtn,
+
+            // 只允许选择图片文件。
+            accept: {
+                title: 'Images',
+                extensions: 'gif,jpg,jpeg,bmp,png',
+                mimeTypes: 'image/*'
+            }
+        });
+
+        // 当有文件添加进来的时候
+        uploader.on('fileQueued', function (file) {
+
+            //图片索引
+            var index = $("#" + fileList + " img").length;
+
+
+            var $li = $(
+                '<div id="' + file.id + '" class="file-item thumbnail">' +
+                '<img>' +
+                '<input type="hidden"  id="' + name + '[' + index + '].ImageType"  name="' + name + '[' + index + '].ImageType"  value="" />' +
+                '<input type="hidden"  id="' + name + '[' + index + '].ImagePath" name="' + name + '[' + index + '].ImagePath"  value="" />' +
+                '<div class="cp_img_jian"></div>' +
+                '</div>'
+            ),
+                $img = $li.find('img');
+
+            $li.children(".cp_img_jian").css('display', 'none');
+
+            if (isadd) {
+                // $list为容器jQuery实例
+                $list.append($li);
+            }
+            else {
+                // $list为容器jQuery实例
+                $list.empty();
+                $list.append($li);
+            }
+
+
+            // 创建缩略图
+            // 如果为非图片文件，可以不用调用此方法。
+            // thumbnailWidth x thumbnailHeight 为 100 x 100
+            uploader.makeThumb(file, function (error, src) {
+                if (error) {
+                    $img.replaceWith('<span>不能预览</span>');
+                    return;
+                }
+
+                $img.attr('src', src);
+            }, thumbnailWidth, thumbnailHeight);
+        });
+
+
+        // 文件上传过程中创建进度条实时显示。
+        uploader.on('uploadProgress', function (file, percentage) {
+            var $li = $('#' + file.id),
+                $percent = $li.find('.progress span');
+
+            // 避免重复创建
+            if (!$percent.length) {
+                $percent = $('<p class="progress"><span></span></p>')
+                    .appendTo($li)
+                    .find('span');
+            }
+
+            $percent.css('width', percentage * 100 + '%');
+        });
+
+        // 文件上传成功，给item添加成功class, 用样式标记上传成功。
+        uploader.on('uploadSuccess', function (file, response) {
+
+            var index = $("#" + fileList + " img").length - 1;
+            var imageType = name + '[' + index + '].ImageType';
+            var imagePath = name + '[' + index + '].ImagePath';
+
+            var inputArray = $("#" + file.id).find("input");
+            inputArray.each(function (index, item) {
+                switch (index) {
+                    case 0://首页
+                        $(item).val(type);
+                        break;
+                    case 1://产品页
+                        $(item).val(response.filePath);
+                        break;
+                }
+            });
+            $('#' + file.id).addClass('upload-state-done');
+        });
+
+        // 文件上传失败，显示上传出错。
+        uploader.on('uploadError', function (file) {
+            var $li = $('#' + file.id),
+                $error = $li.find('div.error');
+
+            // 避免重复创建
+            if (!$error.length) {
+                $error = $('<div class="error"></div>').appendTo($li);
+            }
+
+            $error.text('上传失败');
+        });
+
+        // 完成上传完了，成功或者失败，先删除进度条。
+        uploader.on('uploadComplete', function (file) {
+            $('#' + file.id).find('.progress').remove();
+        });
+
+        $(document).on("mouseover", ".file-item", function () {
+            //鼠标悬浮
+            $(this).children(".cp_img_jian").css('display', 'block');
+        });
+        $(document).on(" mouseout", ".file-item", function () {
+            $(this).children(".cp_img_jian").css('display', 'none');
+        })
+
+        //执行删除方法
+        $list.on("click", ".cp_img_jian", function () {
+            var Id = $(this).parent().attr("id");
+            uploader.removeFile(uploader.getFile(Id, true));
+            $(this).parent().remove();
+        });
+    }
 </script>
 <form id="form1">
     <input name="NightSegmentationOrderCount" id="NightSegmentationOrderCount"  type="hidden" value="" />
@@ -564,7 +814,7 @@
                     <tr>
                         <th class="formTitle">挂号费</th>
                         <td class="formValue">
-                            <input id="Price" name="Price" type="text" class="form-control" isvalid="yes" checkexpession="Num" placeholder="请输入挂号费" />
+                            <input id="Price" name="Price" type="text" class="form-control" isvalid="yes" checkexpession="isNumerData" placeholder="请输入挂号费" />
                         </td>
                         <th class="formTitle"></th>
                         <td class="formValue"></td>
@@ -585,7 +835,16 @@
                             <textarea id="Introduction" name="Introduction" class="form-control" isvalid="yes" checkexpession="NotNull" placeholder="请输入简介" style="height: 60px;"></textarea>
                         </td>
                     </tr>
-
+                    <tr>
+                        <th>
+                            <!--dom结构部分-->
+                            <div id="uploader-demo" class="wu-example">
+                                <!--用来存放item-->
+                                <div id="homefileList" class="uploader-list"></div>
+                                <div id="homefilePicker">选择图片</div>
+                            </div>
+                        </th>
+                    </tr>
                 </table>
 
             </div>

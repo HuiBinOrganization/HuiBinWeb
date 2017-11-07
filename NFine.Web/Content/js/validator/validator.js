@@ -349,8 +349,19 @@ $.fn.Validform = function () {
                         }
                         break;
                     }
+                case "isNumerData":
+                    {
+                        if (!isNumerData(value, $(this).attr("eqvalue"))) {
+                            Validatemsg = errormsg + "必须为数字！\n";
+                            Validateflag = false;
+                            ValidationMessage($(this), Validatemsg); return false;
+                        }
+                        break;
+                    }
                 default:
                     break;
+
+                    
             }
         }
     });
@@ -794,6 +805,18 @@ $.fn.Validform = function () {
             if (RegExp.$1 < 256 && RegExp.$2 < 256 && RegExp.$3 < 256 && RegExp.$4 < 256) return true;
         }
         return false;
+    }
+    //数字或者小数
+    function isNumerData(obj) {
+        var controlObj = $.trim(obj);
+        if (controlObj.length == 0 || controlObj == null || controlObj == undefined) {
+            return true;
+        }
+        var re = /^([1-9]\d*(\.\d*[1-9])?)|(0\.\d*[1-9])/g 
+        if (!re.test(obj))
+            return false;
+        else
+            return true;
     }
 }
 //提示信息
