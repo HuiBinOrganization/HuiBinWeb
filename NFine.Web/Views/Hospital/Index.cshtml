@@ -13,12 +13,12 @@
 
 <body>
 <div class="uk-container uk-container-center">
-  <nav class="uk-navbar"> <a href="" class="uk-navbar-brand mtp18"><img src="~/Content/img/pages/logo.png" alt="" width="605" height="96" /></a>
+  <nav class="uk-navbar"> <a href="~/Hospital/Index" class="uk-navbar-brand mtp18"><img src="~/Content/img/pages/logo.png" alt="" width="605" height="96" /></a>
     <div class="uk-navbar-flip mtp46">
       <ul class="uk-navbar-nav">
-        <li><a href="~/Hospital/Index">首页</a></li>
-        <li><a href="javascript:void(0);">国际诊疗网</a></li>
-        <li><a href="javascript:void(0);"><i class="uk-icon-home uk-icon-small"></i></a></li>
+        <li><a href="http://www.dyyy120.com/">首页</a></li>
+        <li><a href="~/Hospital/Index">国际诊疗网</a></li>
+        <li><a href="http://www.dyyy.xjtu.edu.cn/"><i class="uk-icon-home uk-icon-small"></i></a></li>
       </ul>
     </div>
   </nav>
@@ -166,7 +166,7 @@
           <!-- loops end --> 
         </li>
         <!-- query start -->
-        <li class="tabquery" id="query-table">
+        <li class="tabquery" id="query-table" style="min-height:500px;">
           <h4 class="uk-text-center">Note: Please fill in your reservation name and identification number, so that we can check your reservation information!</h4>
           <form class="uk-form" id="query-form">
             <table width="70%" border="0" cellspacing="0" cellpadding="0" class="uk-container-center">
@@ -174,7 +174,7 @@
                 <tr class="lht70">
                   <td class="uk-width-1-6 uk-text-left">Full name</td>
                   <td><div class="uk-form-row">
-                      <input type="text" placeholder="Full name" class="uk-form-large" id="full-name">
+                      <input type="text" placeholder="Text input" class="uk-form-large" id="full-name" style="line-height:40px;height:40px;">
                     </div></td>
                   <td>
                       <span class="uk-form-help-inline">Please fill in the passport name</span>
@@ -184,7 +184,7 @@
                 <tr class="uk-margin-large">
                   <td class="uk-width-1-6 uk-text-left">Passport No.</td>
                   <td><div class="uk-form-row">
-                      <input type="text" placeholder="Passport No" class="uk-form-large" id="passport-no">
+                      <input type="text" placeholder="Text input" class="uk-form-large" id="passport-no">
                     </div></td>
                   <td>
                       <span class="uk-form-help-inline">Please enter your passport number at the time of your reservation</span>
@@ -367,7 +367,7 @@
       <div class="uk-width-2-5">
         <div class="uk-panel social">
           <h3 class="uk-panel-title uk-margin-bottom">About us</h3>
-          <p><a href="#" class="uk-icon-button uk-icon-weibo"></a><a href="#" class="uk-icon-button uk-icon-tencent-weibo"></a><a href="#" class="uk-icon-button uk-icon-wechat"></a></p>
+          @*<p><a href="#" class="uk-icon-button uk-icon-weibo"></a><a href="#" class="uk-icon-button uk-icon-tencent-weibo"></a><a href="#" class="uk-icon-button uk-icon-wechat"></a></p>*@
           <p><img src="~/Content/img/pages/pic-ewm.png" alt=""/></p>
           <p>Scanning concern Jiaotong University Affiliated Hospital</p>
         </div>
@@ -433,7 +433,7 @@
                                     "</div>"+
                                     "<div class=\"uk-overlay-panel uk-overlay-fade uk-overlay-background\">"+
                                         "<h4>Be good at:</h4>"+
-                                        "<p>"+ result.Result[i].GootAt+"</p>"+
+                                        "<p style=\"height:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;\">" + result.Result[i].GootAt + "</p>" +
                                     "</div>"+
                                     "<a class=\"uk-position-cover\" href=\"../Hospital/Doctor?DocId=" + String(result.Result[i].DoctorId) +"\"></a> </figure>"
                                     );
@@ -601,9 +601,17 @@
                                     if (result.Result != null) {
                                         for (var i = 0; i < result.Result.length; i++) {
                                             var splitAppointment = result.Result[i].Appointment.split(" ");//空格分割
+                                            //设置性别
+                                            var sex = "";
+                                            var sexy = result.Result[i].Gender;
+                                            if (sexy == 1) {
+                                                sex = "男";
+                                            } else if (sexy == 2) {
+                                                sex = "女";
+                                            }
                                             $("#inner-querytable").append("<tr class=\"uk-table-middle\">" +
                                               "<td>" + result.Result[i].FullName + "</td>" +
-                                              "<td>" + result.Result[i].Gender + "</td>" +
+                                              "<td>" + sex + "</td>" +
                                               "<td>" + result.Result[i].DateOfBirth + "</td>" +
                                               "<td>" + result.Result[i].IdentificationNumber + "</td>" +
                                               "<td>" + result.Result[i].Description + "</td>" +
