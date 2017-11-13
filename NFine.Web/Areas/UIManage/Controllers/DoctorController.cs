@@ -52,7 +52,7 @@ namespace NFine.Web.Areas.UIManage.Controllers
                         GetDoctorListResponse doctorResponse = new GetDoctorListResponse();
                         doctorResponse.DoctorId = doctor.DoctorId;
                         doctorResponse.DoctorName = doctor.DoctorName;
-                        doctorResponse.Avatar =doctor.Avatar;
+                        doctorResponse.Avatar = doctor.Avatar;
                         doctorResponse.GootAt = doctor.GootAt;
                         doctorResponse.VisitList = new List<int>();
                         if (visitList != null && visitList.Any())
@@ -170,7 +170,7 @@ namespace NFine.Web.Areas.UIManage.Controllers
                                 orderCycleInfo.OrderDateTime = info.OrderDateTime;
                                 var beginTime = Convert.ToDateTime(orderCycleInfo.OrderDateTime.ToString("yyyy-MM-dd 00:00:00"));
                                 var endTime = Convert.ToDateTime(orderCycleInfo.OrderDateTime.ToString("yyyy-MM-dd 23:59:59"));
-                                var orderList = orderApp.GetList(item => item.OrderDoctorId == request.DoctorId && item.OrderDate == beginTime);
+                                var orderList = orderApp.GetList(item => item.OrderDoctorId == request.DoctorId && item.OrderDate >= beginTime && item.OrderDate <= endTime).ToList();
 
                                 #region 上午出诊
                                 //上午出诊
@@ -193,10 +193,10 @@ namespace NFine.Web.Areas.UIManage.Controllers
                                             {
                                                 //查询预约人数,上午
                                                 var orderUserCount = 0;
-                                                orderList = orderList.Where(item => item.OrderType == 1);
-                                                if (orderList != null && orderList.Any())
+                                                var temporderList = orderList.Where(item => item.OrderType == 1);
+                                                if (temporderList != null && temporderList.Any())
                                                 {
-                                                    orderUserCount = orderList.Count();
+                                                    orderUserCount = temporderList.Count();
                                                 }
 
 
@@ -224,10 +224,10 @@ namespace NFine.Web.Areas.UIManage.Controllers
                                                 {
                                                     //查询预约人数,上午
                                                     var orderUserCount = 0;
-                                                    orderList = orderList.Where(item => item.OrderType == 1);
-                                                    if (orderList != null && orderList.Any())
+                                                    var temporderList = orderList.Where(item => item.OrderType == 1);
+                                                    if (temporderList != null && temporderList.Any())
                                                     {
-                                                        orderUserCount = orderList.Count();
+                                                        orderUserCount = temporderList.Count();
                                                     }
 
 
@@ -248,10 +248,10 @@ namespace NFine.Web.Areas.UIManage.Controllers
                                             {
                                                 //查询预约人数,上午
                                                 var orderUserCount = 0;
-                                                orderList = orderList.Where(item => item.OrderType == 1);
-                                                if (orderList != null && orderList.Any())
+                                                var temporderList = orderList.Where(item => item.OrderType == 1);
+                                                if (temporderList != null && temporderList.Any())
                                                 {
-                                                    orderUserCount = orderList.Count();
+                                                    orderUserCount = temporderList.Count();
                                                 }
 
 
@@ -301,10 +301,10 @@ namespace NFine.Web.Areas.UIManage.Controllers
                                             {
                                                 //查询预约人数,下午
                                                 var orderUserCount = 0;
-                                                orderList = orderList.Where(item => item.OrderType == 2);
-                                                if (orderList != null && orderList.Any())
+                                                var temporderList = orderList.Where(item => item.OrderType == 2);
+                                                if (temporderList != null && temporderList.Any())
                                                 {
-                                                    orderUserCount = orderList.Count();
+                                                    orderUserCount = temporderList.Count();
                                                 }
 
                                                 if (orderUserCount < visit.AfternoonCount)
@@ -324,10 +324,10 @@ namespace NFine.Web.Areas.UIManage.Controllers
                                         {
                                             //查询预约人数,下午
                                             var orderUserCount = 0;
-                                            orderList = orderList.Where(item => item.OrderType == 2);
-                                            if (orderList != null && orderList.Any())
+                                            var temporderList = orderList.Where(item => item.OrderType == 2);
+                                            if (temporderList != null && temporderList.Any())
                                             {
-                                                orderUserCount = orderList.Count();
+                                                orderUserCount = temporderList.Count();
                                             }
 
                                             if (orderUserCount < visit.AfternoonCount)
@@ -373,10 +373,10 @@ namespace NFine.Web.Areas.UIManage.Controllers
                                             {
                                                 //查询预约人数,晚上
                                                 var orderUserCount = 0;
-                                                orderList = orderList.Where(item => item.OrderType ==3);
-                                                if (orderList != null && orderList.Any())
+                                                var temporderList = orderList.Where(item => item.OrderType == 3);
+                                                if (temporderList != null && temporderList.Any())
                                                 {
-                                                    orderUserCount = orderList.Count();
+                                                    orderUserCount = temporderList.Count();
                                                 }
 
                                                 if (orderUserCount < visit.NightCount)
@@ -397,10 +397,10 @@ namespace NFine.Web.Areas.UIManage.Controllers
                                             #region 晚上
                                             //查询预约人数,晚上
                                             var orderUserCount = 0;
-                                            orderList = orderList.Where(item => item.OrderType == 3);
-                                            if (orderList != null && orderList.Any())
+                                            var temporderList = orderList.Where(item => item.OrderType == 3);
+                                            if (temporderList != null && temporderList.Any())
                                             {
-                                                orderUserCount = orderList.Count();
+                                                orderUserCount = temporderList.Count();
                                             }
 
                                             if (orderUserCount < visit.NightCount)
