@@ -21,6 +21,14 @@ namespace NFine.Domain.ViewModel
         }
 
         /// <summary>
+        /// 头像
+        /// </summary>
+        public string Avatar
+        {
+            get;
+            set;
+        }
+        /// <summary>
         /// 姓名
         /// </summary>
         public string Name

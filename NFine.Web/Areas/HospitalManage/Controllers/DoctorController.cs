@@ -7,6 +7,8 @@ using System.Web.Mvc;
 using NFine.Domain.ViewModel;
 using NFine.Application.SystemManage;
 using NFine.Code;
+using System.IO;
+using System.Text;
 
 namespace NFine.Web.Areas.HospitalManage.Controllers
 {
@@ -56,6 +58,7 @@ namespace NFine.Web.Areas.HospitalManage.Controllers
                 model.Title = doctor.Title;
                 model.Price = doctor.Price;
                 model.Experties = doctor.GootAt;
+                model.Avatar = doctor.Avatar;
                 model.Introduction = doctor.Introduction;
             }
 
@@ -127,9 +130,9 @@ namespace NFine.Web.Areas.HospitalManage.Controllers
                     }
                 }
 
-             
-              
-                
+
+
+
             }
             #endregion
 
@@ -254,18 +257,30 @@ namespace NFine.Web.Areas.HospitalManage.Controllers
                     model.AfternoonOrderCount = visitList.Max(item => item.AfternoonCount);
                     model.NightOrderCount = visitList.Max(item => item.NightCount);
                 }
-              
+
             }
             #endregion
 
             return Content(model.ToJson());
         }
 
+        // You might want to think of a better method name.
+        //public string ConvertUTF8ToWin1252(string source)
+        //{
+        //    Encoding utf8 = new UTF8Encoding();
+        //    Encoding win1252 = Encoding.GetEncoding(1252);
+
+        //    byte[] input = source.ToUTF8ByteArray();  // Note the use of my extension method
+        //    byte[] output = Encoding.Convert(utf8, win1252, input);
+
+        //    return win1252.GetString(output);
+        //}
+
         [HttpGet]
         [HandlerAjaxOnly]
         public ActionResult GetStopFormJson(string keyValue)
         {
-          
+
             StopViewModel model = new StopViewModel();
             model.CloseDate = DateTime.Now.ToString("yyyy-MM-dd");
             return Content(model.ToJson());
@@ -282,6 +297,17 @@ namespace NFine.Web.Areas.HospitalManage.Controllers
         [HttpGet]
         [HandlerAuthorize]
         public virtual ActionResult StopList()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// 医生头像
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [HandlerAuthorize]
+        public virtual ActionResult DoctorHeader()
         {
             return View();
         }
@@ -322,6 +348,93 @@ namespace NFine.Web.Areas.HospitalManage.Controllers
             int.TryParse(keyValue, out doctorId);
             doctorApp.DeleteForm(doctorId);
             return Success("删除成功。");
+        }
+
+        /// <summary>
+        /// 上传图片
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <param name="type"></param>
+        /// <param name="lastModifiedDate"></param>
+        /// <param name="size"></param>
+        /// <param name="file"></param>
+        /// <returns></returns>
+        public ActionResult UpLoadProcess(string id, string name, string type, string lastModifiedDate, int size, HttpPostedFileBase file)
+        {
+            //保存到临时文件夹
+            //string urlPath = "../Upload/temp";
+            string filePathName = string.Empty;
+
+            string localPath = Path.Combine(HttpRuntime.AppDomainAppPath, "Upload/temp");
+            if (Request.Files.Count == 0)
+            {
+                return Json(new { jsonrpc = 2.0, error = new { code = 102, message = "保存失败" }, id = "id" });
+            }
+
+            string ex = Path.GetExtension(file.FileName);
+            filePathName = Guid.NewGuid().ToString("N") + ex;
+            if (!System.IO.Directory.Exists(localPath))
+            {
+                System.IO.Directory.CreateDirectory(localPath);
+            }
+            file.SaveAs(Path.Combine(localPath, filePathName));
+
+            return Json(new
+            {
+                jsonrpc = "2.0",
+                id = id,
+                filePath = "/Upload/temp/" + filePathName//返回一个视图界面可直接使用的url
+            });
+
+        }
+
+        /// <summary>
+        /// 上传图片
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <param name="type"></param>
+        /// <param name="lastModifiedDate"></param>
+        /// <param name="size"></param>
+        /// <param name="file"></param>
+        /// <returns></returns>
+        public ActionResult UpLoadHeadProcess(List<ImageInfo> data)
+        {
+            string filePathName = string.Empty;
+            foreach (var info in data)
+            {
+                string base64Str = info.Data.Replace("data:image/png;base64,", "");
+                byte[] bytes = System.Convert.FromBase64String(base64Str);
+                using (System.IO.MemoryStream ms = new System.IO.MemoryStream(bytes))
+                {
+                    filePathName = string.Empty;
+
+                    string localPath = Path.Combine(HttpRuntime.AppDomainAppPath, "Upload/temp");
+                    var img = System.Drawing.Image.FromStream(ms);
+                    string ex = ".png";
+                    filePathName = Guid.NewGuid().ToString("N") + ex;
+                    if (!System.IO.Directory.Exists(localPath))
+                    {
+                        System.IO.Directory.CreateDirectory(localPath);
+                    }
+                    img.Save(Path.Combine(localPath, filePathName));
+                }
+            }
+            return Json(new
+            {
+                jsonrpc = "2.0",
+                filePath = "/Upload/temp/" + filePathName//返回一个视图界面可直接使用的url
+            });
+        }
+
+        public class ImageInfo
+        {
+            public string Data
+            {
+                get;
+                set;
+            }
         }
     }
 }

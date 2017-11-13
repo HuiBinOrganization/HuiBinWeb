@@ -59,7 +59,7 @@ namespace NFine.IRepository.SystemManage
                     DoctorEntity entity = new DoctorEntity();
                     entity.DoctorName = model.Name;
                     entity.GootAt = model.Experties;
-                    entity.Avatar = "";
+                    entity.Avatar = model.Avatar;
                     entity.Title = model.Title;
                     entity.Introduction = model.Introduction;
                     entity.Gender = model.Gender;
@@ -79,7 +79,7 @@ namespace NFine.IRepository.SystemManage
                     {
                         entity.DoctorName = model.Name;
                         entity.GootAt = model.Experties;
-                        entity.Avatar = "";
+                        entity.Avatar = model.Avatar;
                         entity.Title = model.Title;
                         entity.Introduction = model.Introduction;
                         entity.Gender = model.Gender;
