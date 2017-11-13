@@ -651,12 +651,12 @@ namespace NFine.Web.Areas.UIManage.Controllers
             }
 
             //就诊卡号
-            if (string.IsNullOrWhiteSpace(request.VisitingCardNumber))
-            {
-                response.IsSuccess = false;
-                response.Reason = "就诊卡号输入不正确";
-                return Content(response.ToJson());
-            }
+            //if (string.IsNullOrWhiteSpace(request.VisitingCardNumber))
+            //{
+            //    response.IsSuccess = false;
+            //    response.Reason = "就诊卡号输入不正确";
+            //    return Content(response.ToJson());
+            //}
 
             //性别
             if ((int)request.Gender < 1 || (int)request.Gender > 2)

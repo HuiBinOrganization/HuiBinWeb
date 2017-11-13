@@ -43,6 +43,8 @@
             this.txtOrderCycle = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.cbIsTest = new System.Windows.Forms.ComboBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.cbIsExistCard = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // label1
@@ -132,7 +134,7 @@
             // 
             // tbnSave
             // 
-            this.tbnSave.Location = new System.Drawing.Point(96, 223);
+            this.tbnSave.Location = new System.Drawing.Point(96, 251);
             this.tbnSave.Name = "tbnSave";
             this.tbnSave.Size = new System.Drawing.Size(75, 23);
             this.tbnSave.TabIndex = 10;
@@ -174,11 +176,30 @@
             this.cbIsTest.Size = new System.Drawing.Size(306, 20);
             this.cbIsTest.TabIndex = 14;
             // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(36, 225);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(53, 12);
+            this.label8.TabIndex = 15;
+            this.label8.Text = "是否有卡";
+            // 
+            // cbIsExistCard
+            // 
+            this.cbIsExistCard.FormattingEnabled = true;
+            this.cbIsExistCard.Location = new System.Drawing.Point(95, 220);
+            this.cbIsExistCard.Name = "cbIsExistCard";
+            this.cbIsExistCard.Size = new System.Drawing.Size(306, 20);
+            this.cbIsExistCard.TabIndex = 16;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(419, 268);
+            this.ClientSize = new System.Drawing.Size(419, 308);
+            this.Controls.Add(this.cbIsExistCard);
+            this.Controls.Add(this.label8);
             this.Controls.Add(this.cbIsTest);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.txtOrderCycle);
@@ -220,6 +241,8 @@
         private System.Windows.Forms.TextBox txtOrderCycle;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.ComboBox cbIsTest;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.ComboBox cbIsExistCard;
     }
 }
 

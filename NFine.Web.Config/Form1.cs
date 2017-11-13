@@ -37,6 +37,8 @@ namespace NFine.Web.Config
             var hisUrl = this.txtHisUrl.Text.Trim();
             var orderCycle = this.txtOrderCycle.Text.Trim();
             var isTest = this.cbIsTest.SelectedValue.ToString();
+
+            var isExistCard = this.cbIsExistCard.SelectedValue.ToString();
             if (string.IsNullOrEmpty(server))
             {
                 isReturn = true;
@@ -164,6 +166,9 @@ namespace NFine.Web.Config
                                 case "IsTest":
                                     xele.SetAttribute("value", isTest);
                                     break;
+                                case "IsExistCard":
+                                    xele.SetAttribute("value", isExistCard);
+                                    break;
                             }
                         }
 
@@ -215,6 +220,19 @@ namespace NFine.Web.Config
             cbIsTest.DataSource = infoList;
             cbIsTest.ValueMember = "Key";
             cbIsTest.DisplayMember = "Value";
+
+            infoList = new List<Select>();
+            select = new Select();
+            select.Key = 1;
+            select.Value = "是";
+            infoList.Add(select);
+            select = new Select();
+            select.Key = 0;
+            select.Value = "否";
+            infoList.Add(select);
+            cbIsExistCard.DataSource = infoList;
+            cbIsExistCard.ValueMember = "Key";
+            cbIsExistCard.DisplayMember = "Value";
         }
         #endregion
 
